@@ -30,8 +30,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // $settings = Settings::all();
-        // $pages = Page::all();
-        // view()->share(compact('settings', 'pages'));
+        $settings = Settings::all();
+        $pages = Page::all();
+        view()->share(compact('settings', 'pages'));
     }
 }

@@ -40,10 +40,43 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'clients' => [
+            'driver' => 'session',
+            'provider' => 'clients',
+            'table' => 'password_resets',
+            'expire' => 60,
+        ],
+        'owners' => [
+            'driver' => 'session',
+            'provider' => 'owners',
+            'table' => 'password_resets',
+            'expire' => 60,
+        ],
+        'workers' => [
+            'driver' => 'session',
+            'provider' => 'workers',
+            'table' => 'password_resets',
+            'expire' => 60,
+        ],
 
         'api' => [
             'driver' => 'token',
             'provider' => 'users',
+            'hash' => false,
+        ],
+        'clients_api' => [
+            'driver' => 'token',
+            'provider' => 'clients',
+            'hash' => false,
+        ],
+        'owners_api' => [
+            'driver' => 'token',
+            'provider' => 'owners',
+            'hash' => false,
+        ],
+        'workers_api' => [
+            'driver' => 'token',
+            'provider' => 'workers',
             'hash' => false,
         ],
     ],
@@ -69,6 +102,18 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\User::class,
+        ],
+        'clients' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Client::class,
+        ],
+        'workers' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Worker::class,
+        ],
+        'owners' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\PlaceOwner::class,
         ],
 
         // 'users' => [

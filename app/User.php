@@ -2,13 +2,15 @@
 
 namespace App;
 
+use Zizaco\Entrust\Traits\EntrustUserTrait;
+
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, EntrustUserTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -36,4 +38,18 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    protected $appends = ['roles_list'];
+    public function getRolesListAttribute()
+    {
+        return $this->roles->pluck('id')->toArray();
+    }
+    public function roles()
+    {
+        return $this->belongsToMany('App\Models\Role');
+    }
+    public function getRoles()
+    {
+        $roles = $this->roles->pluck('display_name')->toArray();
+        return implode(',', $roles);
+    }
 }

@@ -6,8 +6,9 @@ use App\Models\BloodType;
 use App\Models\Category;
 use App\Models\City;
 use App\Models\ClientMessage;
-use App\Models\Government;
+use App\Models\Governorate;
 use App\Models\Settings;
+use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
@@ -20,7 +21,7 @@ class MainController extends Controller
      */
     public function getGovernments()
     {
-        $governments = Government::all(['id', 'name']);
+        $governments = Governorate::all(['id', 'name']);
         return jsonResponse(1, 'success', $governments);
     }
     public function getCities(Request $request)
@@ -28,12 +29,12 @@ class MainController extends Controller
         $cities = City::govern($request->govern)->get(['name', 'id']);
         return jsonResponse(1, 'success', $cities);
     }
-    public function getBloodTypes()
+    public function getSubCategories(Request $request)
     {
-        $bloodTypes = BloodType::all(['id', 'name']);
-        return jsonResponse(1, 'success', $bloodTypes);
+        $subCategories = SubCategory::cat($request->category)->get(['name', 'id']);
+        return jsonResponse(1, 'success', $subCategories);
     }
-    public function getPostsCategories()
+    public function getCategories()
     {
         $postsCategories = Category::all(['id', 'name']);
         return jsonResponse(1, 'success', $postsCategories);

@@ -33,16 +33,20 @@
                 </div>
             </div>
             <div class="slick2">
-                @foreach ($posts as $post)
+                @foreach($posts as $post)
                 <div class="slick-cont">
                     <div class="card">
                         <img src="{{ asset($post->photo) }}" class="card-img-top" alt="slick-img">
-                        <div class="heart-icon"><i class="far fa-heart"></i></div>
+                        @auth('clients')
+                        <div class="heart-icon" data-post="{{ $post->id }}"><i
+                                class="{{ auth('clients')->user()->favouritePosts->contains($post->id)?'fas':'far' }} fa-heart"></i>
+                        </div>
+                        @endauth
                         <div class="card-body">
                             <h5 class="card-title">{{ $post->title }}</h5>
                             <p style="overflow: hidden;height:110px;" class="mb-4">{{ $post->content }}
                             </p>
-                            <div class="text-center"><a href="{{ route('post.show',$post->id) }}"
+                            <div class="text-center"><a href="{{ route('front.post',['post'=>$post->id]) }}"
                                     class="btn bg px-5">التفاصيل</a>
                             </div>
                         </div>
@@ -126,6 +130,7 @@
         <!--End row-->
     </div>
     <!--End container-->
+    {{-- @csrf --}}
 </section>
 <!--End blood-app-->
 @endsection
@@ -167,3 +172,56 @@
 </div>
 <!--End main-header-->
 @endsection
+
+@push('scripts')
+<script>
+    $('.heart-icon').click(function () {
+            var icon = $(this).find('i');
+            let post = $(this).attr('data-post');
+            let token = $('input[name="_token"]').val();
+            $.ajax({
+            url:'/favourite/post',
+            type:'post',
+            data:{
+                post:post,
+                _token:token
+            },
+            success:function(response){
+                if ($(this).hasClass('fas')) {
+                $(this).removeClass('fas').addClass('far');
+                } else {
+                $(this).removeClass('far').addClass('fas');
+                }
+            }
+            });
+        });
+</script>
+<script>
+    var request = new XMLHttpRequest();
+
+        var url = "https://cors-anywhere.herokuapp.com/" + "http://ipda3-tech.com/blood-bank/api/v1/donation-requests?api_token=W4mx3VMIWetLcvEcyF554CfxjZHwdtQldbdlCl2XAaBTDIpNjKO1f7CHuwKl&page=1";
+
+        request.open('GET', url);
+
+        request.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+
+                var dataHolder = JSON.parse(this.responseText);
+                var div = document.getElementById('donations');
+                var temp = "";
+                for (var i = 0; i < dataHolder['data'].data.length; i++) {
+                    temp += '<div class="req-item my-3"><div class="row"><div class="col-md-9 col-sm-12 clearfix"><div class="blood-type m-1 float-right"><h3>' + dataHolder['data'].data[i].blood_type.name + '</h3></div><div class="mx-3 float-right pt-md-2"><p>اسم الحالة : ' + dataHolder['data'].data[i].patient_name + '</p><p>مستشفى : ' + dataHolder['data'].data[i].hospital_name + '</p><p>المدينة : ' + dataHolder['data'].data[i].city.name + '</p></div></div><div class="col-md-3 col-sm-12 text-center p-sm-3 pt-md-5"><a href="Status-detailes.html" class="btn btn-light px-5 py-3">التفاصيل</a></div></div></div>';
+                }
+
+
+                div.innerHTML = temp;
+                // console.log(dataHolder);
+
+
+            }
+        };
+
+        request.send();
+
+</script>
+@endpush

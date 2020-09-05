@@ -15,6 +15,7 @@
     <!--main file css-->
     <link rel="stylesheet" href="{{ asset('front/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('front/css/style.css') }}">
+    @stack('styles')
     <title>بنك الدم</title>
 </head>
 
@@ -51,26 +52,28 @@
                                         class="fab fa-whatsapp"></i></a></li>
                         </ul>
                     </div>
-                    @guest('client')
+                    @guest('clients')
                     <div>
                         <a href="{{ url('/register') }}">انشاء حساب جديد</a>
                         <a class="px-3 log" href="{{ url('/login') }}">دخول</a>
                     </div>
                     @endguest
 
-                    @auth('client')
+                    @auth('clients')
                     <div class="connect">
                         <div class="dropdown">
                             <a class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">
-                                <span> مرحبا بك </span> &nbsp; &nbsp;{{ auth('client')->user()->name }}
+                                <span> مرحبا بك </span> &nbsp; &nbsp;{{ auth('clients')->user()->name }}
                             </a>
                             <div class="dropdown-menu text-right" aria-labelledby="dropdownMenuButton">
                                 <a class="dropdown-item" href="{{ route('index') }}"> <i
                                         class="fas fa-home ml-2"></i>الرئيسيه</a>
-                                <a class="dropdown-item" href="#"> <i class="fas fa-user-alt ml-2"></i>معلوماتى</a>
+                                <a class="dropdown-item" href="{{ route('front.profile') }}"> <i
+                                        class="fas fa-user-alt ml-2"></i>معلوماتى</a>
                                 <a class="dropdown-item" href="#"> <i class="fas fa-bell ml-2"></i>اعدادات الاشعارات</a>
-                                <a class="dropdown-item" href="#"> <i class="far fa-heart ml-2"></i>المفضلة</a>
+                                <a class="dropdown-item" href="{{ route('front.favourite.posts') }}"> <i
+                                        class="far fa-heart ml-2"></i>المفضلة</a>
                                 <a class="dropdown-item" href="#"> <i class="far fa-comments ml-2"></i>ابلاغ</a>
                                 <a class="dropdown-item" href="{{ route('contact') }}"> <i
                                         class="fas fa-phone ml-2"></i>تواصل
@@ -112,10 +115,10 @@
                             <a class="nav-link" href="#">عن بنك الدم</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="article-details.html">المقالات</a>
+                            <a class="nav-link" href="{{ route('front.posts') }}">المقالات</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="donation.html">طلبات التبرع</a>
+                            <a class="nav-link" href="{{ route('front.requests') }}">طلبات التبرع</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('about') }}">من نحن</a>
@@ -123,8 +126,9 @@
                         <li class="nav-item cont">
                             <a class="nav-link" href="{{ route('contact') }}">اتصل بنا</a>
                         </li>
-                        @auth('client')
-                        <li class="mr-lg-auto py-md-2"><a class="btn bg" href="#">طلب تبرع</a></li>
+                        @auth('clients')
+                        <li class="mr-lg-auto py-md-2"><a class="btn bg" href="{{ route('front.donation.create') }}">طلب
+                                تبرع</a></li>
                         @endauth
                     </ul>
                 </div>
@@ -154,9 +158,9 @@
                     <div class="col-md-3">
                         <h6 class="">الرئيسية</h6>
                         <ul class="list-unstyled">
-                            <li class="py-2"><a href="">عن بنك الدم</a></li>
-                            <li class="py-2"><a href="article-details.html">المقالات</a></li>
-                            <li class="py-2"><a href="donation.html">عن التبرع</a></li>
+                            <li class="py-2"><a href="#">عن بنك الدم</a></li>
+                            <li class="py-2"><a href="{{ route('front.posts') }}">المقالات</a></li>
+                            <li class="py-2"><a href="{{ route('front.requests') }}">عن التبرع</a></li>
                             <li class="py-2"><a href="{{ route('about') }}">من نحن</a></li>
                             <li class="py-2"><a href="{{ route('contact') }}">اتصل بنا</a></li>
                         </ul>
@@ -210,34 +214,8 @@
     <script src="{{ asset('front/js/popper.min.js') }}"></script>
     <script src="{{ asset('front/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('front/js/main.js') }}"></script>
-    <script>
-        var request = new XMLHttpRequest();
 
-        var url = "https://cors-anywhere.herokuapp.com/" + "http://ipda3-tech.com/blood-bank/api/v1/donation-requests?api_token=W4mx3VMIWetLcvEcyF554CfxjZHwdtQldbdlCl2XAaBTDIpNjKO1f7CHuwKl&page=1";
-
-        request.open('GET', url);
-
-        request.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-
-                var dataHolder = JSON.parse(this.responseText);
-                var div = document.getElementById('donations');
-                var temp = "";
-                for (var i = 0; i < dataHolder['data'].data.length; i++) {
-                    temp += '<div class="req-item my-3"><div class="row"><div class="col-md-9 col-sm-12 clearfix"><div class="blood-type m-1 float-right"><h3>' + dataHolder['data'].data[i].blood_type.name + '</h3></div><div class="mx-3 float-right pt-md-2"><p>اسم الحالة : ' + dataHolder['data'].data[i].patient_name + '</p><p>مستشفى : ' + dataHolder['data'].data[i].hospital_name + '</p><p>المدينة : ' + dataHolder['data'].data[i].city.name + '</p></div></div><div class="col-md-3 col-sm-12 text-center p-sm-3 pt-md-5"><a href="Status-detailes.html" class="btn btn-light px-5 py-3">التفاصيل</a></div></div></div>';
-                }
-
-
-                div.innerHTML = temp;
-                // console.log(dataHolder);
-
-
-            }
-        };
-
-        request.send();
-
-    </script>
+    @stack('scripts')
 </body>
 
 </html>

@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-
 use Illuminate\Database\Eloquent\Model;
 
 class City extends Model
@@ -10,22 +9,19 @@ class City extends Model
 
     protected $table = 'cities';
     public $timestamps = true;
-    protected $fillable = array('name');
+    protected $fillable = array('name', 'governorate_id');
 
-    public function government()
+    public function governorate()
     {
-        return $this->belongsTo('App\Models\Government');
+        return $this->belongsTo('App\Models\Governorate');
     }
 
-
-
-    public function scopeGovern($query, $govern = null)
+    public function places()
     {
-        //to make the filtering by governs is optional
-        /*return $query->where(function ($query) use ($govern) {
-            if (!is_null($govern))
-                $query->where('government_id', $govern);
-        });*/
-        return $query->where('government_id', $govern);
+        return $this->hasMany('App\Models\Place');
+    }
+    public function scopeGovern($query, $govern)
+    {
+        return $query->where('governorate_id', $govern);
     }
 }

@@ -64,7 +64,7 @@ class Kernel extends HttpKernel
         'role' => \Zizaco\Entrust\Middleware\EntrustRole::class,
         'permission' => \Zizaco\Entrust\Middleware\EntrustPermission::class,
         'ability' => \Zizaco\Entrust\Middleware\EntrustAbility::class,
-        'auto-check-permission' => AutoCheckPermission::class
+        'auto-check-permission' => Middleware\AutoCheckPermission::class
     ];
 
     /**

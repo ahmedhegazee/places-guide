@@ -20,6 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::group(['prefix' => 'v1', 'namespace' => 'Api'], function () {
     Route::get('governments', 'MainController@getGovernments');
     Route::get('cities', 'MainController@getCities');
+    Route::get('sub-categories', 'MainController@getSubCategories');
     Route::get('blood-types', 'MainController@getBloodTypes');
     Route::get('settings', 'MainController@getSettings');
     Route::post('register', 'AuthController@register');

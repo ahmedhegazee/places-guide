@@ -3,76 +3,33 @@
 namespace App\Models;
 
 use App\Search;
-
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class Client extends Authenticatable
+use Illuminate\Contracts\Auth\CanResetPassword;
+
+class Client extends Authenticatable implements CanResetPassword
 {
     use Notifiable, Search;
     protected $table = 'clients';
-    protected $guard = 'clients';
     public $timestamps = true;
-    protected $fillable = array('name', 'password', 'email', 'phone', 'dob', 'last_donation_date', 'city_id', 'blood_type_id', 'is_banned');
-    protected $hidden = [
-        'password', 'api_token', 'pin_code'
-    ];
-    public function city()
-    {
-        return $this->belongsTo('App\Models\City');
-    }
+    protected $fillable = array('full_name', 'email', 'password', 'is_banned', 'phone');
 
-    public function bloodType()
+    public function reviews()
     {
-        return $this->belongsTo('App\Models\BloodType');
+        return $this->hasMany('App\Models\Review');
     }
-
-    public function favouritePosts()
+    public $preventGetAttr = false;
+    public function getIsBannedAttribute()
     {
-        return $this->morphedByMany('App\Models\Post', 'clientable');
-    }
-
-    public function bloodTypes()
-    {
-        return $this->morphedByMany('App\Models\BloodType', 'clientable');
-    }
-
-    public function governments()
-    {
-        return $this->morphedByMany('App\Models\Government', 'clientable');
-    }
-
-    public function messages()
-    {
-        return $this->hasMany('App\Models\ClientMessage');
-    }
-
-    public function notifications()
-    {
-        return $this->morphedByMany('App\Models\Notification', 'clientable');
-    }
-
-    public function donationRequests()
-    {
-        return $this->hasMany('App\Models\DonationRequest');
-    }
-
-    public function tokens()
-    {
-        return $this->hasMany('App\Models\Token');
-    }
-    // public function getBannedStatus()
-    // {
-    //     return [
-    //         0 => 'Not Banned',
-    //         1 => 'Banned'
-    //     ][$this->is_banned];
-    // }
-    public function getIsBannedAttribute($value)
-    {
-        return [
-            0 => 'Not Banned',
-            1 => 'Banned'
-        ][$value];
+        if ($this->preventGetAttr)
+            return $this->attributes['is_banned'];
+        else {
+            $status = [
+                0 => 'غير محظور',
+                1 => 'محظور',
+            ];
+            return $status[$this->attributes['is_banned']];
+        }
     }
 }

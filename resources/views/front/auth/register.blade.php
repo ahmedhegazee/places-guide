@@ -1,6 +1,6 @@
+@inject('bloodTypes','App\Models\BloodType')
+@inject('governs','App\Models\Government')
 @extends('front.master')
-<input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name"
-    value="{{ old('name') }}" required autocomplete="name" autofocus>
 @section('content')
 <div class="container">
     <!--Breadcrumb-->
@@ -17,42 +17,65 @@
     @include('partials.validation-errors')
     <div class="container">
         <div class="py-4 mb-4">
-            <form action="" class="w-75 m-auto">
+            <form action="{{ url('/register') }}" class="w-75 m-auto" method="POST">
+                @csrf
                 <div><input type="text" name="name" class="form-control my-3 @error('name') is-invalid @enderror"
                         value="{{ old('name') }}" placeholder="الاسم"></div>
-                <div><input type="mail" name="email" class="form-control my-3 @error('email') is-invalid @enderror"
+                <div><input type="email" name="email" class="form-control my-3 @error('email') is-invalid @enderror"
                         value="{{ old('email') }}" placeholder="البريد الاليكترونى"></div>
-                <div class="input-group">
-                    <input type="text" id="datepicker" name="dob"
-                        class="form-control @error('dob') is-invalid @enderror" placeholder="تاريخ الميلاد">
-                    <i class="far fa-calendar-alt"></i>
-                </div>
-                <input type="text" name="booldType" class="form-control my-3" placeholder="فصيلة الدم">
                 <div class="input-group mb-3">
-                    <select name="capital" id="capital" class="form-control custom-select">
+                    <input type="date" id="dob" name="dob" class="form-control @error('dob') is-invalid @enderror"
+                        value="{{ old('dob') }}" placeholder="تاريخ الميلاد">
+                    {{-- <i class="far fa-calendar-alt"></i> --}}
+                </div>
+                <div class="input-group mb-3">
+                    <select class="form-control custom-select @error('blood_type_id') is-invalid @enderror"
+                        name="blood_type_id" id="blood" required>
+                        <option value="" disabled selected>اختيار فصيلة دم</option>
+                        @foreach ($bloodTypes->all() as $bloodType)
+                        <option value={{$bloodType->id}}>{{$bloodType->name}}</option>
+                        @endforeach
+                    </select>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                {{-- <input type="text" name="booldType" class="form-control my-3" placeholder="فصيلة الدم"> --}}
+                <div class="input-group mb-3">
+                    {{-- <select name="capital" id="capital" class="form-control custom-select">
                         <option>المحافظة</option>
                         <option value="القاهرة">القاهرة</option>
                         <option value="القليوبيه">القليوبية</option>
                         <option value="سوهاج">سوهاج</option>
+                    </select> --}}
+                    <select class="form-control  custom-select" onchange="getCities()" value="" required name="govern"
+                        id="govern">
+                        <option selected="" disabled="">اختيار المحافظة</option>
+                        @foreach ($governs->all() as $govern)
+                        <option value={{$govern->id}}>{{$govern->name}}</option>
+                        @endforeach
                     </select>
                     <i class="fas fa-chevron-down"></i>
                 </div>
                 <div class="input-group">
-                    <select name="city" id="city" class="form-control custom-select">
+                    {{-- <select name="city" id="city" class="form-control custom-select">
                         <option selected>المدينة</option>
                         <option value="القاهرة">الدقى</option>
                         <option value="بنها">بنها</option>
                         <option value="سوهاج">سوهاج</option>
+                    </select> --}}
+                    <select class="form-control @error('city_id') is-invalid @enderror custom-select" name="city_id"
+                        id="city" required>
+                        <option selected="" disabled="">اختيار مدينة</option>
                     </select>
                     <i class="fas fa-chevron-down"></i>
                 </div>
                 <input type="text" name="phone" value="{{ old('phone') }}"
                     class="form-control my-3 @error('phone') is-invalid @enderror" placeholder="رقم الهاتف">
                 <div class="input-group mb-3">
-                    <input type="text" id="datepicker" name="last_donation_date"
+                    <input type="date" id="last_donation_date" name="last_donation_date"
                         class="form-control @error('last_donation_date') is-invalid @enderror"
-                        placeholder="اخر تاريخ تبرع" aria-label="Username" aria-describedby="basic-addon1">
-                    <i class="far fa-calendar-alt"></i>
+                        placeholder="اخر تاريخ تبرع" aria-label="Username" value="{{ old('last_donation_date') }}"
+                        aria-describedby="basic-addon1">
+                    {{-- <i class="far fa-calendar-alt"></i> --}}
                 </div>
                 <input type="password" name="password" class="form-control my-3 @error('password') is-invalid @enderror"
                     placeholder="كلمة المرور">
@@ -65,3 +88,34 @@
     </div>
 </section>
 @endsection
+@push('scripts')
+<script>
+    function getCities(){
+              let govern = $('#govern').val();
+            //   console.log(govern);
+
+              $.ajax({
+                url:`${location.origin}/api/v1/cities?govern=${govern}`
+              }).done(function(data){
+                let cities = data.data;
+               $('#city').empty();
+               $(`<option selected="" disabled="">اختيار مدينة</option>`).appendTo('#city');
+                cities.forEach(function(city){
+                  $(`<option value=${city.id}>${city.name}</option>`).appendTo('#city');
+                });
+              })
+            }
+</script>
+@endpush
+@push('styles')
+<style>
+    select.form-control:not([size]):not([multiple]) {
+        height: calc(2.25rem + 5px);
+        padding: 8px;
+    }
+
+    .fa-chevron-down {
+        top: 15px !important;
+    }
+</style>
+@endpush

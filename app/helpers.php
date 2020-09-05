@@ -10,9 +10,10 @@ use Twilio\Rest\Client as RestClient;
         ],
  */
 // to allow the class be defined in the loading of the application
-function jsonResponse($message, $data = null, $responseStatus = 200)
+function jsonResponse($status, $message, $data = null, $responseStatus = 200)
 {
     $response = [
+        'status' => $status,
         'message' => $message,
         'data' => $data
     ];

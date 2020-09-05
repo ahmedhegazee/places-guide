@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-
 use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
@@ -12,8 +11,13 @@ class Category extends Model
     public $timestamps = true;
     protected $fillable = array('name');
 
-    public function posts()
+    public function subCategories()
     {
-        return $this->hasMany('App\Models\Post');
+        return $this->hasMany('App\Models\SubCategory');
+    }
+
+    public function places()
+    {
+        return $this->hasManyThrough('App\Models\Place', 'App\Models\SubCategory');
     }
 }

@@ -63,7 +63,7 @@ Route::group(['prefix' => 'dashboard'], function () {
         Route::resource('place', 'PlaceController')->only(['show', 'index']);
         Route::resource('setting', 'SettingController')->only(['index', 'edit', 'update']);
         Route::resource('message', 'ClientMessageController')->only(['index', 'destroy']);
-        Route::resource('owner-request', 'OwnerRequestController')->except('edit');
+        Route::resource('owner-request', 'OwnerRequestController')->except(['edit', 'show']);
         Route::resource('user', 'UserController')->except(['show']);
         Route::resource('role', 'RoleController')->except(['show']);
         // Route::resource('permission', 'PermissionController')->except(['show']);

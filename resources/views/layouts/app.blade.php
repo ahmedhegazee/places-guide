@@ -77,8 +77,8 @@ dir="rtl"
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('owner.index') }}"
-                                class="nav-link {{ Route::currentRouteName()=='owner.index'?'active':'' }}">
+                            <a href="{{ route('place-owner.index') }}"
+                                class="nav-link {{ Route::currentRouteName()=='place-owner.index'?'active':'' }}">
                                 <i class="nav-icon fas fa-users"></i>
                                 <p>
                                     {{ __('pages.Owners') }}

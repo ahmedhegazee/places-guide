@@ -22,7 +22,7 @@
         <div class="card-header">
             <h3 class="card-title">{{ __('pages.List Of').' '. __('pages.Owners') }}</h3>
             <div class="row justify-content-end">
-                <form class="form-inline ml-3" id="filter" action="{{route('owner.index')}}">
+                <form class="form-inline ml-3" id="filter" action="{{route('place-owner.index')}}">
                     <div class="input-group input-group-sm mr-2">
                         @if (app()->getLocale()=='ar')
                         <div class="input-group-append">
@@ -75,13 +75,13 @@
                         <td>
                             <input type="hidden" class="{{ $record->preventGetAttr=true }}" id="ban-{{ $record->id }}"
                                 value="{{ $record->is_banned?0:1 }}">
-                            <a href="{{route('owner.update',['owner'=>$record->id])}}"
+                            <a href="{{route('place-owner.update',['place-owner'=>$record->id])}}"
                                 id="update-route-{{ $record->id }}"
                                 onclick="event.preventDefault();banUser({{ $record->id }});" class="btn btn-warning"><i
                                     class="fas fa-user-slash"></i></a>
                         </td>
                         <td>
-                            <a href="{{route('owner.destroy',['owner'=>$record->id])}}"
+                            <a href="{{route('place-owner.destroy',['place-owner'=>$record->id])}}"
                                 id="delete-route-{{ $record->id }}"
                                 onclick="event.preventDefault();deleteRecord({{ $record->id }});"
                                 class="btn btn-danger"><i class="fas fa-trash"></i></a>

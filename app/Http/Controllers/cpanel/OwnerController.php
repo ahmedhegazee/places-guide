@@ -4,6 +4,7 @@ namespace App\Http\Controllers\cpanel;
 
 use App\Http\Controllers\Controller;
 use App\Models\PlaceOwner;
+use Hash;
 use Illuminate\Http\Request;
 
 class OwnerController extends Controller
@@ -50,5 +51,25 @@ class OwnerController extends Controller
         } else {
             return jsonResponse(0, 'error');
         }
+    }
+    public function changePassword(Request $request)
+    {
+        $this->validate($request, [
+            'old_password' => 'required|string',
+            'new_password' => 'required|string|confirmed',
+        ]);
+        if (Hash::check($request->old_password, auth()->user()->password)) {
+            auth()->user()->update([
+                'password' => bcrypt($request->new_password)
+            ]);
+            flash(__('messages.add'), 'success');
+            return back();
+        } else {
+            return back()->withErrors(['old_password' => 'The old password is not correct']);
+        }
+    }
+    public function showPasswordForm()
+    {
+        return view('owners.auth.change-password');
     }
 }

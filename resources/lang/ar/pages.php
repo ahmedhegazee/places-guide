@@ -36,7 +36,9 @@ return [
     'Owners' => 'اصحاب الشركات',
     'Owner' => 'صاحب الشركة',
     'Account Type' => 'نوع عضوية الحساب',
-
+    'Photos' => 'صور',
+    'Videos' => 'فيديوهات',
+    'Customer Reviews' => 'تقييمات العملاء',
     //Clients Page
     'Name' => 'الاسم',
     'Dispaly Name' => 'الاسم المعروض',
@@ -56,6 +58,7 @@ return [
     'Select' => 'اختر',
     'Search' => 'بحث',
     'Blood Type' => 'فصيلة الدم',
+    'Work Ads' => 'اعلانات العمال',
 
     //Governorates Pages
     'No' => 'عدد',

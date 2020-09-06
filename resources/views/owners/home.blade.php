@@ -11,19 +11,19 @@ Dashboard
 
 <!-- Main content -->
 <section class="content">
-    @if (app()->getLocale()=='ar')
+    {{-- @if (app()->getLocale()=='ar')
     <div class="row">
         <div class="col-12 col-sm-6 col-md-3">
             <div class="info-box mb-3">
                 <div class="info-box-content">
                     <span class="info-box-text">Clients</span>
                     <span class="info-box-number">{{$client->count()}}</span>
-                </div>
-                <span class="info-box-icon bg-info elevation-1"><i class="fas fa-users"></i></span>
+    </div>
+    <span class="info-box-icon bg-info elevation-1"><i class="fas fa-users"></i></span>
 
-            </div>
-        </div>
-        {{-- <div class="col-12 col-sm-6 col-md-3">
+    </div>
+    </div> --}}
+    {{-- <div class="col-12 col-sm-6 col-md-3">
             <div class="info-box mb-3">
                 <div class="info-box-content">
                     <span class="info-box-text">Donation Requests</span>
@@ -41,7 +41,7 @@ Dashboard
     <span class="info-box-icon bg-dark elevation-1"><i class="fas fa-images"></i></span>
     </div>
     </div> --}}
-    @else
+    {{-- @else
     <div class="row">
         <div class="col-12 col-sm-6 col-md-3">
             <div class="info-box mb-3">
@@ -49,10 +49,10 @@ Dashboard
                 <div class="info-box-content">
                     <span class="info-box-text">Clients</span>
                     <span class="info-box-number">{{$client->count()}}</span>
-                </div>
-            </div>
-        </div>
-        {{-- <div class="col-12 col-sm-6 col-md-3">
+    </div>
+    </div>
+    </div> --}}
+    {{-- <div class="col-12 col-sm-6 col-md-3">
                 <div class="info-box mb-3">
                     <span class="info-box-icon bg-success elevation-1"><i class="fas fa-chart-line"></i></span>
                     <div class="info-box-content">
@@ -70,8 +70,8 @@ Dashboard
     </div>
     </div>
     </div> --}}
-    @endif
-    </div>
+    {{-- @endif
+    </div> --}}
     <!-- Default box -->
 
 

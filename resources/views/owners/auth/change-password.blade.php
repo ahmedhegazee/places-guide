@@ -19,7 +19,7 @@ Change Password
             @include('partials.validation-errors')
             {!!
             Form::model(null,[
-            'route'=>'change-password',
+            'route'=>'owner.change-password',
             'method' => 'post'
             ])
             !!}

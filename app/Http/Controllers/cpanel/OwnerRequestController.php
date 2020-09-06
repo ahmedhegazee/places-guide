@@ -60,7 +60,7 @@ class OwnerRequestController extends Controller
         $this->validate($request, $rules, $messages);
         if ($request->closed_time <= $request->opened_time)
             return back()->with('closed_time', 'الرجاء اختيار معاد اغلاق مناسب');
-        $request->merge(['closed_days' => implode(",", $request->closed_days)]);
+        $request->merge(['closed_days' => implode(",", $request->closed_days), 'password' => bcrypt($request->password)]);
         $owner = PlaceOwner::create($request->all());
         $owner->place()->create($request->all());
         flash(__('messages.add'), 'success');

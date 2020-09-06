@@ -20,7 +20,9 @@ class RedirectIfAuthenticated
         $redirectTo = '';
         if ($guard == 'clients')
             $redirectTo = '/';
-        else
+        else if ($guard == 'owners')
+            $redirectTo = '/owner';
+        else if ($guard == 'web')
             $redirectTo = '/dashboard';
         if (Auth::guard($guard)->check()) {
             return redirect($redirectTo);

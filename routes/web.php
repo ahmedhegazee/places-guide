@@ -59,7 +59,7 @@ Route::group(['prefix' => 'dashboard'], function () {
         Route::resource('worker-category', 'WorkerCategoryController')->except('show');
         Route::resource('/{category}/subcategory', 'SubCategoryController')->except('show');
         Route::resource('client', 'ClientController')->only(['index', 'destroy', 'update']);
-        Route::resource('owner', 'OwnerController')->only(['index', 'destroy', 'update']);
+        Route::resource('place-owner', 'OwnerController')->only(['index', 'destroy', 'update']);
         Route::resource('place', 'PlaceController')->only(['show', 'index']);
         Route::resource('setting', 'SettingController')->only(['index', 'edit', 'update']);
         Route::resource('message', 'ClientMessageController')->only(['index', 'destroy']);
@@ -73,15 +73,20 @@ Route::group(['prefix' => 'dashboard'], function () {
 });
 Route::group(['prefix' => 'owner', 'namespace' => 'Owner'], function () {
     Route::group(['namespace' => 'Auth'], function () {
-        Route::get('/login', 'LoginController@showLoginForm')->name('front.login');
+        Route::get('/login', 'LoginController@showLoginForm')->name('owner.login');
         Route::post('/login', 'LoginController@login');
-        Route::get('/register', 'RegisterController@showRegistrationForm')->name('front.register');
+        Route::get('/register', 'RegisterController@showRegistrationForm')->name('owner.register');
         Route::post('/register', 'RegisterController@register');
-        Route::post('/logout', 'LoginController@logout');
+
         Route::get('/password/reset', 'ForgotPasswordController@showLinkRequestForm')->name('password.request');
         Route::get('/password/reset/{token}', 'ResetPasswordController@showResetForm')->name('password.reset');
         Route::post('/password/email', 'ForgotPasswordController@sendResetLinkEmail')->name('password.email');
         Route::post('/password/reset', 'ResetPasswordController@reset')->name('password.update');
     });
-    Route::get('/','HomeController@index')->name('owner.home')
+    Route::group(['middleware' => 'auth:owners'], function () {
+        Route::get('/', 'HomeController@index')->name('owner.home');
+        Route::get('change-password', 'OwnerController@showPasswordForm')->name('owner.change-password-form');
+        Route::post('change-password', 'OwnerController@changePassword')->name('owner.change-password');
+        Route::post('/logout', 'Auth\LoginController@logout')->name('owner.logout');
+    });
 });

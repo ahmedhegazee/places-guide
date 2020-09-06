@@ -68,79 +68,44 @@ dir="rtl"
                         <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
                         <li class="nav-item">
-                            <a href="{{ route('client.index') }}"
-                                class="nav-link {{ Route::currentRouteName()=='client.index'?'active':'' }}">
+                            <a href="#" class="nav-link {{ Route::currentRouteName()=='client.index'?'active':'' }}">
+                                <i class="nav-icon fas fa-images"></i>
+                                <p>
+                                    {{ __('pages.Photos') }}
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link {{ Route::currentRouteName()=='client.index'?'active':'' }}">
+                                <i class="nav-icon fas fa-photo-video"></i>
+                                <p>
+                                    {{ __('pages.Videos') }}
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link {{ Route::currentRouteName()=='client.index'?'active':'' }}">
+                                <i class="nav-icon fas fa-photo-video"></i>
+                                <p>
+                                    {{ __('pages.Videos') }}
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link {{ Route::currentRouteName()=='client.index'?'active':'' }}">
                                 <i class="nav-icon fas fa-users"></i>
                                 <p>
-                                    {{ __('pages.Clients') }}
+                                    {{ __('pages.Customer Reviews') }}
                                 </p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('owner.index') }}"
-                                class="nav-link {{ Route::currentRouteName()=='owner.index'?'active':'' }}">
-                                <i class="nav-icon fas fa-users"></i>
+                            <a href="#" class="nav-link {{ Route::currentRouteName()=='client.index'?'active':'' }}">
+                                <i class="nav-icon fas fa-briefcase"></i>
                                 <p>
-                                    {{ __('pages.Owners') }}
+                                    {{ __('pages.Work Ads') }}
                                 </p>
                             </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('owner-request.index') }}"
-                                class="nav-link {{ Route::currentRouteName()=='owner-request.index'?'active':'' }}">
-                                <i class="nav-icon fas fa-user-plus"></i>
-                                <p>
-                                    {{ __('pages.Owner Requests') }}
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('place.index') }}"
-                                class="nav-link {{ Route::currentRouteName()=='place.index'?'active':'' }}">
-                                <i class="nav-icon fas fa-building"></i>
-                                <p>
-                                    {{ __('pages.Companies') }}
-                                </p>
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a href="{{ route('government.index') }}"
-                                class="nav-link {{ Route::currentRouteName()=='government.index'?'active':'' }}">
-                                <i class="nav-icon fas fa-university"></i>
-                                <p>
-                                    {{ __('pages.Governments') }}
-
-                                </p>
-                            </a>
-                        </li>
-
-                        <li
-                            class="nav-item currentRouteName-treeview {{ Route::currentRouteName()=='category.index'||Route::currentRouteName()=='category.index'?'menu-open':'' }}">
-                            <a href="#" class="nav-link ">
-                                <i class="nav-icon fas fa-bookmark"></i>
-                                <p>
-                                    {{ __('pages.Categories') }}
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview"
-                                style="display: {{ Route::currentRouteName()=='category.index'||Route::currentRouteName()=='worker-category.index'?'block':'none' }};">
-                                <li class="nav-item">
-                                    <a href="{{ route('category.index') }}"
-                                        class="nav-link {{ Route::currentRouteName()=='category.index'?'active':'' }}">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>{{ __('pages.Companies') }}</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('worker-category.index') }}"
-                                        class="nav-link {{ Route::currentRouteName()=='worker-category.index'?'active':'' }}">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>{{ __('pages.Workers Jobs') }}</p>
-                                    </a>
-                                </li>
-                            </ul>
                         </li>
 
                         {{-- <li class="nav-item">
@@ -153,26 +118,7 @@ dir="rtl"
                         </p>
                         </a>
                         </li> --}}
-                        <li class="nav-item">
-                            <a href="{{ route('user.index') }}"
-                                class="nav-link {{ Route::currentRouteName()=='user.index'?'active':'' }}">
-                                <i class="nav-icon fas fa-users"></i>
-                                <p>
-                                    {{ __('pages.Users') }}
 
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('role.index') }}"
-                                class="nav-link {{ Route::currentRouteName()=='role.index'?'active':'' }}">
-                                <i class="nav-icon fas fa-user-tag"></i>
-                                <p>
-                                    {{ __('pages.Roles') }}
-
-                                </p>
-                            </a>
-                        </li>
 
                         {{-- <li class="nav-item">
                             <a href="{{ route('setting.index') }}"
@@ -185,8 +131,8 @@ dir="rtl"
                         </a>
                         </li> --}}
                         <li class="nav-item">
-                            <a href="{{ route('change-password-form') }}"
-                                class="nav-link {{ Route::currentRouteName()=='change-password-form'?'active':'' }}">
+                            <a href="{{ route('owner.change-password-form') }}"
+                                class="nav-link {{ Route::currentRouteName()=='owner.change-password-form'?'active':'' }}">
                                 <i class="nav-icon fas fa-key"></i>
                                 <p>
 
@@ -196,7 +142,7 @@ dir="rtl"
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('logout') }}" onclick="event.preventDefault();
+                            <a href="{{ route('owner.logout') }}" onclick="event.preventDefault();
                                     document.getElementById('logout-form').submit();" class="nav-link">
                                 <i class="nav-icon fas fa-sign-out-alt"></i>
                                 <p>
@@ -204,7 +150,8 @@ dir="rtl"
 
                                 </p>
                             </a>
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            <form id="logout-form" action="{{ route('owner.logout') }}" method="POST"
+                                style="display: none;">
                                 @csrf
                             </form>
                         </li>

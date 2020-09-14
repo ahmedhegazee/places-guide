@@ -68,6 +68,7 @@ class MainController extends Controller
         $governs = $this->getGovernorates();
         $categories = $this->getCategories();
         $model = auth('owners')->user()->place;
+
         return view('owners.auth.change-info-company', compact('model', 'governs', 'days', 'categories'));
     }
     public function changeCompanyInfo(Request $request)

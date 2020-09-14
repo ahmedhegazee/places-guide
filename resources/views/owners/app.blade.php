@@ -67,8 +67,8 @@ dir="rtl"
                         data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-                        <input type="hidden" data="{{ $place->owner->preventAccountTypeAttribute = true }}">
-                        @if ($place->owner->account_type)
+                        <input type="hidden" data="{{ auth('owners')->user()->preventAccountTypeAttribute = true }}">
+                        @if (auth('owners')->user()->account_type)
                         <li class="nav-item">
                             <a href="{{ route('photo.index') }}"
                                 class="nav-link {{ Route::currentRouteName()=='photo.index'?'active':'' }}">

@@ -37,10 +37,9 @@
             </div>
             <button id="submitBtn" class="btn btn-primary" id="submit" type="submit">{{ __('pages.Submit') }}</button>
 
+            {!!Form::close()!!}
         </div>
-        {!!Form::close()!!}
-    </div>
-    <!-- /.card-body -->
+        <!-- /.card-body -->
 
     </div>
     <!-- /.card -->

@@ -14,6 +14,9 @@
 use Illuminate\Http\Request;
 use App\ImageUtility;
 
+Route::get('/b', function () {
+    dd(route('owner.logout'));
+});
 // Route::view('/test', 'welcome');
 // Route::post('/test', function (Request $request) {
 //     // $image = $request->file('image');

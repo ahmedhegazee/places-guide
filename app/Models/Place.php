@@ -26,10 +26,13 @@ class Place extends Model
     {
         return $this->belongsTo('App\Models\SubCategory');
     }
-
+    public function discounts()
+    {
+        return $this->hasMany('App\Models\Discount');
+    }
     public function photos()
     {
-        return $this->hasMany('App\Models\Place');
+        return $this->hasMany('App\Models\PlacePhoto');
     }
 
     public function videos()

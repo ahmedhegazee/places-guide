@@ -27,7 +27,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/owner';
+    protected $redirectTo = '/company-panel';
 
     /**
      * Create a new controller instance.
@@ -36,9 +36,9 @@ class LoginController extends Controller
      */
     public function __construct()
     {
+        $this->middleware('guest:owners')->except('logout');
         $this->middleware('guest')->except('logout');
         $this->middleware('guest:clients')->except('logout');
-        $this->middleware('guest:owners')->except('logout');
         $this->middleware('guest:workers')->except('logout');
     }
     protected function guard()
@@ -53,6 +53,7 @@ class LoginController extends Controller
     // }
     public function showLoginForm()
     {
+
         return view('owners.auth.login');
     }
     // public function username()

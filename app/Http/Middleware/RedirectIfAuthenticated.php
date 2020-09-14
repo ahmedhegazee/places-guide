@@ -17,11 +17,13 @@ class RedirectIfAuthenticated
      */
     public function handle($request, Closure $next, $guard = null)
     {
+        // dd($guard);
         $redirectTo = '';
         if ($guard == 'clients')
             $redirectTo = '/';
-        else if ($guard == 'owners')
-            $redirectTo = '/owner';
+        else
+        if ($guard == 'owners')
+            $redirectTo = '/company-panel';
         else if ($guard == 'web')
             $redirectTo = '/dashboard';
         if (Auth::guard($guard)->check()) {

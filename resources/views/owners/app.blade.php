@@ -57,7 +57,7 @@ dir="rtl"
                             alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="{{ route('owner.home') }}" class="d-block">{{ auth('owners')->user()->name }}</a>
+                        <a href="{{ route('owner.home') }}" class="d-block">{{ auth('owners')->user()->full_name }}</a>
                     </div>
                 </div>
 
@@ -67,8 +67,11 @@ dir="rtl"
                         data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
+                        <input type="hidden" data="{{ $place->owner->preventAccountTypeAttribute = true }}">
+                        @if ($place->owner->account_type)
                         <li class="nav-item">
-                            <a href="#" class="nav-link {{ Route::currentRouteName()=='client.index'?'active':'' }}">
+                            <a href="{{ route('photo.index') }}"
+                                class="nav-link {{ Route::currentRouteName()=='photo.index'?'active':'' }}">
                                 <i class="nav-icon fas fa-images"></i>
                                 <p>
                                     {{ __('pages.Photos') }}
@@ -76,38 +79,41 @@ dir="rtl"
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link {{ Route::currentRouteName()=='client.index'?'active':'' }}">
+                            <a href="{{ route('video.index') }}"
+                                class="nav-link {{ Route::currentRouteName()=='video.index'?'active':'' }}">
                                 <i class="nav-icon fas fa-photo-video"></i>
                                 <p>
                                     {{ __('pages.Videos') }}
                                 </p>
                             </a>
                         </li>
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a href="#" class="nav-link {{ Route::currentRouteName()=='client.index'?'active':'' }}">
-                                <i class="nav-icon fas fa-photo-video"></i>
-                                <p>
-                                    {{ __('pages.Videos') }}
-                                </p>
-                            </a>
-                        </li>
+                        <i class="nav-icon fas fa-users"></i>
+                        <p>
+                            {{ __('pages.Customer Reviews') }}
+                        </p>
+                        </a>
+                        </li> --}}
                         <li class="nav-item">
-                            <a href="#" class="nav-link {{ Route::currentRouteName()=='client.index'?'active':'' }}">
-                                <i class="nav-icon fas fa-users"></i>
-                                <p>
-                                    {{ __('pages.Customer Reviews') }}
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link {{ Route::currentRouteName()=='client.index'?'active':'' }}">
+                            <a href="{{ route('work-ad.index') }}"
+                                class="nav-link {{ Route::currentRouteName()=='work-ad.index'?'active':'' }}">
                                 <i class="nav-icon fas fa-briefcase"></i>
                                 <p>
                                     {{ __('pages.Work Ads') }}
                                 </p>
                             </a>
                         </li>
-
+                        <li class="nav-item">
+                            <a href="{{ route('discount.index') }}"
+                                class="nav-link {{ Route::currentRouteName()=='discount.index'?'active':'' }}">
+                                <i class="nav-icon fas fa-percent"></i>
+                                <p>
+                                    {{ __('pages.Discounts') }}
+                                </p>
+                            </a>
+                        </li>
+                        @endif
                         {{-- <li class="nav-item">
                             <a href="{{ route('message.index') }}"
                         class="nav-link {{ Route::currentRouteName()=='message.index'?'active':'' }}">
@@ -130,6 +136,26 @@ dir="rtl"
                         </p>
                         </a>
                         </li> --}}
+                        <li class="nav-item">
+                            <a href="{{ route('owner.change-info-form') }}"
+                                class="nav-link {{ Route::currentRouteName()=='owner.change-info-form'?'active':'' }}">
+                                <i class="nav-icon fas fa-edit"></i>
+                                <p>
+
+                                    {{ __('pages.Edit').' '.__('pages.Account Data') }}
+
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('owner.change-info-company-form') }}"
+                                class="nav-link {{ Route::currentRouteName()=='owner.change-info-company-form'?'active':'' }}">
+                                <i class="nav-icon fas fa-edit"></i>
+                                <p>
+                                    {{ __('pages.Edit').' '.__('pages.Company Data') }}
+                                </p>
+                            </a>
+                        </li>
                         <li class="nav-item">
                             <a href="{{ route('owner.change-password-form') }}"
                                 class="nav-link {{ Route::currentRouteName()=='owner.change-password-form'?'active':'' }}">

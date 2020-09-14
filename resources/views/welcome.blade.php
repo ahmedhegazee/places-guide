@@ -86,7 +86,17 @@
             <div class="title m-b-md">
                 Blood Bank
             </div>
+            {!!
+            Form::model(null,[
+            'url'=>'/test',
+            'method'=>'post',
+            'files'=>true,
+            ])
+            !!}
+            <input type="file" name="image" accept="image/*" class="form-control">
+            <button id="submitBtn" class="btn btn-primary" id="submit" type="submit">{{ __('pages.Submit') }}</button>
 
+            {!!Form::close()!!}
         </div>
     </div>
 </body>

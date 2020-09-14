@@ -12,10 +12,10 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('auth:owners');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth:owners');
+    // }
 
     /**
      * Show the application dashboard.
@@ -24,6 +24,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('owners.home');
+        $place = auth('owners')->user()->place;
+        $place->preventClosedDaysAttribute = false;
+        $place->owner->preventAccountTypeAttribute = false;
+        return view('owners.home', compact('place'));
     }
 }

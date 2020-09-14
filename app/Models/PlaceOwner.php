@@ -40,8 +40,8 @@ class PlaceOwner extends Authenticatable implements CanResetPassword
     public function getAccountTypeAttribute()
     {
         if ($this->preventAccountTypeAttribute)
-            // return $this->attributes['account_type'];
-            return null;
+            return $this->attributes['account_type'];
+        // return null;
         else {
             $type = [
                 0 => 'عضوية فضية',

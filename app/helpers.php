@@ -32,3 +32,21 @@ function getHerokuDatabaseData($url)
     $DATABASE_URL['db_name'] = $dbName;
     return $DATABASE_URL;
 }
+function storeFile($file, $directory)
+{
+    $path = env('APP_URL') . '/storage/' . $file->store($directory, 'public');
+    return $path;
+}
+function storeFileOnGoogleCloud($file, $directory)
+{
+    return env('GOOGLE_CLOUD_PUBLIC_URL') . $file->store($directory);
+}
+function deleteFile($file)
+{
+    $fileDirectory = public_path($file);
+    if (file_exists($fileDirectory))
+        unlink($fileDirectory);
+}
+function deleteFileOnFireBase($file)
+{
+}

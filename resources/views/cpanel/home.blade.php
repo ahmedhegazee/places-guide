@@ -3,7 +3,7 @@
 {{-- @inject('request', 'App\Models\DonationRequest') --}}
 {{-- @inject('post', 'App\Models\Post') --}}
 @section('page_title')
-Dashboard
+{{ __('pages.Dashboard') }}
 @endsection
 @section('content')
 <!-- Content Header (Page header) -->

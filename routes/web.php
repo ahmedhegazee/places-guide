@@ -105,10 +105,13 @@ Route::group(['prefix' => 'company-panel', 'namespace' => 'Owner'], function () 
         Route::get('change-info', 'MainController@showChangeInfoForm')->name('owner.change-info-form');
         Route::post('change-info-company', 'MainController@changeCompanyInfo')->name('owner.change-info-company');
         Route::get('change-info-company', 'MainController@showChangeCompanyInfoForm')->name('owner.change-info-company-form');
-        Route::resource('photo', 'PlacePhotoController');
-        Route::resource('video', 'PlaceVideoController');
-        Route::resource('work-ad', 'WorkAdController');
-        Route::resource('discount', 'DiscountController');
+        Route::group(['middleware' => ['is-premimum']], function () {
+            Route::resource('photo', 'PlacePhotoController');
+            Route::resource('video', 'PlaceVideoController');
+            Route::resource('work-ad', 'WorkAdController');
+            Route::resource('discount', 'DiscountController');
+        });
+
         Route::post('/logout', 'Auth\LoginController@logout')->name('owner.logout');
     });
 });

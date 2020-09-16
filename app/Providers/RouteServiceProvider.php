@@ -38,7 +38,9 @@ class RouteServiceProvider extends ServiceProvider
         $this->mapApiRoutes();
 
         $this->mapWebRoutes();
-
+        $this->mapDashboardRoutes();
+        $this->mapOwnerRoutes();
+        $this->mapFrontRoutes();
         //
     }
 
@@ -52,8 +54,8 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapWebRoutes()
     {
         Route::middleware('web')
-             ->namespace($this->namespace)
-             ->group(base_path('routes/web.php'));
+            ->namespace($this->namespace)
+            ->group(base_path('routes/web.php'));
     }
 
     /**
@@ -66,8 +68,28 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapApiRoutes()
     {
         Route::prefix('api')
-             ->middleware('api')
-             ->namespace($this->namespace)
-             ->group(base_path('routes/api.php'));
+            ->middleware('api')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/api.php'));
+    }
+    protected function mapDashboardRoutes()
+    {
+        Route::prefix('dashboard')
+            ->middleware('web')
+            ->namespace($this->namespace . '\cpanel')
+            ->group(base_path('routes/dashboard.php'));
+    }
+    protected function mapOwnerRoutes()
+    {
+        Route::prefix('company-panel')
+            ->middleware('web')
+            ->namespace($this->namespace . '\Owner')
+            ->group(base_path('routes/owner.php'));
+    }
+    protected function mapFrontRoutes()
+    {
+        Route::middleware('web')
+            ->namespace($this->namespace . '\Front')
+            ->group(base_path('routes/front.php'));
     }
 }

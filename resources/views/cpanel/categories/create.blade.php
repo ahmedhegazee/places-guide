@@ -20,10 +20,12 @@
             @include('partials.validation-errors')
             {!!
             Form::model($model,[
-            'route'=>'category.store'
+            'route'=>'category.store',
+            'files'=>true,
             ])
             !!}
             @include('layouts.form')
+            @include('layouts.image-upload')
             {!!Form::close()!!}
         </div>
         <!-- /.card-body -->

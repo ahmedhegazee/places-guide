@@ -87,14 +87,15 @@
 
     </div>
     <div class="form-group">
-        <label for="category">{{ __('pages.Category') }}</label>
-        {!!Form::select('category',$categories,null,array('class'=>'form-control
+        <label for="category_id">{{ __('pages.Category') }}</label>
+        {!!Form::select('category_id',$categories,null,array('class'=>'form-control
         multiple-select','id'=>'category','onchange'=>'getSubCategories()','placeholder'=>'اختر التصنيف'))!!}
     </div>
     <div class="form-group">
         <label for="sub_category_id">{{ __('pages.SubCategory') }}</label>
         <select class="form-control multiple-select" id="sub_category" name="sub_category_id">
-            <option selected>اختر التصنيف الفرعي</option>
+            <option selected value="">اختر التصنيف الفرعي</option>
+
         </select>
 
     </div>
@@ -202,24 +203,27 @@
                 });
               })
             }
-            function getSubCategories(){
+    function getSubCategories(){
               let category = $('#category').val();
             //   console.log(govern);
 
               $.ajax({
                 url:`${location.origin}/api/v1/sub-categories?category=${category}`
               }).done(function(data){
-                let cities = data.data;
+                let categories = data.data;
 
                let defaultElement= $('#sub_category').children().first();
                 $('#sub_category').empty();
                 $(defaultElement).appendTo('#sub_category');
             //    $(`<option selected="" disabled=""></option>`).appendTo('#city');
-                cities.forEach(function(city){
-                  $(`<option value=${city.id}>${city.name}</option>`).appendTo('#sub_category');
+                if(categories.length==0)
+                $('<option value="">لا يوجد تصنيف</option>').appendTo('#sub_category');
+                else
+                categories.forEach(function(category){
+                  $(`<option value=${category.id}>${category.name}</option>`).appendTo('#sub_category');
                 });
               })
-            }
+    }
 
 </script>
 @endsection

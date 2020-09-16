@@ -50,6 +50,7 @@ return [
     'Company Data' => 'بيانات الشركة',
     'Company Photos' => 'صور الشركة',
     'Upload File' => 'رفع الملف',
+    'Upload' => 'رفع',
     'Website' => 'الموقع الالكتروني',
     'Youtube' => 'قناة اليوتيوب',
     'Facebook' => 'صفحة الفيسبوك',
@@ -57,6 +58,8 @@ return [
     'Instagram' => 'صفحة الانستجرام',
     'Comapny Logo' => 'شعار الشركة',
     'Company Location on Map' => 'مكان الشركة على الخريطة',
+    'From Date' => 'من تاريخ ',
+    'To Date' => 'الى تاريخ ',
 
     //Clients Page
     'Name' => 'الاسم',
@@ -80,10 +83,14 @@ return [
     'Work Ads' => 'اعلانات العمال',
     'Ad' => 'اعلان',
     'Dashboard' => 'لوحة التحكم',
-    'Discounts' => 'خصومات',
-    'Discount' => 'خصم',
+    'Discounts' => 'العروض',
+    'Discounts1' => 'عروض',
+    'Discount' => 'عرض',
     'Start Date Discount' => 'تاريخ بداية الخصم',
     'End Date Discount' => ' تاريخ نهاية الخصم',
+    'Filter' => 'تصفية',
+    'All places' => 'كل الاماكن',
+    'Discount Value' => 'عرض بقيمة ',
 
     //Governorates Pages
     'No' => 'عدد',

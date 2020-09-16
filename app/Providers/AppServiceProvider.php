@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\Category;
 use App\Models\Page;
+use App\Models\Place;
 use App\Models\Settings;
 use Illuminate\Support\ServiceProvider;
 
@@ -33,6 +35,10 @@ class AppServiceProvider extends ServiceProvider
 
         $settings = Settings::all();
         $pages = Page::all();
-        view()->share(compact('settings', 'pages'));
+        $categories = Category::all();
+        $countPlaces = Place::with(['owner' => function ($q) {
+            $q->accepted(1);
+        }])->count();
+        view()->share(compact('settings', 'pages', 'categories', 'countPlaces'));
     }
 }

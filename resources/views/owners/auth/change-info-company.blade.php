@@ -148,6 +148,7 @@
                     lat: lat,
                     lng: long
                 }
+                placeMarker(center);
             }
 
             map = new google.maps.Map(document.getElementById("map"), {
@@ -163,7 +164,7 @@
         function placeMarker(location) {
             if (marker != null)
                 marker.setMap(null);
-            console.log(location.lat());
+            // console.log(location.lat());
             marker = new google.maps.Marker({
                 position: location,
                 map: map

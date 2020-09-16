@@ -20,7 +20,8 @@ class CreatePlacesTable extends Migration
             $table->integer('place_owner_id')->unsigned();
             $table->string('phone');
             $table->string('tax_record');
-            $table->integer('sub_category_id')->unsigned();
+            $table->integer('category_id')->unsigned();
+            $table->integer('sub_category_id')->unsigned()->nullable();
             $table->tinyInteger('is_best')->default('0');
             $table->time('opened_time');
             $table->time('closed_time');

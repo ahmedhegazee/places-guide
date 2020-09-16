@@ -62,5 +62,9 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('password')
         ]);
         $user->roles()->attach(1);
+        $this->call(PlaceOwnersTableSeeder::class);
+        $this->call(OwnerRequestTableSeeder::class);
+        $this->call(DiscountsTableSeeder::class);
+        $this->call(WorkAdsTableSeeer::class);
     }
 }

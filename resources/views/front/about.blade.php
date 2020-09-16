@@ -11,7 +11,8 @@
     </nav>
     <!--End Breadcrumb-->
     <section class="about-us my-4 py-5">
-        <div class="my-5 text-center"><img src="{{ asset('front/imgs/logo.png') }}" alt="logo"></div>
+        <div class="my-5 text-center"><img src="{{ asset('images/logo.png') }}"
+                style="border-radius: 50%;width: 50px;height: 50px;" alt="logo"></div>
         <div class="about-US-content px-4 mb-5">
             <p class="my-md-4">
                 {{ $pages->first()->content }}

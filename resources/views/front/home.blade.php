@@ -1,21 +1,56 @@
+@inject('category', 'App\Models\Category')
 @extends('front.master')
 @section('content')
-<!--About section-->
-<section class="about py-5">
+<section class="categories py-2">
+    <h2 class="text-center mb-4">تصنيفات افضل الاماكن</h2>
     <div class="container">
-        <div class="about-cont py-3">
-            <p class="pl-4"><span> بنك الدم</span> هذا النص هو مثال لنص ممكن أن يستبدل فى نفس المساحه, لقد تم توليد
-                هذا النص من مولد النص العرب حيث يمكنك ان تولد هذا النص أو
-                العديد من النصوص الأخرى وإضافة الى زيادة عدد الحروف التى يولدها التطبيق يطلع على صورة حقيقة لتطبيق
-                الموقع
-            </p>
+        <div class="row">
+            @foreach ($category->all() as $record)
+            <div class="col-md-4 col-sm-12">
+                <div class="card mb-4 shadow-sm">
+                    <a href="{{ route('category',['category'=>$record->id]) }}" class="category">
+                        <div class="position-relative category-content">
+                            <img src="{{$record->image }}" width="100%" alt="">
+                            <span>{{ $record->name }}</span>
+                            <span class="count">{{ $record->places->count() }}</span>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="card-text">{{ $record->name }}</h3>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            @endforeach
         </div>
     </div>
-    <!--End container-->
 </section>
+<section class="new-places bg-white py-2 ">
+    <h2 class="text-center mb-4 mt-3">احدث الاماكن المضافة</h2>
+    <div class="container">
+        <div class="row">
+            @foreach ($places as $record)
+            <div class="col-md-4 col-sm-12">
+                <div class="card mb-4 shadow-sm">
+                    <a href="#" class="category">
+                        <div class="position-relative category-content">
+                            <img src="{{ $record->main_image }}" width="100%" height="200px" alt="">
+                            <span>{{ $record->name }}</span>
+
+                        </div>
+                        <div class="card-body">
+                            <h3 class="card-text">{{ $record->name }}</h3>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            @endforeach
+        </div>
+    </div>
+</section>
+<!--About section-->
 <!--End About-->
 <!--Articles section-->
-<section class="articles py-5">
+{{-- <section class="articles py-5">
     <div class="title">
         <div class="container">
             <h2><span class="py-1">المقالات</span> </h2>
@@ -37,30 +72,29 @@
                 <div class="slick-cont">
                     <div class="card">
                         <img src="{{ asset($post->photo) }}" class="card-img-top" alt="slick-img">
-                        @auth('clients')
-                        <div class="heart-icon" data-post="{{ $post->id }}"><i
-                                class="{{ auth('clients')->user()->favouritePosts->contains($post->id)?'fas':'far' }} fa-heart"></i>
-                        </div>
-                        @endauth
-                        <div class="card-body">
-                            <h5 class="card-title">{{ $post->title }}</h5>
-                            <p style="overflow: hidden;height:110px;" class="mb-4">{{ $post->content }}
-                            </p>
-                            <div class="text-center"><a href="{{ route('front.post',['post'=>$post->id]) }}"
-                                    class="btn bg px-5">التفاصيل</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                @endforeach
-            </div>
-        </div>
+@auth('clients')
+<div class="heart-icon" data-post="{{ $post->id }}"><i
+        class="{{ auth('clients')->user()->favouritePosts->contains($post->id)?'fas':'far' }} fa-heart"></i>
+</div>
+@endauth
+<div class="card-body">
+    <h5 class="card-title">{{ $post->title }}</h5>
+    <p style="overflow: hidden;height:110px;" class="mb-4">{{ $post->content }}
+    </p>
+    <div class="text-center"><a href="{{ route('front.post',['post'=>$post->id]) }}" class="btn bg px-5">التفاصيل</a>
     </div>
-    <!--End container-->
-</section>
+</div>
+</div>
+</div>
+@endforeach
+</div>
+</div>
+</div>
+<!--End container-->
+</section> --}}
 <!--End Articles-->
 <!--Donation-->
-<section class="donation">
+{{-- <section class="donation">
     <h2 class="text-center"><span class="py-1">طلبات التبرع</span> </h2>
     <hr />
     <div class="donation-request py-5">
@@ -89,10 +123,10 @@
         <!--End container-->
     </div>
     <!--End Donation-request-->
-</section>
+</section> --}}
 <!--End Donation-->
 <!--Contact-us-->
-<section class="contact-us py-5 mt-4">
+<section class="contact-us py-5 ">
     <div class="container">
         <div class="row">
             <div class="contact-info col-md-6 col-sm-12 text-center">
@@ -115,7 +149,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6">
-                <h4 class="mt-5 mb-4">تطبيق بنك الدم</h4>
+                <h4 class="mt-5 mb-4">تطبيق {{ env('APP_NAME') }}</h4>
                 <p class="appText">هذا النص هو مثال لنص ممكن أن يستبدل فى نفس المساحه, لقد تم توليد هذا النص من مولد
                     النص
                     العرب</p>
@@ -140,33 +174,33 @@
 <!--main-header-->
 <div class="main-header">
     <div class="slide">
-        <img src="{{ asset('front/imgs/header.jpg') }}" class="d-block w-100" alt="...">
+        <img src="{{ asset('images/background.jpg') }}" class="d-fixed w-100" alt="...">
         <div class="slick-caption">
-            <h4 class="my-md-3">بنك الدم نمضى قدما لصحة أفضل</h4>
+            <h4 class="my-md-3">دليلك لافضل الاماكن</h4>
             <p class="pl-md-5">هذا النص هو مثال لنص ممكن أن يستبدل فى نفس المساحه, لقد تم توليد هذا النص من مولد
                 النص
                 العرب</p>
-            <button class="btn bg px-5">المزيد</button>
+            {{-- <button class="btn bg px-5">المزيد</button> --}}
         </div>
     </div>
     <div class="slide">
-        <img src="{{ asset('front/imgs/header.jpg') }}" class="d-block w-100" alt="...">
+        <img src="{{ asset('images/background.jpg') }}" class="d-fixed w-100" alt="...">
         <div class="slick-caption">
-            <h4 class="my-md-3">بنك الدم نمضى قدما لصحة أفضل</h4>
+            <h4 class="my-md-3">دليلك لافضل الاماكن</h4>
             <p class="pl-md-5">هذا النص هو مثال لنص ممكن أن يستبدل فى نفس المساحه, لقد تم توليد هذا النص من مولد
                 النص
                 العرب</p>
-            <button class="btn bg px-5">المزيد</button>
+            {{-- <button class="btn bg px-5">المزيد</button> --}}
         </div>
     </div>
     <div class="slide">
-        <img src="{{ asset('front/imgs/header.jpg') }}" class="d-block w-100" alt="...">
+        <img src="{{ asset('images/background.jpg') }}" class="d-fixed w-100" alt="...">
         <div class="slick-caption">
-            <h4 class="my-md-3">بنك الدم نمضى قدما لصحة أفضل</h4>
+            <h4 class="my-md-3">دليلك لافضل الاماكن</h4>
             <p class="pl-md-5">هذا النص هو مثال لنص ممكن أن يستبدل فى نفس المساحه, لقد تم توليد هذا النص من مولد
                 النص
                 العرب</p>
-            <button class="btn bg px-5">المزيد</button>
+            {{-- <button class="btn bg px-5">المزيد</button> --}}
         </div>
     </div>
 </div>
@@ -196,32 +230,5 @@
             });
         });
 </script>
-<script>
-    var request = new XMLHttpRequest();
 
-        var url = "https://cors-anywhere.herokuapp.com/" + "http://ipda3-tech.com/blood-bank/api/v1/donation-requests?api_token=W4mx3VMIWetLcvEcyF554CfxjZHwdtQldbdlCl2XAaBTDIpNjKO1f7CHuwKl&page=1";
-
-        request.open('GET', url);
-
-        request.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-
-                var dataHolder = JSON.parse(this.responseText);
-                var div = document.getElementById('donations');
-                var temp = "";
-                for (var i = 0; i < dataHolder['data'].data.length; i++) {
-                    temp += '<div class="req-item my-3"><div class="row"><div class="col-md-9 col-sm-12 clearfix"><div class="blood-type m-1 float-right"><h3>' + dataHolder['data'].data[i].blood_type.name + '</h3></div><div class="mx-3 float-right pt-md-2"><p>اسم الحالة : ' + dataHolder['data'].data[i].patient_name + '</p><p>مستشفى : ' + dataHolder['data'].data[i].hospital_name + '</p><p>المدينة : ' + dataHolder['data'].data[i].city.name + '</p></div></div><div class="col-md-3 col-sm-12 text-center p-sm-3 pt-md-5"><a href="Status-detailes.html" class="btn btn-light px-5 py-3">التفاصيل</a></div></div></div>';
-                }
-
-
-                div.innerHTML = temp;
-                // console.log(dataHolder);
-
-
-            }
-        };
-
-        request.send();
-
-</script>
 @endpush

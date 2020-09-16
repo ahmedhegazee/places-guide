@@ -9,7 +9,7 @@ class Category extends Model
 
     protected $table = 'categories';
     public $timestamps = true;
-    protected $fillable = array('name');
+    protected $fillable = array('name', 'image');
 
     public function subCategories()
     {
@@ -18,6 +18,7 @@ class Category extends Model
 
     public function places()
     {
-        return $this->hasManyThrough('App\Models\Place', 'App\Models\SubCategory');
+        // return $this->hasManyThrough('App\Models\Place', 'App\Models\SubCategory');
+        return $this->hasMany('App\Models\Place');
     }
 }

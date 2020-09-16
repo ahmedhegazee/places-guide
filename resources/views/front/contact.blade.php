@@ -17,7 +17,8 @@
             <div class="col-md-6 my-1">
                 <div class="contact-details">
                     <h5 class="py-3 text-center">اتصل بنا</h5>
-                    <div class="text-center py-3"><img src="{{ asset('front/imgs/logo.png') }}" alt="img-logo"></div>
+                    <div class="text-center py-3"><img src="{{ asset('images/logo.png') }}"
+                            style="border-radius: 50%;width: 50px;height: 50px;" alt="img-logo"></div>
                     <div class="contact-mail p-3">
                         <p class="py-1">الجوال <span> : {{ $settings->get(1)->value }}</span></p>
                         <p class="py-1">فاكس <span> : {{ $settings->get(8)->value }}</span></p>

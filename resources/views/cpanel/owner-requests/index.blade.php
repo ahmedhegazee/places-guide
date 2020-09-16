@@ -102,7 +102,7 @@
         <div class="card-header">
             <h3 class="card-title">{{ __('pages.List Of').' '.__('pages.Owner Requests') }}</h3>
             {{-- <div class="row justify-content-end">
-                <form class="form-inline ml-3" id="filter" action="{{route('client.index')}}">
+                <form class="form-inline ml-3" id="filter" action="{{route('owner-request.index')}}">
             <div class="input-group input-group-sm mr-2">
                 @if (app()->getLocale()=='ar')
                 <div class="input-group-append">
@@ -167,12 +167,13 @@
                 </tr>
                 @empty
                 <tr style="text-align: center">
-                    <td colspan=6>{{ __('pages.No Data') }}</td>
+                    <td colspan=7>{{ __('pages.No Data') }}</td>
                 </tr>
                 @endforelse
             </tbody>
         </table>
-        {{$records->links()}}
+        {{-- {{$records->links()}} --}}
+        {{ $records->appends(request()->only('search'))->render() }}
     </div>
     <!-- /.card-body -->
     @csrf

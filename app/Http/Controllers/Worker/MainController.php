@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Front;
+namespace App\Http\Controllers\Worker;
 
 use App\Http\Controllers\Controller;
 use App\Models\BloodType;
@@ -18,8 +18,6 @@ class MainController extends Controller
 {
     public function home()
     {
-
-        $posts = Post::take(6)->get();
         return view('front.home', compact('posts'));
     }
     public function about()

@@ -2,25 +2,28 @@
 
 namespace App\Http\Controllers\Front;
 
+use App\FormatDataCollection;
 use App\Http\Controllers\Controller;
-use App\Models\BloodType;
+use App\Models\Category;
 use App\Models\City;
-use App\Models\DonationRequest;
+use App\Models\Discount;
 use App\Models\Government;
-use App\Models\Post;
+use App\Models\Place;
+use App\Models\SubCategory;
 use App\Models\Token;
-use App\VisitorMessage;
+use App\Models\VisitorMessage;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 
 class MainController extends Controller
 {
+    use FormatDataCollection;
     public function home()
     {
+        $places = Place::latest()->take(6)->get();
 
-        $posts = Post::take(6)->get();
-        return view('front.home', compact('posts'));
+        return view('front.home', compact('places'));
     }
     public function about()
     {
@@ -204,5 +207,37 @@ class MainController extends Controller
         $request->user()->update($request->all());
         flash('تم التحديث بنجاح', 'success');
         return back();
+    }
+    public function category(Request $request, Category $category)
+    {
+        $records = $category->places()->searchCity($request->city)->paginate(10);
+        $governs = $this->getGovernorates();
+        return view('front.category', compact('records', 'category', 'governs'));
+    }
+    public function subCategory(Request $request, Category $category, SubCategory $subcategory)
+    {
+        $records = $subcategory->places()->searchCity($request->city)->paginate(10);
+        $governs = $this->getGovernorates();
+        return view('front.category', compact('records', 'category', 'governs', 'subcategory'));
+    }
+    public function discounts(Request $request)
+    {
+
+        $records = Place::has('discounts', '>', 0)
+            ->searchCategory($request->cat)
+            ->searchCity($request->city)
+            ->withCount('discounts')
+            ->with('availableDiscounts')
+            ->orderBy('name', 'asc')
+            ->paginate(10);
+        // dd($records);
+        // $records = collect([]);
+        $governs = $this->getGovernorates();
+        return view('front.discounts', compact('records', 'governs'));
+    }
+    public function showPlaceDiscounts(Place $place)
+    {
+        $records = $place->availableDiscounts()->paginate(5);
+        return view('front.discount-show', compact('place', 'records'));
     }
 }

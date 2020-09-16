@@ -20,7 +20,8 @@
             @include('partials.validation-errors')
             {!!
             Form::model($model,[
-            'route'=>'discount.store'
+            'route'=>'discount.store',
+            'files'=>true,
             ])
             !!}
             @include('owners.discounts.form')

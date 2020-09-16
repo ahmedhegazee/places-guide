@@ -43,8 +43,11 @@ class CategoryController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|min:3',
+            'image' => 'required|image|max:4000'
         ]);
-        Category::create($request->all());
+        $data = $request->only('name');
+        $data['image'] = storeFileOnGoogleCloud($request->file('image'), 'categories');
+        Category::create($data);
         flash(__('messages.add'), 'success');
         return redirect()->route('category.index');
     }
@@ -71,8 +74,12 @@ class CategoryController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|min:3',
+            'image' => 'sometimes|image|max:4000'
         ]);
-        $category->update($request->all());
+        $data = $request->only('name');
+        if ($request->has('image'))
+            $data['image'] = storeFileOnGoogleCloud($request->file('image'), 'categories');
+        $category->update($data);
         flash(__('messages.update'), 'success');
         return redirect()->route('category.index');
     }

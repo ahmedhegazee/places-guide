@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="{{ asset('front/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('front/css/style.css') }}">
     @stack('styles')
-    <title>بنك الدم</title>
+    <title>{{ env('APP_NAME') }}</title>
 </head>
 
 <body>
@@ -36,8 +36,8 @@
                 <!--row of top-bar-->
                 <div class="d-flex justify-content-between">
                     <div>
-                        <a href="index.html" class="ar px-1">عربى</a>
-                        <a href="" class="en px-1">EN</a>
+                        {{-- <a href="index.html" class="ar px-1">عربى</a>
+                        <a href="" class="en px-1">EN</a> --}}
                     </div>
                     <div>
                         <ul class="list-unstyled">
@@ -71,9 +71,9 @@
                                         class="fas fa-home ml-2"></i>الرئيسيه</a>
                                 <a class="dropdown-item" href="{{ route('front.profile') }}"> <i
                                         class="fas fa-user-alt ml-2"></i>معلوماتى</a>
-                                <a class="dropdown-item" href="#"> <i class="fas fa-bell ml-2"></i>اعدادات الاشعارات</a>
+                                {{-- <a class="dropdown-item" href="#"> <i class="fas fa-bell ml-2"></i>اعدادات الاشعارات</a>
                                 <a class="dropdown-item" href="{{ route('front.favourite.posts') }}"> <i
-                                        class="far fa-heart ml-2"></i>المفضلة</a>
+                                    class="far fa-heart ml-2"></i>المفضلة</a> --}}
                                 <a class="dropdown-item" href="#"> <i class="far fa-comments ml-2"></i>ابلاغ</a>
                                 <a class="dropdown-item" href="{{ route('contact') }}"> <i
                                         class="fas fa-phone ml-2"></i>تواصل
@@ -99,7 +99,8 @@
         <!--navbar-->
         <nav class="navbar navbar-expand-lg navbar-light">
             <div class="container">
-                <a class="navbar-brand" href="#"><img src="{{ asset('front/imgs/logo.png') }}" alt=""></a>
+                <a class="navbar-brand" href="#"><img src="{{ asset('images/logo.png') }}"
+                        style="border-radius: 50%;width: 50px;height: 50px;" alt=""></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse"
                     data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                     aria-label="Toggle navigation">
@@ -111,14 +112,17 @@
                             <a class="nav-link" href="{{ url('/') }}">الرئيسيه <span
                                     class="sr-only">(current)</span></a>
                         </li>
+                        {{-- <li class="nav-item">
+                            <a class="nav-link" href="{{ route('about') }}">تصنيفات الدليل</a>
+                        </li> --}}
                         <li class="nav-item">
-                            <a class="nav-link" href="#">عن بنك الدم</a>
+                            <a class="nav-link" href="{{ route('discount') }}">العروض</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('front.posts') }}">المقالات</a>
+                            <a class="nav-link" href="{{ route('about') }}">انضم الينا</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('front.requests') }}">طلبات التبرع</a>
+                            <a class="nav-link" href="{{ route('about') }}">الوظائف</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('about') }}">من نحن</a>
@@ -126,10 +130,6 @@
                         <li class="nav-item cont">
                             <a class="nav-link" href="{{ route('contact') }}">اتصل بنا</a>
                         </li>
-                        @auth('clients')
-                        <li class="mr-lg-auto py-md-2"><a class="btn bg" href="{{ route('front.donation.create') }}">طلب
-                                تبرع</a></li>
-                        @endauth
                     </ul>
                 </div>
             </div>
@@ -146,8 +146,9 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-4  offset-1">
-                        <img src="{{ asset('front/imgs/logo.png') }}" alt="">
-                        <h5 class="my-3">بنك الدم</h5>
+                        <img src="{{ asset('images/logo.png') }}" style="border-radius: 50%;width: 50px;height: 50px;"
+                            alt="">
+                        <h5 class="my-3">{{ env('APP_NAME') }}</h5>
                         <p class="pl-4"> هذا النص هو مثال لنص ممكن أن يستبدل فى نفس المساحه, لقد تم توليد
                             هذا النص من مولد النص العرب حيث يمكنك ان تولد هذا النص أو
                             العديد من النصوص الأخرى وإضافة الى زيادة عدد الحروف التى يولدها التطبيق يطلع على صورة حقيقة
@@ -158,9 +159,13 @@
                     <div class="col-md-3">
                         <h6 class="">الرئيسية</h6>
                         <ul class="list-unstyled">
-                            <li class="py-2"><a href="#">عن بنك الدم</a></li>
-                            <li class="py-2"><a href="{{ route('front.posts') }}">المقالات</a></li>
-                            <li class="py-2"><a href="{{ route('front.requests') }}">عن التبرع</a></li>
+                            {{-- <li class="py-2"><a href="#">عن بنك الدم</a></li> --}}
+                            {{-- <li class="py-2"><a href="{{ route('front.posts') }}">المقالات</a></li> --}}
+                            {{-- <li class="py-2"><a href="{{ route('front.requests') }}">عن التبرع</a></li> --}}
+                            {{-- <li class="py-2"><a href="{{ route('about') }}">تصنيفات الدليل</a></li> --}}
+                            <li class="py-2"><a href="{{ route('discount') }}">العروض</a></li>
+                            <li class="py-2"><a href="{{ route('about') }}">انضم الينا</a></li>
+                            <li class="py-2"><a href="{{ route('about') }}">الوظائف</a></li>
                             <li class="py-2"><a href="{{ route('about') }}">من نحن</a></li>
                             <li class="py-2"><a href="{{ route('contact') }}">اتصل بنا</a></li>
                         </ul>
@@ -196,7 +201,7 @@
                         </ul>
                     </div>
                     <div class="col-md-4">
-                        <p class="text-center">جميع الحقوق محفوظه لـ <span>بنك الدم</span> &copy; 2020</p>
+                        <p class="text-center">جميع الحقوق محفوظه لـ <span> {{ env('APP_NAME') }}</span> &copy; 2020</p>
                     </div>
                 </div>
             </div>

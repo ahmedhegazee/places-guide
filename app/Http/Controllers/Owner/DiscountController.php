@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Owner;
 
+use App\FormatDataCollection;
 use App\Http\Controllers\Controller;
 use App\Models\Discount;
 use Illuminate\Http\Request;
@@ -9,6 +10,7 @@ use Illuminate\Validation\Rule;
 
 class DiscountController extends Controller
 {
+    use FormatDataCollection;
     /**
      * Display a listing of the resource.
      *
@@ -46,8 +48,11 @@ class DiscountController extends Controller
             'discount' => 'required|string|min:3',
             'starting_date' => 'required|date|after_or_equal:today',
             'end_date' => 'required|date|after:starting_date',
+            'image' => 'required|image|max:4000',
         ]);
-        $request->user()->place->discounts()->create($request->all());
+        $data = $request->except('image');
+        $data['image'] = storeFileOnGoogleCloud($request->image, 'images');
+        $request->user()->place->discounts()->create($data);
         flash(__('messages.add'), 'success');
         return redirect(route('discount.index'));
     }
@@ -90,8 +95,12 @@ class DiscountController extends Controller
             'discount' => 'required|string|min:3',
             'starting_date' => 'required|date|after_or_equal:today',
             'end_date' => 'required|date|after:starting_date',
+            'image' => 'sometimes|image|max:4000'
         ]);
-        $discount->update($request->all());
+        $data = $request->except('image');
+        if ($request->has('image'))
+            $data['image'] = storeFileOnGoogleCloud($request->image, 'images');
+        $discount->update($data);
         flash(__('messages.update'), 'success');
         return redirect()->route('discount.index');
     }

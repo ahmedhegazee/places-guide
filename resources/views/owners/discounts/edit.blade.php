@@ -20,10 +20,11 @@
             {!!
             Form::model($discount,[
             'route'=>['discount.update',$discount->id],
-            'method' => 'put'
+            'method' => 'put',
+            'files'=>true,
             ])
             !!}
-            @include('owners.workads.form')
+            @include('owners.discounts.form')
             {!!Form::close()!!}
         </div>
         <!-- /.card-body -->

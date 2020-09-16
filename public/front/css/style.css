@@ -171,6 +171,7 @@ li .signin {
 /*main-header*/
 .main-header {
     overflow: hidden;
+    height: 80vh;
 }
 
 .main-header button {
@@ -180,6 +181,7 @@ li .signin {
 
 .slide {
     position: relative;
+
 }
 
 .slick-caption {
@@ -928,4 +930,28 @@ a:hover {
 
 .slick-dots .slick-active {
     border-color: #ab0b0e;
+}
+
+.category,
+.category:hover {
+    text-decoration: none;
+    color: #000 !important;
+}
+
+.bg-gray {
+    background-color: #aaa;
+}
+
+.categories .category-content span {
+    bottom: 5px;
+    right: 10px;
+    color: #fff;
+    position: absolute;
+    font-size: 1.3rem;
+}
+
+.categories .category-content .count {
+    right: 85% !important;
+    font-size: 2rem;
+    bottom: 0;
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Owner;
 
+use App\FormatDataCollection;
 use App\Http\Controllers\Controller;
 use App\Models\BloodType;
 use App\Models\Category;
@@ -20,6 +21,7 @@ use Laracasts\Flash\Flash;
 
 class MainController extends Controller
 {
+    use FormatDataCollection;
     public function changePassword(Request $request)
     {
         $this->validate($request, [
@@ -112,37 +114,5 @@ class MainController extends Controller
         $place->update($data);
         flash(__('messages.update'), 'success');
         return redirect(route('owner.home'));
-    }
-    function getDays()
-    {
-        return [
-            'Sunday' =>  'الاحد',
-            'Monday' =>  'الاثنين',
-            'Tuesday' =>  'الثلاثاء',
-            'Wednesday' =>  'الاربعاء',
-            'Thursday' =>  'الخميس',
-            'Friday' =>  'الجمعة',
-            'Saturday' =>  'السبت',
-        ];
-    }
-    function getGovernorates()
-    {
-        // $arr = ['' => 'اختار المحافظة'];
-
-        return Governorate::all()->mapWithKeys(function ($role) {
-            return [
-                $role->id =>  $role->name,
-            ];
-        })->toArray();
-    }
-    function getCategories()
-    {
-        // $arr = ['' => 'اختار المحافظة'];
-
-        return Category::all()->mapWithKeys(function ($role) {
-            return [
-                $role->id =>  $role->name,
-            ];
-        })->toArray();
     }
 }

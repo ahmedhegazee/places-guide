@@ -21,10 +21,12 @@
             {!!
             Form::model($category,[
             'route'=>['category.update',$category->id],
-            'method' => 'put'
+            'method' => 'put',
+            'files'=>true
             ])
             !!}
             @include('layouts.form')
+            @include('layouts.image-upload')
             {!!Form::close()!!}
         </div>
         <!-- /.card-body -->

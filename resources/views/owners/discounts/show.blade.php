@@ -14,6 +14,7 @@
     <div class="card">
 
         <div class="card-body">
+            <img src="{{ $discount->image }}" alt=""><br>
             <span class="text-bold">{{ __('pages.Title').' : '}} </span>
             <span>{{  $discount->title }}</span><br>
             <span class="text-bold">{{ __('pages.Discount').' : '}} </span>

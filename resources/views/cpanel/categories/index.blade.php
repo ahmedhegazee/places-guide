@@ -31,6 +31,7 @@
             <table id="table" class="table table-bordered table-hover table-striped">
                 <thead>
                     <th>#</th>
+                    <th>{{ __('pages.Photo') }}</th>
                     <th>{{ __('pages.Name') }}</th>
                     <th>{{ __('pages.Show') .' '.__('pages.SubCategories') }}</th>
                     <th>{{ __('pages.Edit') }}</th>
@@ -39,6 +40,7 @@
                 <tbody>
                     @forelse ($records as $record)
                     <tr id="record-{{ $record->id }}">
+                        <td><img src="{{ $record->image }}" alt="" width="100px" height="100px"></td>
                         <td>{{$loop->iteration}}</td>
                         <td>{{$record->name}}</td>
                         <td>

@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@inject('model', 'App\Models\PlaceOwner')
+{{-- @inject('model', 'App\Models\PlaceOwner') --}}
 @section('page_title')
 {{ __('pages.Owner Requests') }}
 @endsection
@@ -22,7 +22,7 @@
 
             @include('partials.validation-errors')
             {!!
-            Form::model($model,[
+            Form::model(null,[
             'route'=>'owner-request.store',
             'method'=>'post'
             ])

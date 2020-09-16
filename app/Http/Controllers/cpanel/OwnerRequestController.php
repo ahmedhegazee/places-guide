@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\cpanel;
 
+use App\FormatDataCollection;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\City;
@@ -14,6 +15,7 @@ use Illuminate\Validation\Rule;
 
 class OwnerRequestController extends Controller
 {
+    use FormatDataCollection;
     /**
      * Display a listing of the resource.
      *
@@ -21,7 +23,12 @@ class OwnerRequestController extends Controller
      */
     public function index(Request $request)
     {
-        $records = PlaceOwner::accepted(0)->with('place')->search($request->search)->paginate(10);
+        $records = PlaceOwner::accepted(0)
+            // ->with(['place' => function ($q) use ($request) {
+            //     $q->search($request->search);
+            // }])
+            ->paginate(10);
+        // dd($records);
         return view('cpanel.owner-requests.index', compact('records'));
     }
 
@@ -36,6 +43,7 @@ class OwnerRequestController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request->all());
         // dd(implode(",", $request->closed_days));
         // dd($request->all());
         $rules = [
@@ -51,16 +59,17 @@ class OwnerRequestController extends Controller
             // 'city_id' => ['required', 'numeric', Rule::in(City::all('id')->toArray())],
             'city_id' => 'required|numeric|exists:cities,id',
             // 'sub_category_id' => ['required', 'numeric', Rule::in(SubCategory::all('id')->toArray())],
-            'sub_category_id' => 'required|numeric|exists:sub_categories,id',
+            // 'sub_category_id' => 'nullable|numeric|exists:sub_categories,id',
+            'category_id' => 'required|numeric|exists:categories,id',
             'opened_time' => 'required|string',
             'closed_time' => 'required|string',
-            'closed_days' => ['required', 'array', Rule::in(array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'))]
+            'closed_days' => ['array', Rule::in(array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'))]
         ];
         $messages = [];
         $this->validate($request, $rules, $messages);
         if ($request->closed_time <= $request->opened_time)
             return back()->with('closed_time', 'الرجاء اختيار معاد اغلاق مناسب');
-        $request->merge(['closed_days' => implode(",", $request->closed_days), 'password' => bcrypt($request->password)]);
+        $request->merge(['closed_days' => $request->has('closed_days') ? implode(",", $request->closed_days) : '', 'password' => bcrypt($request->password)]);
         $owner = PlaceOwner::create($request->all());
         $owner->place()->create($request->all());
         flash(__('messages.add'), 'success');
@@ -91,37 +100,5 @@ class OwnerRequestController extends Controller
         } else {
             return jsonResponse(0, 'error');
         }
-    }
-    function getDays()
-    {
-        return [
-            'Sunday' =>  'الاحد',
-            'Monday' =>  'الاثنين',
-            'Tuesday' =>  'الثلاثاء',
-            'Wednesday' =>  'الاربعاء',
-            'Thursday' =>  'الخميس',
-            'Friday' =>  'الجمعة',
-            'Saturday' =>  'السبت',
-        ];
-    }
-    function getGovernorates()
-    {
-        // $arr = ['' => 'اختار المحافظة'];
-
-        return Governorate::all()->mapWithKeys(function ($role) {
-            return [
-                $role->id =>  $role->name,
-            ];
-        })->toArray();
-    }
-    function getCategories()
-    {
-        // $arr = ['' => 'اختار المحافظة'];
-
-        return Category::all()->mapWithKeys(function ($role) {
-            return [
-                $role->id =>  $role->name,
-            ];
-        })->toArray();
     }
 }

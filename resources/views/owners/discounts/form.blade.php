@@ -38,6 +38,7 @@
     'required'
     ])!!}
 </div>
+@include('layouts.image-upload')
 <div class="form-group ">
     <button class="btn btn-primary" type="submit">{{ __('pages.Submit') }}</button>
 </div>

@@ -12,6 +12,7 @@ use App\Models\Place;
 use App\Models\SubCategory;
 use App\Models\Token;
 use App\Models\VisitorMessage;
+use App\Models\WorkAd;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
@@ -55,143 +56,16 @@ class MainController extends Controller
         flash('تم ارسال الرسالة بنجاح', 'success')->important();
         return back();
     }
-    public function post(Post $post)
-    {
-        $relatedPosts = Post::searchCategory($post->category->id)->where('id', '!=', $post->id)->take(6)->get();
-        // dd($relatedPosts);
-        return view('front.post-details', compact('post', 'relatedPosts'));
-    }
     public function favouritePosts()
     {
         $favouritePosts = auth('client')->user()->favouritePosts()->paginate(3);
         return view('front.favourite-posts', compact('favouritePosts'));
-    }
-    public function posts()
-    {
-        $posts = Post::paginate(3);
-        return view('front.posts', compact('posts'));
     }
     public function toggleFavouritePosts(Request $request)
     {
         $client = $request->user();
         $client->favouritePosts()->toggle($request->post);
         return jsonResponse(1, 'success');
-    }
-    public function donation(Request $request)
-    {
-        $this->validate($request, [
-            'city' => ['sometimes', 'numerc', Rule::in(City::all()->pluck('id')->toArray())],
-            'blood' => ['sometimes', 'numeric', Rule::in(BloodType::all()->pluck('id')->toArray())],
-            // 'search' => 'sometimes|string'
-        ]);
-        $records = DonationRequest::with('client')->with('city.government')->with('bloodType')->search($request->search)
-            ->searchBloodType($request->blood)
-            ->searchCity($request->city)
-            ->paginate(10);
-        return view('front.donation', compact('records'));
-    }
-    public function donationStatus(DonationRequest $request)
-    {
-        return view('front.donation-status', compact('request'));
-    }
-    public function createRequest()
-    {
-        return view('front.request-create');
-    }
-    public function storeRequest(Request $request)
-    {
-        $rules = [
-            'name' => 'required|string|min:3',
-            'age' => 'required|numeric',
-            'blood_type_id' => ['required', Rule::in(BloodType::all()->pluck('id')->toArray())],
-            'no_blood_bags' => 'required|numeric',
-            'address' => [Rule::requiredIf(function () use ($request) {
-                return !$request->has('longtitude') && !$request->has('latitude');
-            }), 'string'],
-            'longtitude' => ['numeric', Rule::requiredIf(function () use ($request) {
-                return !$request->has('address');
-            })],
-            'latitude' => ['numeric', Rule::requiredIf(function () use ($request) {
-                return !$request->has('address');
-            })],
-            'city_id'
-            => ['required', Rule::in(City::all()->pluck('id')->toArray())],
-            'government_id'
-            => ['required', Rule::in(Government::all()->pluck('id')->toArray())],
-            'phone'
-            => ['required', 'regex:/^(010|011|012|015){1}[0-9]{8}$/'],
-            'notes' => 'sometimes|string'
-        ];
-        $client = $request->user();
-        $validator = $this->validate($request, $rules);
-
-        $donationRequest = $client->donationRequests()->create($request->all());
-        // here we retrieve all the clients who have a favourite blood type of the same request's blood type
-        $donatorsIDs = $donationRequest->city->government->clients()->whereHas('bloodTypes', function ($q) use ($request) {
-            $q->where('blood_types.id', $request->blood_type_id);
-        })->pluck('clients.id')->toArray();
-        if (count($donatorsIDs)) {
-            $notification
-                = $donationRequest->notifications()->create([
-                    'title' => 'نحتاج لتبرعكم بالدم',
-                    'content' => $donationRequest->bloodType->name . ' نحتاج للتبرع لهذه الفصيلة '
-                ]);
-            $notification->clients()->attach($donatorsIDs);
-            $tokens = Token::whereIn('client_id', $donatorsIDs)->where('token', '!=', null)->pluck('token')->toArray();
-            // dd($tokens);
-            if (count($tokens)) {
-                $data = [
-                    'donation_request_id' => $donationRequest->id,
-                ];
-                $send = notifyByFireBase($notification->title, $notification->content, $tokens, $data);
-                info('firebase result:' . $send);
-            }
-        }
-        flash('تم انشاء الطلب', 'success')->important();
-        return back();
-    }
-    protected function validator(array $data)
-    {
-        return Validator::make($data, [
-            'name' => 'required|string|min:5',
-            // 'password' => 'sometimes|string|min:8|confirmed',
-            'email' => ['required', 'email', Rule::unique('clients')->ignore(auth('client')->user()->id)],
-            'phone' => ['required', 'regex:/^(010|011|012|015){1}[0-9]{8}$/', Rule::unique('clients')->ignore(auth('client')->user()->id)],
-            'dob' => 'required|date|before: -16 years',
-            'last_donation_date' => 'required|date|before_or_equal: -1 days',
-            'city_id' => ['sometimes', Rule::in(City::all()->pluck('id')->toArray())],
-            'blood_type_id' => ['sometimes', Rule::in(BloodType::all()->pluck('id')->toArray())],
-        ], [
-            'name.required' => 'حقل الاسم مطلوب',
-            'name.min' => 'يجب ان يحتوي حقل الاسم على الاقل خمس احرف',
-
-            'password.required' => 'حقل كلمة المرور مطلوب',
-            'password.min' => 'حقل كلمة المرور يجب ان يحتوي على الاقل ٨ احرف',
-            'password.confirmed' => 'الرجاء كتابة كلمة المرور مره اخرى بشكل صحيح',
-
-            'email.required' => 'حقل البريد الالكتروني مطلوب',
-            'email.email' => 'الرجاء كتابة البريد الالكتروني بشكل صحيح',
-            'email.unique' => 'هذا البريد الالكنروني موجود بالفعل',
-
-            'phone.required' => 'حقل الجوال مطلوب',
-            'phone.regex' => 'يجب كتابة رقم الجوال بشكل صحيح',
-            'phone.unique' => 'رقم الجوال موجود بالفعل',
-
-            'dob.required' => 'حقل تاريخ الميلاد مطلوب',
-            'dob.date' => 'الرجاء كتابة تاريخ الميلاد بشكل صحيح',
-            'dob.before' => 'يجب ان يكون سن المتبرع على الاقل ١٦ سنة',
-
-            'last_donation_date.required' => 'حقل تاريخ اخر تبرع مطلوب',
-            'last_donation_date.date' => 'الرجاء كتابة تاريخ اخر تبرع بشكل صحيح',
-            'last_donation_date.before_or_equal' => 'الرجاء كتابة تاريخ اخر تبرع بشكل صحيح',
-
-            'city_id.required' => 'حقل المدينة مطلوب',
-            'city_id.in' => 'الرجاء اختيار المدينة بشكل صحيح',
-
-            'blood_type_id.required' => 'حقل فصيلة الدم مطلوب',
-            'blood_type_id.in' => 'الرجاء اختيار فصيلة الدم بشكل صحيح'
-
-        ]);
     }
     public function profile()
     {
@@ -222,7 +96,6 @@ class MainController extends Controller
     }
     public function discounts(Request $request)
     {
-
         $records = Place::has('discounts', '>', 0)
             ->searchCategory($request->cat)
             ->searchCity($request->city)
@@ -239,5 +112,22 @@ class MainController extends Controller
     {
         $records = $place->availableDiscounts()->paginate(5);
         return view('front.discount-show', compact('place', 'records'));
+    }
+    public function workads(Request $request)
+    {
+        $governs = $this->getGovernorates();
+        $records = WorkAd::with(['place' => function ($query) use ($request) {
+            $query->searchCity($request->city);
+        }])
+            ->searchCategory($request->cat)
+            ->paginate(10);
+        $count = WorkAd::all()->count();
+        // dd($records);
+        return view('front.workads', compact('records', 'governs', 'count'));
+    }
+    public function showWorkAd(WorkAd $ad)
+    {
+        //Make the show view
+        return view('', compact('ad'));
     }
 }

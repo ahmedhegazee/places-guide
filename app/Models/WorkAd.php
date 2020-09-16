@@ -13,11 +13,19 @@ class WorkAd extends Model
 
     public function place()
     {
-        return $this->belongsTo('App\Models\Place');
+        return $this->belongsTo('App\Models\Place', 'id');
     }
     public function workerCategory()
     {
         return $this->belongsTo('App\Models\WorkerCategory', 'work_category_id');
+    }
+    public function scopeSearchCategory($query, $category = null)
+    {
+        return $query->where(function ($query) use ($category) {
+            if (!is_null($category)) {
+                $query->where('work_category_id', $category);
+            }
+        });
     }
     // public function workers()
     // {

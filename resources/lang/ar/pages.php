@@ -90,6 +90,7 @@ return [
     'End Date Discount' => ' تاريخ نهاية الخصم',
     'Filter' => 'تصفية',
     'All places' => 'كل الاماكن',
+    'All Jobs' => 'كل الوظائف',
     'Discount Value' => 'عرض بقيمة ',
 
     //Governorates Pages

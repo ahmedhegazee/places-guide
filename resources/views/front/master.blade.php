@@ -122,7 +122,7 @@
                             <a class="nav-link" href="{{ route('about') }}">انضم الينا</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('about') }}">الوظائف</a>
+                            <a class="nav-link" href="{{ route('workads') }}">اعلانات التوظيف</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('about') }}">من نحن</a>
@@ -165,7 +165,7 @@
                             {{-- <li class="py-2"><a href="{{ route('about') }}">تصنيفات الدليل</a></li> --}}
                             <li class="py-2"><a href="{{ route('discount') }}">العروض</a></li>
                             <li class="py-2"><a href="{{ route('about') }}">انضم الينا</a></li>
-                            <li class="py-2"><a href="{{ route('about') }}">الوظائف</a></li>
+                            <li class="py-2"><a href="{{ route('workads') }}">اعلانات التوظيف</a></li>
                             <li class="py-2"><a href="{{ route('about') }}">من نحن</a></li>
                             <li class="py-2"><a href="{{ route('contact') }}">اتصل بنا</a></li>
                         </ul>

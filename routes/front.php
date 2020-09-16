@@ -8,6 +8,8 @@ Route::get('/category/{category}', 'MainController@category')->name('category');
 Route::get('/category/{category}/subcategory/{subcategory}', 'MainController@subCategory')->name('subCategory');
 Route::get('/discounts', 'MainController@discounts')->name('discount');
 Route::get('/discount/{place}', 'MainController@showPlaceDiscounts')->name('discount.show');
+Route::get('/workads', 'MainController@workads')->name('workads');
+Route::get('/workads/{ad}', 'MainController@showWorkAd')->name('workads.show');
 Route::group(['namespace' => 'Auth'], function () {
     Route::get('/login', 'LoginController@showLoginForm')->name('front.login');
     Route::post('/login', 'LoginController@login');

@@ -70,6 +70,7 @@ return [
     'Password' => 'كلمة المرور',
     'Confirm' => 'تأكيد',
     'Phone' => 'الجوال',
+    'Phone To Communicate' => 'رقم الجوال للتواصل',
     'Govern' => 'محافظة',
     'City' => 'مدينة',
     'Is Banned' => 'محظور',

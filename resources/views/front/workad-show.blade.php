@@ -1,85 +1,36 @@
-@inject('category', 'App\Models\WorkerCategory')
 @extends('front.master')
 @section('content')
 <nav class="mb-4" aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ route('index') }}">الرئيسيه</a></li>
-        <li class="breadcrumb-item active" aria-current="page">اعلانات التوظيف</li>
+        <li class="breadcrumb-item active" aria-current="page">{{ __('pages.Work Ads').' لـ'.$ad->place->name }}</li>
     </ol>
 </nav>
 <section class="categories py-2 ">
     <div class="container">
         <div class="row">
-            {{-- Filter  --}}
-            <div class="col-md-3 col-sm-12">
-                <ul class="subcategories mb-4">
-                    <a href="{{ route('workads')}}">
-                        <li class="d-flex justify-content-between">
-                            <div>
-                                <span>{{ __('pages.All Jobs') }}</span>
-                                <span class="count">({{ $count }})</span>
-                            </div><i class="fas fa-chevron-left"></i>
-                        </li>
-                    </a>
-                    @foreach($category->all() as $cat)
-                    <a href="{{ route('workads').'?cat='.$cat->id }}">
-                        <li class="d-flex justify-content-between">
-                            <div><span>{{ $cat->name }}</span>
-                                <span class="count">({{ $cat->ads->count() }})</span>
-                            </div><i class="fas fa-chevron-left"></i>
-                        </li>
-                    </a>
-                    @endforeach
-                </ul>
-                <form action="{{ route('workads') }}">
-                    <div class="filter mb-4">
-                        <h4 class="text-center filter-header">{{ __('pages.Filter') }}</h4>
-                        {!!Form::select('govern',$governs,null,array('class'=>'
-                        multiple-select','id'=>'govern','onchange'=>'getCities()','placeholder'=>'اختر
-                        المحافظة'))!!}
-                        <select class="multiple-select last-select" id="city" name="city">
-                            <option selected>اختر المدينة</option>
-                        </select>
-                        <input type="hidden" name="cat" value="{{ request()->cat }}">
-                    </div>
-                    <button class="btn btn-success filter-button" type="submit">{{ __('pages.Filter') }}</button>
-                    {{-- Button --}}
-                </form>
-            </div>
-
             {{-- Records --}}
 
-            <div class="row col-md-9 col-sm-12">
-                @forelse($records as $record)
-                <div class="col-md-6 col-sm-12">
-                    <div class="card mb-4 shadow-sm">
-                        <a href="{{ route('workads.show',['ad'=>$record->id]) }}" class="category">
-                            <div class="position-relative category-content">
-                                @if ($record->main_image=='images/company.png')
-                                <img src="{{asset($record->place->main_image)}}" width="100%" height="200px" alt="">
-                                @else
-                                <img src="{{$record->place->main_image }}" width="100%" height="200px" alt="">
-                                @endif
-                                <span>{{ $record->place->name }}</span>
-                            </div>
-                            <div class="card-body">
-                                <h3 class="card-text">{{ $record->title }}</h3>
-                            </div>
-                        </a>
-                    </div>
+
+            <div class="col-md-12 col-sm-12">
+                <div class="card mb-4 shadow-sm">
+                    <a class="category">
+                        <div class="position-relative category-content">
+
+                            <img src="{{$ad->place->main_image }}" width="100%" alt="">
+                        </div>
+                        <div class="card-body">
+                            <h3 class="card-text">{{ $ad->title }}</h3>
+                            <span>{{ $ad->place->name }}</span><br>
+                            <span>{{ __('pages.Address').' : '. $ad->place->address }}</span><br>
+                            <span>{{ __('pages.Phone To Communicate').' : '. $ad->phone }}</span><br>
+                            <span>{{ __('pages.Quantity').' : '.$ad->quantity}}</span><br>
+                            <pre>{{ $ad->content }}</pre>
+                        </div>
+                    </a>
                 </div>
-                @empty
-                <div class="alert alert-danger col-12" style="height:50px" role="alert">
-                    {{ __('messages.No Ads') }}
-                </div>
-                @endforelse
             </div>
 
-        </div>
-
-        {{-- pagination --}}
-        <div class="row justify-content-center">
-            {{ $records->appends(['city'=>request()->city,'cat'=>request()->cat])->links() }}
         </div>
     </div>
 </section>
@@ -317,10 +268,6 @@
         bottom: unset !important;
         right: unset !important;
         padding: 8px 10px;
-    }
-
-    .categories .category-content span {
-        color: #000 !important;
     }
 </style>
 @endpush

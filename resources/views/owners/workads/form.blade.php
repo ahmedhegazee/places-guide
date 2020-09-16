@@ -13,6 +13,13 @@
     ])!!}
 </div>
 <div class="form-group">
+    <label for="phone"> {{ __('pages.Phone To Communicate') }}</label>
+    {!!Form::number('phone',null,[
+    'class'=>'form-control',
+    'required'
+    ])!!}
+</div>
+<div class="form-group">
     <label for="work_category_id">{{ __('pages.Category') }}</label>
     {!!Form::select('work_category_id',$categories,null,array('class'=>'form-control
     multiple-select','placeholder'=>'اختر التصنيف'))!!}

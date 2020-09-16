@@ -9,12 +9,13 @@ class WorkAd extends Model
 
     protected $table = 'work_ads';
     public $timestamps = true;
-    protected $fillable = array('work_category_id', 'place_id', 'title', 'content', 'quantity');
+    protected $fillable = array('work_category_id', 'place_id', 'title', 'content', 'quantity', 'phone');
 
     public function place()
     {
-        return $this->belongsTo('App\Models\Place', 'id');
+        return $this->belongsTo('App\Models\Place');
     }
+
     public function workerCategory()
     {
         return $this->belongsTo('App\Models\WorkerCategory', 'work_category_id');

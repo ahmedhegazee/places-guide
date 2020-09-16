@@ -116,9 +116,11 @@ class MainController extends Controller
     public function workads(Request $request)
     {
         $governs = $this->getGovernorates();
-        $records = WorkAd::with(['place' => function ($query) use ($request) {
-            $query->searchCity($request->city);
-        }])
+        $records = WorkAd::whereHas('place', function ($query) use ($request) {
+            if ($request->has('city'))
+                $query->where('city_id', $request->city);
+        })
+            ->with('place')
             ->searchCategory($request->cat)
             ->paginate(10);
         $count = WorkAd::all()->count();
@@ -128,6 +130,6 @@ class MainController extends Controller
     public function showWorkAd(WorkAd $ad)
     {
         //Make the show view
-        return view('', compact('ad'));
+        return view('front.workad-show', compact('ad'));
     }
 }

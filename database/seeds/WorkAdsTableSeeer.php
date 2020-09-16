@@ -18,7 +18,8 @@ class WorkAdsTableSeeer extends Seeder
             'title' => 'نحتاج الى معلمين شاورما',
             'content' => 'ساعات العمل ١٢ ساعة
 المرتب ٤٠٠٠ جنيه',
-            'quantity' => 4
+            'quantity' => 4,
+            'phone' => '0111111111'
         ]);
     }
 }

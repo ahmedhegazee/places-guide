@@ -45,6 +45,7 @@ class WorkAdController extends Controller
             'title' => 'required|string|min:3',
             'content' => 'required|string|min:3',
             'quantity' => 'required|numeric|min:1',
+            'phone' => 'required|string',
             'work_category_id' => ['required', Rule::in(WorkerCategory::all()->pluck('id')->toArray())]
         ]);
         $request->user()->place->ads()->create($request->all());
@@ -88,6 +89,7 @@ class WorkAdController extends Controller
             'title' => 'required|string|min:3',
             'content' => 'required|string|min:3',
             'quantity' => 'required|numeric|min:1',
+            'phone' => 'required|string',
             'work_category_id' => ['required', Rule::in(WorkerCategory::all()->pluck('id')->toArray())]
         ]);
         $work_ad->update($request->all());

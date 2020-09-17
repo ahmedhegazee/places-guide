@@ -21,8 +21,14 @@ class SubCategory extends Model
         return $this->hasMany('App\Models\Place');
     }
 
-    public function scopeCat($query, $category)
+    // public function scopeCat($query, $category)
+    // {
+    //     return $query->where('category_id', $category);
+    // }
+    public function acceptedPlaces()
     {
-        return $query->where('category_id', $category);
+        return $this->places()->whereHas('owner', function ($query) {
+            $query->where('is_accepted', 1);
+        });
     }
 }

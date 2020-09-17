@@ -9,39 +9,7 @@
 <section class="categories py-2">
     <div class="container">
         <div class="row">
-            <div class="col-md-3 col-sm-12">
-                <ul class="subcategories mb-4">
-                    <a href="{{ route('category',['category'=>$category->id]) }}">
-                        <li class="d-flex justify-content-between">
-                            <div><span>{{ __('pages.All places') }}</span> <span
-                                    class="count">({{ $category->places->count() }})</span>
-                            </div><i class="fas fa-chevron-left"></i>
-                        </li>
-                    </a>
-                    @foreach($category->subCategories as $cat)
-                    {{-- <a href="{{ route('subCategory',['category'=>$cat->id]) }}"> --}}
-                    <a href="#">
-                        <li class="d-flex justify-content-between">
-                            <div><span>{{ $cat->name }}</span> <span class="count">({{ $cat->places->count() }})</span>
-                            </div><i class="fas fa-chevron-left"></i>
-                        </li>
-                    </a>
-                    @endforeach
-                </ul>
-                <form action="{{ route('category',['category'=>$category->id]) }}">
-                    <div class="filter mb-4">
-                        <h4 class="text-center filter-header">{{ __('pages.Filter') }}</h4>
-                        {!!Form::select('govern',$governs,null,array('class'=>'
-                        multiple-select','id'=>'govern','onchange'=>'getCities()','placeholder'=>'اختر
-                        المحافظة'))!!}
-                        <select class="multiple-select last-select" id="city" name="city">
-                            <option selected>اختر المدينة</option>
-                        </select>
-                    </div>
-                    <button class="btn btn-success filter-button" type="submit">{{ __('pages.Filter') }}</button>
-                    {{-- Button --}}
-                </form>
-            </div>
+            @include('layouts.filter-sidebar')
             <div class="row col-md-9 col-sm-12">
                 @foreach($records as $record)
                 <div class="col-md-6 col-sm-12">
@@ -200,6 +168,10 @@
 
     .breadcrumb .active {
         color: #D0934D;
+    }
+
+    .categories {
+        min-height: 90vh;
     }
 
     .category-header {

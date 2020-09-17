@@ -21,4 +21,10 @@ class Category extends Model
         // return $this->hasManyThrough('App\Models\Place', 'App\Models\SubCategory');
         return $this->hasMany('App\Models\Place');
     }
+    public function acceptedPlaces()
+    {
+        return $this->places()->whereHas('owner', function ($query) {
+            $query->where('is_accepted', 1);
+        });
+    }
 }

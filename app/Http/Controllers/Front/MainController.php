@@ -9,10 +9,12 @@ use App\Models\City;
 use App\Models\Discount;
 use App\Models\Government;
 use App\Models\Place;
+use App\Models\PlaceOwner;
 use App\Models\SubCategory;
 use App\Models\Token;
 use App\Models\VisitorMessage;
 use App\Models\WorkAd;
+use App\Models\WorkerCategory;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
@@ -22,7 +24,10 @@ class MainController extends Controller
     use FormatDataCollection;
     public function home()
     {
-        $places = Place::latest()->take(6)->get();
+        $places = Place::whereHas('owner', function ($query) {
+            $query->where('is_accepted', 1);
+        })
+            ->latest()->take(6)->get();
 
         return view('front.home', compact('places'));
     }
@@ -84,18 +89,29 @@ class MainController extends Controller
     }
     public function category(Request $request, Category $category)
     {
-        $records = $category->places()->searchCity($request->city)->paginate(10);
+        $title = __('pages.All places');
+        $route = route('category', ['category' => $category->id]);
+        $count = $category->acceptedPlaces()->count();
+        $categories = $category->subCategories()->withCount('acceptedPlaces')->get();
+        // dd($categories);
+        $records = $category->acceptedPlaces()
+            ->searchCategory($request->cat)
+            ->searchCity($request->city)->paginate(10);
         $governs = $this->getGovernorates();
-        return view('front.category', compact('records', 'category', 'governs'));
+        return view('front.category', compact('records', 'category', 'governs', 'categories', 'route', 'title', 'count'));
     }
-    public function subCategory(Request $request, Category $category, SubCategory $subcategory)
-    {
-        $records = $subcategory->places()->searchCity($request->city)->paginate(10);
-        $governs = $this->getGovernorates();
-        return view('front.category', compact('records', 'category', 'governs', 'subcategory'));
-    }
+
     public function discounts(Request $request)
     {
+        $title = __('pages.All discounts');
+        $route = route("discount");
+        $count = Discount::available()->count();
+        // dd($count);
+        $acceptedOwners = PlaceOwner::accepted(1)->pluck('id')->toArray();
+        $categories = Category::withCount(['places' => function ($query) use ($acceptedOwners) {
+            $query->whereIn('place_owner_id', $acceptedOwners);
+        }])->get();
+
         $records = Place::has('discounts', '>', 0)
             ->searchCategory($request->cat)
             ->searchCity($request->city)
@@ -103,10 +119,9 @@ class MainController extends Controller
             ->with('availableDiscounts')
             ->orderBy('name', 'asc')
             ->paginate(10);
-        // dd($records);
-        // $records = collect([]);
+
         $governs = $this->getGovernorates();
-        return view('front.discounts', compact('records', 'governs'));
+        return view('front.discounts', compact('records', 'governs', 'title', 'route', 'count', 'categories'));
     }
     public function showPlaceDiscounts(Place $place)
     {
@@ -115,6 +130,8 @@ class MainController extends Controller
     }
     public function workads(Request $request)
     {
+        $title = __('pages.All Jobs');
+        $route = route("workads");
         $governs = $this->getGovernorates();
         $records = WorkAd::whereHas('place', function ($query) use ($request) {
             if ($request->has('city'))
@@ -124,8 +141,9 @@ class MainController extends Controller
             ->searchCategory($request->cat)
             ->paginate(10);
         $count = WorkAd::all()->count();
+        $categories = WorkerCategory::withCount('ads')->get();
         // dd($records);
-        return view('front.workads', compact('records', 'governs', 'count'));
+        return view('front.workads', compact('records', 'governs', 'count', 'title', 'route', 'categories'));
     }
     public function showWorkAd(WorkAd $ad)
     {

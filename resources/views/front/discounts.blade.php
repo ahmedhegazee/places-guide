@@ -1,8 +1,3 @@
-{{-- Make page display all companies that have discounts --}}
-{{-- When the client click a category show the comapnies in the same page --}}
-{{-- redirect to another page to show the discounts of company --}}
-{{-- if there is no discounts show message --}}
-@inject('place', 'App\Models\Place')
 @extends('front.master')
 @section('content')
 <nav class="mb-4" aria-label="breadcrumb">
@@ -15,42 +10,7 @@
     <div class="container">
         <div class="row">
             {{-- Filter  --}}
-            <div class="col-md-3 col-sm-12">
-                <ul class="subcategories mb-4">
-                    <a href="{{ route('discount')}}">
-                        <li class="d-flex justify-content-between">
-                            <div><span>{{ __('pages.All places') }}</span> <span
-                                    class="count">({{ $countPlaces }})</span>
-                            </div><i class="fas fa-chevron-left"></i>
-                        </li>
-                    </a>
-                    @foreach($categories as $category)
-                    {{-- <a href="{{ route('subCategory',['category'=>$cat->id]) }}"> --}}
-                    <a href="{{ route('discount').'?cat='.$category->id }}">
-                        <li class="d-flex justify-content-between">
-                            <div><span>{{ $category->name }}</span> <span
-                                    class="count">({{ $category->places->count() }})</span>
-                            </div><i class="fas fa-chevron-left"></i>
-                        </li>
-                    </a>
-                    @endforeach
-                </ul>
-                <form action="{{ route('discount') }}">
-                    <div class="filter mb-4">
-                        <h4 class="text-center filter-header">{{ __('pages.Filter') }}</h4>
-                        {!!Form::select('govern',$governs,null,array('class'=>'
-                        multiple-select','id'=>'govern','onchange'=>'getCities()','placeholder'=>'اختر
-                        المحافظة'))!!}
-                        <select class="multiple-select last-select" id="city" name="city">
-                            <option selected>اختر المدينة</option>
-                        </select>
-                        <input type="hidden" name="cat" value="{{ request()->cat }}">
-                    </div>
-                    <button class="btn btn-success filter-button" type="submit">{{ __('pages.Filter') }}</button>
-                    {{-- Button --}}
-                </form>
-            </div>
-
+            @include('layouts.filter-sidebar')
             {{-- Records --}}
 
             <div class="row col-md-9 col-sm-12">

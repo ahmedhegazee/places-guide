@@ -108,26 +108,26 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav">
-                        <li class="nav-item active">
+                        <li class="nav-item {{ Route::is('index')||Route::is('category')?'active':'' }}">
                             <a class="nav-link" href="{{ url('/') }}">الرئيسيه <span
                                     class="sr-only">(current)</span></a>
                         </li>
                         {{-- <li class="nav-item">
                             <a class="nav-link" href="{{ route('about') }}">تصنيفات الدليل</a>
                         </li> --}}
-                        <li class="nav-item">
+                        <li class="nav-item {{ Route::is('discount')?'active':'' }}">
                             <a class="nav-link" href="{{ route('discount') }}">العروض</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item {{ Route::is('about')?'active':'' }}">
                             <a class="nav-link" href="{{ route('about') }}">انضم الينا</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item {{ Route::is('workads')?'active':'' }}">
                             <a class="nav-link" href="{{ route('workads') }}">اعلانات التوظيف</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item {{ Route::is('about')?'active':'' }}">
                             <a class="nav-link" href="{{ route('about') }}">من نحن</a>
                         </li>
-                        <li class="nav-item cont">
+                        <li class="nav-item cont {{ Route::is('contact')?'active':'' }}">
                             <a class="nav-link" href="{{ route('contact') }}">اتصل بنا</a>
                         </li>
                     </ul>

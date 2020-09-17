@@ -21,7 +21,7 @@ class CategoryTableSeeder extends Seeder
         $cat->subCategories()->create(['name' => 'مطاعم سورية']);
         Category::create([
             'name' => 'صيدليات',
-            'images' => 'https://storage.googleapis.com/list-directory/categories/RrrudfFzaM3AIW8rbfRvlTZbQcxV0uE2d1Wm2IYh.jpeg'
+            'image' => 'https://storage.googleapis.com/list-directory/categories/RrrudfFzaM3AIW8rbfRvlTZbQcxV0uE2d1Wm2IYh.jpeg'
         ]);
         Category::create([
             'name' => 'مكاتب سفريات',

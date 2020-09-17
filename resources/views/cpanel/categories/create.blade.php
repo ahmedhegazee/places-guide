@@ -24,8 +24,8 @@
             'files'=>true,
             ])
             !!}
-            @include('layouts.form')
-            @include('layouts.image-upload')
+            @include('cpanel.categories.form')
+
             {!!Form::close()!!}
         </div>
         <!-- /.card-body -->

@@ -14,18 +14,22 @@ class CategoryTableSeeder extends Seeder
     public function run()
     {
         $cat = Category::create([
-            'name' => 'مطاعم'
+            'name' => 'مطاعم',
+            'image' => 'https://storage.googleapis.com/list-directory/categories/sUhUy73d7xmW9YLMzst5Mqe3AKCyMiWJpgR5xFXz.jpeg'
         ]);
         $cat->subCategories()->create(['name' => 'مطاعم مصرية']);
         $cat->subCategories()->create(['name' => 'مطاعم سورية']);
         Category::create([
-            'name' => 'صيدليات'
+            'name' => 'صيدليات',
+            'images' => 'https://storage.googleapis.com/list-directory/categories/RrrudfFzaM3AIW8rbfRvlTZbQcxV0uE2d1Wm2IYh.jpeg'
         ]);
         Category::create([
-            'name' => 'مكاتب سفريات'
+            'name' => 'مكاتب سفريات',
+            'image' => 'https://storage.googleapis.com/list-directory/categories/jQHhgeGxJtZyIjdHWAEahwEJEreqjLtsm1cyxonM.jpeg'
         ]);
         Category::create([
-            'name' => 'ورش نجارة'
+            'name' => 'ورش نجارة',
+            'image' => 'https://storage.googleapis.com/list-directory/categories/KnsqoZfczDHpdQfqCIjsftPhGynSPcQfXRbUJzI9.jpeg'
         ]);
         WorkerCategory::create([
             'name' => 'معلم شاورما'

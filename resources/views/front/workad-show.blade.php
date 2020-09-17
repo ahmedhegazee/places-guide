@@ -15,9 +15,9 @@
             <div class="col-md-12 col-sm-12">
                 <div class="card mb-4 shadow-sm">
                     <a class="category">
-                        <div class="position-relative category-content">
+                        <div class="position-relative category-content d-flex">
 
-                            <img src="{{$ad->place->main_image }}" width="100%" alt="">
+                            <img src="{{$ad->place->main_image }}" width="100%" style="height:60vh" alt="">
                         </div>
                         <div class="card-body">
                             <h3 class="card-text">{{ $ad->title }}</h3>

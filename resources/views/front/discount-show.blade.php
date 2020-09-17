@@ -21,7 +21,7 @@
                 <div class="card mb-4 shadow-sm">
                     <a href="#" class="category">
                         <div class="position-relative category-content">
-                            <img src="{{$record->image }}" width="100%" alt="">
+                            <img src="{{$record->image }}" width="100%" style="height:60vh" alt="">
                         </div>
                         <div class="card-body">
                             <h3 class="card-text">{{ $record->title }}</h3>

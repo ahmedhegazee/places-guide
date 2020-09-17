@@ -14,7 +14,7 @@ class OwnerRequestTableSeeder extends Seeder
     {
         $owner = PlaceOwner::create([
             'full_name' => 'خالد وليد',
-            'email' => 'khaled@email.com',
+            'email' => 'khaledwaleed@email.com',
             'password' => '$2y$10$8ehsJFHfutYrtyGGBbmDFeBDe/yoO2scXqur/gW1DBhwK8qgzmram',
             'account_type' => 0,
             'is_accepted' => 0
@@ -34,8 +34,8 @@ class OwnerRequestTableSeeder extends Seeder
             'main_image' => 'images/company.png'
         ]);
         $owner = PlaceOwner::create([
-            'full_name' => 'خالد وليد',
-            'email' => 'khaled@email.com',
+            'full_name' => ' سالم محمد',
+            'email' => 'saleem@email.com',
             'password' => '$2y$10$8ehsJFHfutYrtyGGBbmDFeBDe/yoO2scXqur/gW1DBhwK8qgzmram',
             'account_type' => 1,
             'is_accepted' => 0

@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Review extends Model 
+class Review extends Model
 {
 
     protected $table = 'reviews';
@@ -18,7 +18,6 @@ class Review extends Model
 
     public function place()
     {
-        return $this->belongsToMany('App\Models\Place');
+        return $this->belongsTo('App\Models\Place');
     }
-
 }

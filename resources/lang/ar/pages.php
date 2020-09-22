@@ -94,6 +94,8 @@ return [
     'All discounts' => 'كل العروض',
     'All Jobs' => 'كل الوظائف',
     'Discount Value' => 'عرض بقيمة ',
+    'Rating' => 'تقييم ',
+    'From 5' => 'من 5',
 
     //Governorates Pages
     'No' => 'عدد',

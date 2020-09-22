@@ -64,17 +64,19 @@
                         <div class="dropdown">
                             <a class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">
-                                <span> مرحبا بك </span> &nbsp; &nbsp;{{ auth('clients')->user()->name }}
+                                <span> مرحبا بك </span> &nbsp; &nbsp;{{ auth('clients')->user()->full_name }}
                             </a>
                             <div class="dropdown-menu text-right" aria-labelledby="dropdownMenuButton">
                                 <a class="dropdown-item" href="{{ route('index') }}"> <i
                                         class="fas fa-home ml-2"></i>الرئيسيه</a>
                                 <a class="dropdown-item" href="{{ route('front.profile') }}"> <i
                                         class="fas fa-user-alt ml-2"></i>معلوماتى</a>
+                                <a class="dropdown-item" href="{{ route('front.password') }}"> <i
+                                        class="fas fa-lock ml-2"></i>تغيير كلمة المرور</a>
                                 {{-- <a class="dropdown-item" href="#"> <i class="fas fa-bell ml-2"></i>اعدادات الاشعارات</a>
                                 <a class="dropdown-item" href="{{ route('front.favourite.posts') }}"> <i
                                     class="far fa-heart ml-2"></i>المفضلة</a> --}}
-                                <a class="dropdown-item" href="#"> <i class="far fa-comments ml-2"></i>ابلاغ</a>
+                                {{-- <a class="dropdown-item" href="#"> <i class="far fa-comments ml-2"></i>ابلاغ</a> --}}
                                 <a class="dropdown-item" href="{{ route('contact') }}"> <i
                                         class="fas fa-phone ml-2"></i>تواصل
                                     معنا</a>
@@ -115,14 +117,18 @@
                         {{-- <li class="nav-item">
                             <a class="nav-link" href="{{ route('about') }}">تصنيفات الدليل</a>
                         </li> --}}
+
+                        <li class="nav-item {{ Route::is('discount')?'active':'' }}">
+                            <a class="nav-link" href="{{ route('nearest-places') }}">اقرب الاماكن</a>
+                        </li>
                         <li class="nav-item {{ Route::is('discount')?'active':'' }}">
                             <a class="nav-link" href="{{ route('discount') }}">العروض</a>
                         </li>
-                        <li class="nav-item {{ Route::is('about')?'active':'' }}">
-                            <a class="nav-link" href="{{ route('about') }}">انضم الينا</a>
-                        </li>
                         <li class="nav-item {{ Route::is('workads')?'active':'' }}">
                             <a class="nav-link" href="{{ route('workads') }}">اعلانات التوظيف</a>
+                        </li>
+                        <li class="nav-item {{ Route::is('about')?'active':'' }}">
+                            <a class="nav-link" href="{{ route('about') }}">انضم الينا</a>
                         </li>
                         <li class="nav-item {{ Route::is('about')?'active':'' }}">
                             <a class="nav-link" href="{{ route('about') }}">من نحن</a>
@@ -163,9 +169,10 @@
                             {{-- <li class="py-2"><a href="{{ route('front.posts') }}">المقالات</a></li> --}}
                             {{-- <li class="py-2"><a href="{{ route('front.requests') }}">عن التبرع</a></li> --}}
                             {{-- <li class="py-2"><a href="{{ route('about') }}">تصنيفات الدليل</a></li> --}}
+                            <li class="py-2"><a href="{{ route('nearest-places') }}">اقرب الاماكن</a></li>
                             <li class="py-2"><a href="{{ route('discount') }}">العروض</a></li>
-                            <li class="py-2"><a href="{{ route('about') }}">انضم الينا</a></li>
                             <li class="py-2"><a href="{{ route('workads') }}">اعلانات التوظيف</a></li>
+                            <li class="py-2"><a href="{{ route('about') }}">انضم الينا</a></li>
                             <li class="py-2"><a href="{{ route('about') }}">من نحن</a></li>
                             <li class="py-2"><a href="{{ route('contact') }}">اتصل بنا</a></li>
                         </ul>

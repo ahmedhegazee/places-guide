@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\cpanel;
 
 use App\Http\Controllers\Controller;
+use App\Models\Discount;
+use App\Models\Place;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -24,6 +26,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('cpanel.home');
+        $countPlaces = Place::whereHas('owner', function ($query) {
+            $query->accepted(1);
+        })->get()->count();
+        $countOwnerRequest = Place::whereHas('owner', function ($query) {
+            $query->accepted(0);
+        })->get()->count();
+        $discountsCount = Discount::available()->count();
+        return view('cpanel.home', compact('countPlaces', 'countOwnerRequest', 'discountsCount'));
     }
 }

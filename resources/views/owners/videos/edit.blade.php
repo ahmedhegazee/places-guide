@@ -16,7 +16,7 @@
         <div class="card-body">
 
             @include('partials.validation-errors')
-            <video playsinline="playsinline" src={{ $record->src }} controls> </video>
+            <video playsinline="playsinline" src={{ $video->video }} controls> </video>
             {!!
             Form::model($video,[
             'route'=>['video.update',$video->id],

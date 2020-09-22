@@ -17,7 +17,9 @@ class Authenticate extends Middleware
         if (!$request->expectsJson()) {
             if ($request->route()->action['middleware'][1] == "auth:owners")
                 return route('owner.login');
-            else
+            elseif ($request->route()->action['middleware'][1] == "auth:clients") {
+                return route('front.login');
+            } else
                 return route('login');
         }
     }

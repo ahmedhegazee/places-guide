@@ -1,7 +1,3 @@
-{{-- Make page display all companies that have discounts --}}
-{{-- When the client click a category show the comapnies in the same page --}}
-{{-- redirect to another page to show the discounts of company --}}
-{{-- if there is no discounts show message --}}
 @extends('front.master')
 @section('content')
 <nav class="mb-4" aria-label="breadcrumb">

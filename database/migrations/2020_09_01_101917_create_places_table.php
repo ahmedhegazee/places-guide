@@ -33,6 +33,7 @@ class CreatePlacesTable extends Migration
             $table->string('instagram')->nullable();
             $table->string('youtube')->nullable();
             $table->string('main_image')->default('images/company.png');
+            $table->string('video')->nullable();
         });
     }
 

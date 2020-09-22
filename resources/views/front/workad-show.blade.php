@@ -17,7 +17,7 @@
                     <a class="category">
                         <div class="position-relative category-content d-flex">
 
-                            <img src="{{$ad->place->main_image }}" width="100%" style="height:60vh" alt="">
+                            {{-- <img src="{{$ad->place->main_image }}" width="100%" style="height:60vh" alt=""> --}}
                         </div>
                         <div class="card-body">
                             <h3 class="card-text">{{ $ad->title }}</h3>

@@ -15,7 +15,9 @@ use App\Models\Token;
 use App\Models\VisitorMessage;
 use App\Models\WorkAd;
 use App\Models\WorkerCategory;
+use Hash;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 
@@ -24,12 +26,32 @@ class MainController extends Controller
     use FormatDataCollection;
     public function home()
     {
+        if (!is_null(auth('clients')->user()))
+            $bestPlaces = Place::best()->searchCity(auth('clients')->user()->city->id)->take(6)->get();
+        else {
+            $bestPlaces = collect([]);
+        }
+        // dd($bestPlaces);
+        $ratedPlaces = DB::table('reviews')
+            ->join('places', 'reviews.place_id', '=', 'places.id')
+            ->select('places.id', 'places.name', 'places.main_image', DB::raw('AVG(reviews.rating) as avg_rating'))
+            ->groupBy('place_id')
+            ->orderBy('avg_rating', 'desc')
+            ->take(6)
+            ->get();
+        // dd($ratedPlaces);
+        // $ratedPlaces = Place::whereHas('owner', function ($query) {
+        //     $query->where('is_accepted', 1);
+        // })->has('reviews')->get()->sortByDesc(function ($place) {
+        //     return $place->rating;
+        // });
+        // dd($ratedPlaces);
         $places = Place::whereHas('owner', function ($query) {
             $query->where('is_accepted', 1);
         })
             ->latest()->take(6)->get();
-
-        return view('front.home', compact('places'));
+        // dd($places);
+        return view('front.home', compact('places', 'ratedPlaces', 'bestPlaces'));
     }
     public function about()
     {
@@ -74,7 +96,7 @@ class MainController extends Controller
     }
     public function profile()
     {
-        $client = auth('client')->user();
+        $client = auth('clients')->user();
         return view('front.profile', compact('client'));
     }
     public function updateProfile(Request $request)
@@ -84,6 +106,27 @@ class MainController extends Controller
             $request->merge(['password' => bcrypt($request->password)]);
         // dd($request->user());
         $request->user()->update($request->all());
+        flash('تم التحديث بنجاح', 'success');
+        return back();
+    }
+    public function password()
+    {
+        $client = auth('clients')->user();
+        return view('front.change-password', compact('client'));
+    }
+    public function updatePassword(Request $request)
+    {
+        $this->validate($request, [
+            'old_password' => 'required',
+            'password' => 'required|confirmed|min:8'
+        ]);
+        if (Hash::check($request->old_password, $request->user()->password))
+            $request->merge(['password' => bcrypt($request->password)]);
+        else {
+            flash('الرجاء ادخال كلمة المرور القديمة ', 'danger');
+            return back();
+        }
+        $request->user()->update($request->only('password'));
         flash('تم التحديث بنجاح', 'success');
         return back();
     }
@@ -149,5 +192,37 @@ class MainController extends Controller
     {
         //Make the show view
         return view('front.workad-show', compact('ad'));
+    }
+    public function validator($data)
+    {
+        $rules = [
+            'full_name' => 'required|string|min:3',
+            'email' => ['required', 'email', Rule::unique('clients')->ignore(auth('clients')->user()->id)],
+            'city_id' => 'sometimes|exists:cities',
+            'phone'
+            => ['required', 'string', Rule::unique('clients')->ignore(auth('clients')->user()->id)],
+        ];
+        return validator($data, $rules);
+    }
+    public function place(Place $place)
+    {
+        $count = $place->photos->count() + 1;
+        if (!is_null($place->vide0))
+            $count++;
+        return view('front.place', compact('place', 'count'));
+    }
+    public function review(Request $request, Place $place)
+    {
+        $this->validate($request, [
+            'content' => 'required|string|min:3|max:255',
+            'rating' => 'required|numeric',
+        ]);
+        $request->user()->reviews()->create([
+            'place_id' => $place->id,
+            'content' => $request->content,
+            'rating' => $request->rating,
+        ]);
+        flash(__('messages.add'), 'success');
+        return back();
     }
 }

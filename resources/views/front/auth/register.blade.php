@@ -1,5 +1,4 @@
-@inject('bloodTypes','App\Models\BloodType')
-@inject('governs','App\Models\Government')
+@inject('governs','App\Models\Governorate')
 @extends('front.master')
 @section('content')
 <div class="container">
@@ -23,21 +22,6 @@
                         value="{{ old('name') }}" placeholder="الاسم"></div>
                 <div><input type="email" name="email" class="form-control my-3 @error('email') is-invalid @enderror"
                         value="{{ old('email') }}" placeholder="البريد الاليكترونى"></div>
-                <div class="input-group mb-3">
-                    <input type="date" id="dob" name="dob" class="form-control @error('dob') is-invalid @enderror"
-                        value="{{ old('dob') }}" placeholder="تاريخ الميلاد">
-                    {{-- <i class="far fa-calendar-alt"></i> --}}
-                </div>
-                <div class="input-group mb-3">
-                    <select class="form-control custom-select @error('blood_type_id') is-invalid @enderror"
-                        name="blood_type_id" id="blood" required>
-                        <option value="" disabled selected>اختيار فصيلة دم</option>
-                        @foreach ($bloodTypes->all() as $bloodType)
-                        <option value={{$bloodType->id}}>{{$bloodType->name}}</option>
-                        @endforeach
-                    </select>
-                    <i class="fas fa-chevron-down"></i>
-                </div>
                 {{-- <input type="text" name="booldType" class="form-control my-3" placeholder="فصيلة الدم"> --}}
                 <div class="input-group mb-3">
                     {{-- <select name="capital" id="capital" class="form-control custom-select">
@@ -70,13 +54,6 @@
                 </div>
                 <input type="text" name="phone" value="{{ old('phone') }}"
                     class="form-control my-3 @error('phone') is-invalid @enderror" placeholder="رقم الهاتف">
-                <div class="input-group mb-3">
-                    <input type="date" id="last_donation_date" name="last_donation_date"
-                        class="form-control @error('last_donation_date') is-invalid @enderror"
-                        placeholder="اخر تاريخ تبرع" aria-label="Username" value="{{ old('last_donation_date') }}"
-                        aria-describedby="basic-addon1">
-                    {{-- <i class="far fa-calendar-alt"></i> --}}
-                </div>
                 <input type="password" name="password" class="form-control my-3 @error('password') is-invalid @enderror"
                     placeholder="كلمة المرور">
                 <input type="password" name="password_confirmation"

@@ -174,16 +174,16 @@ dir="rtl"
                             </a>
                         </li>
 
-                        {{-- <li class="nav-item">
+                        <li class="nav-item">
                             <a href="{{ route('setting.index') }}"
-                        class="nav-link {{ Route::currentRouteName()=='setting.index'?'active':'' }}">
-                        <i class="nav-icon fas fa-cogs"></i>
-                        <p>
-                            {{ __('pages.Settings') }}
+                                class="nav-link {{ Route::currentRouteName()=='setting.index'?'active':'' }}">
+                                <i class="nav-icon fas fa-cogs"></i>
+                                <p>
+                                    {{ __('pages.Settings') }}
 
-                        </p>
-                        </a>
-                        </li> --}}
+                                </p>
+                            </a>
+                        </li>
                         <li class="nav-item">
                             <a href="{{ route('change-password-form') }}"
                                 class="nav-link {{ Route::currentRouteName()=='change-password-form'?'active':'' }}">

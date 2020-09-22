@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Owner;
 
 use App\Http\Controllers\Controller;
-use App\Models\PlaceVideo;
+use App\Models\Place;
 use Illuminate\Http\Request;
 
 class PlaceVideoController extends Controller
@@ -15,8 +15,8 @@ class PlaceVideoController extends Controller
      */
     public function index()
     {
-        $records = PlaceVideo::paginate(10);
-        return view('owners.videos.index', compact('records'));
+        $video = auth('owners')->user()->place->video;
+        return view('owners.videos.show', compact('video'));
     }
 
     /**
@@ -44,32 +44,22 @@ class PlaceVideoController extends Controller
         $video = $request->file('file');
         //insert all images in only one time || TODO Search for that
 
-        $request->user()->place->videos()->create([
-            'src' => storeFileOnGoogleCloud($video, 'videos')
+        $request->user()->place->update([
+            'video' => storeFileOnGoogleCloud($video, 'videos')
         ]);
 
         flash(__('messages.add'), 'success');
         return redirect(route('video.index'));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  PlaceVideo $video
-     * @return \Illuminate\Http\Response
-     */
-    public function show(PlaceVideo $video)
-    {
-        return view('owners.videos.show', compact('video'));
-    }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  PlaceVideo $video
+     * @param  Place $video
      * @return \Illuminate\Http\Response
      */
-    public function edit(PlaceVideo $video)
+    public function edit(Place $video)
     {
 
         return view('owners.videos.edit', compact('video'));
@@ -79,16 +69,16 @@ class PlaceVideoController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  PlaceVideo $video
+     * @param  Place $video
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, PlaceVideo $video)
+    public function update(Request $request, Place $video)
     {
         $this->validate($request, [
-            'file' => 'required|image|max:4000'
+            'file' => 'required|file|mimes:mp4,webm,mpeg|max:4000'
         ]);
-        deleteFile(str_replace(env('APP_URL') . '/', '', $video->src));
-        $video->update(['src' => storeFileOnGoogleCloud($request->file('file'), 'videos')]);
+        // deleteFile(str_replace(env('APP_URL') . '/', '', $video->src));
+        $video->update(['video' => storeFileOnGoogleCloud($request->file('file'), 'videos')]);
         flash(__('messages.update'), 'success');
         return redirect()->route('video.index');
     }
@@ -96,10 +86,10 @@ class PlaceVideoController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  PlaceVideo $video
+     * @param  Place $video
      * @return \Illuminate\Http\Response
      */
-    public function destroy(PlaceVideo $video)
+    public function destroy(Place $video)
     {
         deleteFile(str_replace(env('APP_URL') . '/', '', $video->src));
         $check = $video->delete();

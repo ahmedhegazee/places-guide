@@ -11,7 +11,7 @@ class Place extends Model
     use Search, FormatDataCollection;
     protected $table = 'places';
     public $timestamps = true;
-    protected $fillable = array('name', 'city_id', 'address', 'about', 'latitude', 'longitude', 'place_owner_id', 'phone', 'sub_category_id', 'category_id', 'is_best', 'is_accepted', 'opened_time', 'closed_time', 'closed_days', 'website', 'twitter', 'facebook', 'instagram', 'youtube', 'main_image', 'tax_record');
+    protected $fillable = array('name', 'city_id', 'address', 'about', 'latitude', 'longitude', 'place_owner_id', 'phone', 'sub_category_id', 'category_id', 'is_best', 'is_accepted', 'opened_time', 'closed_time', 'closed_days', 'website', 'twitter', 'facebook', 'instagram', 'youtube', 'main_image', 'tax_record', 'video');
 
     public function city()
     {
@@ -43,14 +43,9 @@ class Place extends Model
         return $this->hasMany('App\Models\PlacePhoto');
     }
 
-    public function videos()
-    {
-        return $this->hasMany('App\Models\PlaceVideo');
-    }
-
     public function reviews()
     {
-        return $this->belongsToMany('App\Models\Review');
+        return $this->hasMany('App\Models\Review');
     }
 
     public function ads()
@@ -97,5 +92,37 @@ class Place extends Model
                 $query->where('sub_category_id', $category);
             }
         });
+    }
+    public $enableRatingAttribute = false;
+    protected $appends = ['rating'];
+    public function getRatingAttribute()
+    {
+        if ($this->enableRatingAttribute) {
+            $count = $this->reviews->count();
+            if ($count > 0) {
+                return floatval($this->reviews->avg('rating'));
+            } else
+                return 0;
+        } else {
+            return null;
+        }
+    }
+    public function getMainImageAttribute()
+    {
+        if ($this->attributes['main_image'] == 'images/company.png')
+            return asset('images/company.png');
+        else
+            return $this->attributes['main_image'];
+    }
+
+    public function scopeBest($query)
+    {
+        return $query->where('is_best', 1);
+    }
+    public function scopeNearest($query, $lat, $long)
+    {
+        //6380 =>is for km and it is the radius of earth
+        //< 10000 means less than 10 km
+        return $query->whereRaw("ACOS(SIN(RADIANS(latitude))*SIN(RADIANS($lat))+COS(RADIANS(latitude))*COS(RADIANS($lat))*COS(RADIANS(longitude)-RADIANS($long)))*6380 < 10");
     }
 }

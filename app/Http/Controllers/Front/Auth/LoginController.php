@@ -49,7 +49,7 @@ class LoginController extends Controller
     {
         // $request->merge(['is_banned' => 0]);
         // dd($request);
-        return $request->only('phone', 'password', 'is_banned');
+        return $request->only('email', 'password', 'is_banned');
     }
     public function showLoginForm()
     {
@@ -57,7 +57,7 @@ class LoginController extends Controller
     }
     public function username()
     {
-        return 'phone';
+        return 'email';
     }
     protected function validateLogin(Request $request)
     {
@@ -68,7 +68,7 @@ class LoginController extends Controller
                 'password' => 'required|string',
             ],
             [
-                'phone.required' => 'حقل الجوال مطلوب',
+                'email.required' => 'حقل البريد الالكتروني مطلوب',
                 'password.required' => 'حقل كلمة المرور مطلوب',
             ]
         );

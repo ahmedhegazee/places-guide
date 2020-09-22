@@ -1,5 +1,5 @@
 @extends('owners.app')
-@inject('model', 'App\Models\PlaceVideo')
+{{-- @inject('model', 'App\Models\PlaceVideo') --}}
 @section('page_title')
 {{ __('pages.Company Videos') }}
 @endsection
@@ -19,7 +19,7 @@
 
             @include('partials.validation-errors')
             {!!
-            Form::model($model,[
+            Form::model(null,[
             'route'=>'video.store',
             'files'=>true
             ])

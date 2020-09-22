@@ -16,11 +16,37 @@
         <div class="col-12 col-sm-6 col-md-3">
             <div class="info-box mb-3">
                 <div class="info-box-content">
-                    <span class="info-box-text">Clients</span>
+                    <span class="info-box-text">العملاء</span>
                     <span class="info-box-number">{{$client->count()}}</span>
                 </div>
                 <span class="info-box-icon bg-info elevation-1"><i class="fas fa-users"></i></span>
-
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box mb-3">
+                <div class="info-box-content">
+                    <span class="info-box-text">الشركات</span>
+                    <span class="info-box-number">{{$countPlaces}}</span>
+                </div>
+                <span class="info-box-icon bg-success elevation-1"><i class="fas fa-map-marker"></i></span>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box mb-3">
+                <div class="info-box-content">
+                    <span class="info-box-text">طلبات الانضمام</span>
+                    <span class="info-box-number">{{$countOwnerRequest}}</span>
+                </div>
+                <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-plus"></i></span>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box mb-3">
+                <div class="info-box-content">
+                    <span class="info-box-text">العروض المتاحة</span>
+                    <span class="info-box-number">{{$discountsCount}}</span>
+                </div>
+                <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-percent"></i></span>
             </div>
         </div>
         {{-- <div class="col-12 col-sm-6 col-md-3">

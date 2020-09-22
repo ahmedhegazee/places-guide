@@ -31,7 +31,7 @@
             @foreach ($places as $record)
             <div class="col-md-4 col-sm-12">
                 <div class="card mb-4 shadow-sm">
-                    <a href="#" class="category">
+                    <a href="{{ route('place',['place'=>$record->id]) }}" class="category">
                         <div class="position-relative category-content">
                             <img src="{{ $record->main_image }}" width="100%" height="200px" alt="">
                             <span>{{ $record->name }}</span>
@@ -47,85 +47,65 @@
         </div>
     </div>
 </section>
-<!--About section-->
-<!--End About-->
-<!--Articles section-->
-{{-- <section class="articles py-5">
-    <div class="title">
-        <div class="container">
-            <h2><span class="py-1">المقالات</span> </h2>
-        </div>
-        <hr />
-    </div>
-    <div class="article-slide mt-3">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="arrow text-left">
-                        <button type="button" class="prev-arrow px-2 py-1"><i class="fas fa-chevron-right"></i></button>
-                        <button type="button" class="next-arrow px-2 py-1"><i class="fas fa-chevron-left"></i></button>
-                    </div>
+@auth('clients')
+<section class="categories py-2">
+    <h2 class="text-center mb-4"> افضل الاماكن في مدينتك</h2>
+    <div class="container">
+        <div class="row">
+            @foreach ($bestPlaces as $place)
+            <div class="col-md-4 col-sm-12">
+                <div class="card mb-4 shadow-sm">
+                    <a href="{{ route('place',['place'=>$place->id]) }}" class="category">
+                        <div class="position-relative category-content">
+                            <img src="{{$place->main_image }}" width="100%" alt="">
+                            {{-- <span>{{ $place->name }}</span> --}}
+                        </div>
+                        <div class="card-body">
+                            <h3 class="card-text">{{ $place->name }}</h3>
+                        </div>
+                    </a>
                 </div>
             </div>
-            <div class="slick2">
-                @foreach($posts as $post)
-                <div class="slick-cont">
-                    <div class="card">
-                        <img src="{{ asset($post->photo) }}" class="card-img-top" alt="slick-img">
-@auth('clients')
-<div class="heart-icon" data-post="{{ $post->id }}"><i
-        class="{{ auth('clients')->user()->favouritePosts->contains($post->id)?'fas':'far' }} fa-heart"></i>
-</div>
-@endauth
-<div class="card-body">
-    <h5 class="card-title">{{ $post->title }}</h5>
-    <p style="overflow: hidden;height:110px;" class="mb-4">{{ $post->content }}
-    </p>
-    <div class="text-center"><a href="{{ route('front.post',['post'=>$post->id]) }}" class="btn bg px-5">التفاصيل</a>
+            @endforeach
+        </div>
     </div>
+</section>
+@endauth
+{{-- <section class="best-places py-2">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-sm-12">
+                <h4>أكتر الاماكن شعبية</h4>
+                @foreach ($ratedPlaces as $place)
+                <div class="card mb-4 shadow-sm">
+                    <a href="{{ route('category',['category'=>$record->id]) }}" class="category">
+<div class="position-relative category-content">
+    <img src="{{$record->image }}" width="50px" height="50px" alt="">
+    <span>{{ $record->name }}</span>
 </div>
-</div>
+</a>
 </div>
 @endforeach
+
 </div>
-</div>
-</div>
-<!--End container-->
-</section> --}}
-<!--End Articles-->
-<!--Donation-->
-{{-- <section class="donation">
-    <h2 class="text-center"><span class="py-1">طلبات التبرع</span> </h2>
-    <hr />
-    <div class="donation-request py-5">
-        <div class="container">
-            <div class="selection w-75 d-flex mx-auto my-4">
-                <select class="custom-select">
-                    <option selected>اختر فصيلة الدم</option>
-                    <option value="+AB">+AB</option>
-                    <option value="O-">O-</option>
-                    <option value="A+">A+</option>
-                    <option value="B+">B+</option>
-                </select>
-                <select class="custom-select mx-md-3 mx-sm-1">
-                    <option selected>اختر المدينة</option>
-                    <option value="القاهرة">القاهرة</option>
-                    <option value="الجيزة">الجيزة</option>
-                    <option value="القليوبيه">القليوبيه</option>
-                    <option value="سوهاج">سوهاج</option>
-                </select>
-                <div><i class="fas fa-search"></i></div>
+<div class="col-md-6 col-sm-12">
+    <h4>اخترنا لكم</h4>
+    @foreach ($bestPlaces as $place)
+    <div class="card mb-4 shadow-sm">
+        <a href="{{ route('category',['category'=>$record->id]) }}" class="category">
+            <div class="position-relative category-content">
+                <img src="{{$record->image }}" width="50px" height="50px" alt="">
+                <span>{{ $record->name }}</span>
             </div>
-            <!--End selection-->
-            <div id="donations"></div>
-            <!--End last req-item-->
-        </div>
-        <!--End container-->
+        </a>
     </div>
-    <!--End Donation-request-->
+    @endforeach
+</div>
+</div>
+</div>
 </section> --}}
-<!--End Donation-->
-<!--Contact-us-->
+{{-- Best Places based on City and Admin Choices  --}}
+{{-- Best places based on ratings --}}
 <section class="contact-us py-5 ">
     <div class="container">
         <div class="row">
@@ -134,7 +114,9 @@
                 <p class="my-5">يمكنك الأتصال بنا للاستفسار عن معلومة وسيتم الرد عليكم</p>
                 <div class="phone-nm mx-auto">
                     <a href="https://wa.me/2{{ $settings->get(1)->value }}">
-                        <p class="text-right"><span class="">+2</span>{{ $settings->get(1)->value }}</p>
+                        <p class="text-right">
+                            {{-- <span class="">+2</span> --}}
+                            {{ $settings->get(1)->value }}</p>
                         <img src="{{ asset('front/imgs/whats.png') }}" alt="whats-phone">
                     </a>
                 </div>

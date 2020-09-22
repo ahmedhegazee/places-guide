@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Place;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 /*
@@ -16,7 +17,6 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-
 Route::group(['prefix' => 'v1', 'namespace' => 'Api'], function () {
     Route::get('governments', 'MainController@getGovernments');
     Route::get('cities', 'MainController@getCities');
@@ -27,6 +27,14 @@ Route::group(['prefix' => 'v1', 'namespace' => 'Api'], function () {
     Route::post('login', 'AuthController@login');
     Route::post('send-code', 'AuthController@sendResetCode');
     Route::post('reset', 'AuthController@resetPassword');
+    Route::get('nearest-places', function (Request $request) {
+        $places = Place::nearest($request->lat, $request->long)->whereHas('owner', function ($query) {
+            $query->accepted(1);
+        })->take(10)
+            ->get(['id', 'name', 'main_image', 'latitude', 'longitude']);
+        // dd($places);
+        return jsonResponse(1, 'nearest places', $places);
+    });
     // auth is the middleware , client_api is the guard we defined it in the auth file
     Route::group(['middleware' => 'auth:client_api'], function () {
         Route::post('token', 'AuthController@storeToken');

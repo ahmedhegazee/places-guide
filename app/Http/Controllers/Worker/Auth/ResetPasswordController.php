@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Front\Auth;
+namespace App\Http\Controllers\Worker\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Str;
@@ -40,8 +40,10 @@ class ResetPasswordController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest:client');
         $this->middleware('guest');
+        $this->middleware('guest:clients');
+        $this->middleware('guest:owners');
+        $this->middleware('guest:workers');
     }
     /**
      * Display the password reset view for the given token.

@@ -16,7 +16,7 @@ class SettingController extends Controller
     public function index()
     {
         $records = Settings::all();
-        return view('settings.index', compact('records'));
+        return view('cpanel.settings.index', compact('records'));
     }
 
     /**
@@ -27,7 +27,7 @@ class SettingController extends Controller
      */
     public function edit(Settings $setting)
     {
-        return view('settings.edit', compact('setting'));
+        return view('cpanel.settings.edit', compact('setting'));
     }
 
     /**

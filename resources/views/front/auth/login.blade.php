@@ -15,8 +15,8 @@
         <div class="my-5 text-center"><img src="{{ asset('front/imgs/logo.png') }}" alt="logo"></div>
         <form action="{{ url('/login') }}" class="w-75 mx-auto my-5" method="POST">
             @csrf
-            <input type="text" name="phone" class="form-control  my-3 py-3" id="usName" value="{{ old('phone') }}"
-                placeholder="الجوال">
+            <input type="text" name="email" class="form-control  my-3 py-3" id="usName" value="{{ old('email') }}"
+                placeholder="البريد الالكتروني">
             <input type="password" name="password" class="form-control my-3 py-3" id="usPassword"
                 placeholder="كلمة المرور">
             <div class="form-check float-right my-4">

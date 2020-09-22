@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Front\Auth;
 
 use App\User;
 use App\Http\Controllers\Controller;
-use App\Models\BloodType;
 use App\Models\City;
 use App\Models\Client;
 use Auth;
@@ -42,8 +41,10 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest:client');
         $this->middleware('guest');
+        $this->middleware('guest:clients');
+        $this->middleware('guest:owners');
+        $this->middleware('guest:workers');
     }
     public function showRegistrationForm()
     {
@@ -61,11 +62,8 @@ class RegisterController extends Controller
             'name' => 'required|string|min:5',
             'password' => 'required|string|min:8|confirmed',
             'email' => 'required|email|unique:clients',
-            'phone' => ['required', 'regex:/^(010|011|012|015){1}[0-9]{8}$/', 'unique:clients'],
-            'dob' => 'required|date|before: -16 years',
-            'last_donation_date' => 'required|date|before_or_equal: -1 days',
+            'phone' => ['required', 'unique:clients'],
             'city_id' => ['required', Rule::in(City::all()->pluck('id')->toArray())],
-            'blood_type_id' => ['required', Rule::in(BloodType::all()->pluck('id')->toArray())],
         ], [
             'name.required' => 'حقل الاسم مطلوب',
             'name.min' => 'يجب ان يحتوي حقل الاسم على الاقل خمس احرف',
@@ -79,23 +77,10 @@ class RegisterController extends Controller
             'email.unique' => 'هذا البريد الالكنروني موجود بالفعل',
 
             'phone.required' => 'حقل الجوال مطلوب',
-            'phone.regex' => 'يجب كتابة رقم الجوال بشكل صحيح',
             'phone.unique' => 'رقم الجوال موجود بالفعل',
-
-            'dob.required' => 'حقل تاريخ الميلاد مطلوب',
-            'dob.date' => 'الرجاء كتابة تاريخ الميلاد بشكل صحيح',
-            'dob.before' => 'يجب ان يكون سن المتبرع على الاقل ١٦ سنة',
-
-            'last_donation_date.required' => 'حقل تاريخ اخر تبرع مطلوب',
-            'last_donation_date.date' => 'الرجاء كتابة تاريخ اخر تبرع بشكل صحيح',
-            'last_donation_date.before_or_equal' => 'الرجاء كتابة تاريخ اخر تبرع بشكل صحيح',
 
             'city_id.required' => 'حقل المدينة مطلوب',
             'city_id.in' => 'الرجاء اختيار المدينة بشكل صحيح',
-
-            'blood_type_id.required' => 'حقل فصيلة الدم مطلوب',
-            'blood_type_id.in' => 'الرجاء اختيار فصيلة الدم بشكل صحيح'
-
         ]);
     }
 
@@ -108,18 +93,15 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return Client::create([
-            'name' => $data['name'],
+            'full_name' => $data['name'],
             'email' => $data['email'],
             'phone' => $data['phone'],
-            'dob' => $data['dob'],
-            'last_donation_date' => $data['last_donation_date'],
             'city_id' => $data['city_id'],
-            'blood_type_id' => $data['blood_type_id'],
             'password' => Hash::make($data['password']),
         ]);
     }
     protected function guard()
     {
-        return Auth::guard("client");
+        return Auth::guard("clients");
     }
 }

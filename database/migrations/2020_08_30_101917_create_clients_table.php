@@ -15,6 +15,7 @@ class CreateClientsTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('phone');
+            $table->integer('city_id')->unsigned();
             $table->tinyInteger('is_banned')->default(0);
             $table->rememberToken();
         });

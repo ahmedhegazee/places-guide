@@ -9,6 +9,8 @@ Route::get('/discounts', 'MainController@discounts')->name('discount');
 Route::get('/discount/{place}', 'MainController@showPlaceDiscounts')->name('discount.show');
 Route::get('/workads', 'MainController@workads')->name('workads');
 Route::get('/workads/{ad}', 'MainController@showWorkAd')->name('workads.show');
+Route::get('/place/{place}', 'MainController@place')->name('place');
+Route::view('/nearest-places', 'front.nearest_places')->name('nearest-places');
 Route::group(['namespace' => 'Auth'], function () {
     Route::get('/login', 'LoginController@showLoginForm')->name('front.login');
     Route::post('/login', 'LoginController@login');
@@ -20,9 +22,12 @@ Route::group(['namespace' => 'Auth'], function () {
     Route::post('/password/reset', 'ResetPasswordController@reset')->name('password.update');
 });
 
-Route::group(['middleware' => ['auth:client']], function () {
+Route::group(['middleware' => ['auth:clients']], function () {
     Route::get('/profile', 'MainController@profile')->name('front.profile');
     Route::put('/profile', 'MainController@updateProfile');
+    Route::get('/change-password', 'MainController@password')->name('front.password');
+    Route::put('/change-password', 'MainController@updatePassword');
     Route::post('/logout', 'Auth\LoginController@logout');
+    Route::post('/review/{place}', 'MainController@review')->name('review');
 });
 // });

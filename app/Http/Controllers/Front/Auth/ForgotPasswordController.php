@@ -30,8 +30,10 @@ class ForgotPasswordController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest:clients');
         $this->middleware('guest');
+        $this->middleware('guest:clients');
+        $this->middleware('guest:owners');
+        $this->middleware('guest:workers');
     }
     protected function validateEmail(Request $request)
     {

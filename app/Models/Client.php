@@ -13,7 +13,7 @@ class Client extends Authenticatable implements CanResetPassword
     use Notifiable, Search;
     protected $table = 'clients';
     public $timestamps = true;
-    protected $fillable = array('full_name', 'email', 'password', 'is_banned', 'phone');
+    protected $fillable = array('full_name', 'email', 'password', 'is_banned', 'phone', 'city_id');
 
     public function reviews()
     {
@@ -31,5 +31,13 @@ class Client extends Authenticatable implements CanResetPassword
             ];
             return $status[$this->attributes['is_banned']];
         }
+    }
+    public function city()
+    {
+        return $this->belongsTo('App\Models\City');
+    }
+    public function isReviewed($placeId)
+    {
+        return !$this->reviews()->where('place_id', $placeId)->count();
     }
 }

@@ -28,3 +28,5 @@ use App\ImageUtility;
 Route::group(['prefix' => 'dashboard'], function () {
     Auth::routes(['register' => false, 'verify' => false, 'reset' => false]);
 });
+Route::get('/join-us', 'Owner\Auth\RegisterController@showRegistrationForm')->name('owner.register');
+Route::post('/join-us', 'Owner\Auth\RegisterController@register');

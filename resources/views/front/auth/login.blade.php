@@ -12,7 +12,7 @@
     <!--End Breadcrumb-->
     <section class="signup-form my-4 py-4">
         @include('partials.validation-errors')
-        <div class="my-5 text-center"><img src="{{ asset('front/imgs/logo.png') }}" alt="logo"></div>
+        <div class="my-5 text-center"><img src="{{ asset('images/logo.png') }}" alt="logo"></div>
         <form action="{{ url('/login') }}" class="w-75 mx-auto my-5" method="POST">
             @csrf
             <input type="text" name="email" class="form-control  my-3 py-3" id="usName" value="{{ old('email') }}"

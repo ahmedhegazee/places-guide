@@ -118,7 +118,7 @@
                             <a class="nav-link" href="{{ route('about') }}">تصنيفات الدليل</a>
                         </li> --}}
 
-                        <li class="nav-item {{ Route::is('discount')?'active':'' }}">
+                        <li class="nav-item {{ Route::is('nearest-places')?'active':'' }}">
                             <a class="nav-link" href="{{ route('nearest-places') }}">اقرب الاماكن</a>
                         </li>
                         <li class="nav-item {{ Route::is('discount')?'active':'' }}">
@@ -127,8 +127,8 @@
                         <li class="nav-item {{ Route::is('workads')?'active':'' }}">
                             <a class="nav-link" href="{{ route('workads') }}">اعلانات التوظيف</a>
                         </li>
-                        <li class="nav-item {{ Route::is('about')?'active':'' }}">
-                            <a class="nav-link" href="{{ route('about') }}">انضم الينا</a>
+                        <li class="nav-item {{ Route::is('owner.register')?'active':'' }}">
+                            <a class="nav-link" href="{{ route('owner.register') }}">انضم الينا</a>
                         </li>
                         <li class="nav-item {{ Route::is('about')?'active':'' }}">
                             <a class="nav-link" href="{{ route('about') }}">من نحن</a>
@@ -172,7 +172,7 @@
                             <li class="py-2"><a href="{{ route('nearest-places') }}">اقرب الاماكن</a></li>
                             <li class="py-2"><a href="{{ route('discount') }}">العروض</a></li>
                             <li class="py-2"><a href="{{ route('workads') }}">اعلانات التوظيف</a></li>
-                            <li class="py-2"><a href="{{ route('about') }}">انضم الينا</a></li>
+                            <li class="py-2"><a href="{{ route('owner.register') }}">انضم الينا</a></li>
                             <li class="py-2"><a href="{{ route('about') }}">من نحن</a></li>
                             <li class="py-2"><a href="{{ route('contact') }}">اتصل بنا</a></li>
                         </ul>

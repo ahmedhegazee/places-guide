@@ -12,7 +12,7 @@
                         <div class="position-relative category-content">
                             <img src="{{$record->image }}" width="100%" alt="">
                             <span>{{ $record->name }}</span>
-                            <span class="count">{{ $record->places->count() }}</span>
+                            <span class="count">{{ $record->acceptedPlaces()->count() }}</span>
                         </div>
                         <div class="card-body">
                             <h3 class="card-text">{{ $record->name }}</h3>

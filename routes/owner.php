@@ -3,8 +3,6 @@
 Route::group(['namespace' => 'Auth'], function () {
     Route::get('/login', 'LoginController@showLoginForm')->name('owner.login');
     Route::post('/login', 'LoginController@login');
-    Route::get('/register', 'RegisterController@showRegistrationForm')->name('owner.register');
-    Route::post('/register', 'RegisterController@register');
 
     Route::get('/password/reset', 'ForgotPasswordController@showLinkRequestForm')->name('password.request');
     Route::get('/password/reset/{token}', 'ResetPasswordController@showResetForm')->name('password.reset');

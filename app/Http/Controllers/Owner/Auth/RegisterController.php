@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers\Owner\Auth;
 
-use App\User;
+use App\FormatDataCollection;
 use App\Http\Controllers\Controller;
-use App\Models\BloodType;
 use App\Models\City;
-use App\Models\Client;
+use App\Models\PlaceOwner;
 use Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Validation\Rule;
+use Illuminate\Http\Request;
+use Illuminate\Auth\Events\Registered;
+
 
 class RegisterController extends Controller
 {
@@ -26,7 +28,7 @@ class RegisterController extends Controller
     |
     */
 
-    use RegistersUsers;
+    use RegistersUsers, FormatDataCollection;
 
     /**
      * Where to redirect users after registration.
@@ -49,7 +51,11 @@ class RegisterController extends Controller
     }
     public function showRegistrationForm()
     {
-        return view('owners.auth.register');
+        $days = $this->getDays();
+        $governs = $this->getGovernorates();
+        $categories = $this->getCategories();
+        // dd($governs);
+        return view('owners.auth.register', compact('days', 'governs', 'categories'));
     }
     /**
      * Get a validator for an incoming registration request.
@@ -62,12 +68,19 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => 'required|string|min:5',
             'password' => 'required|string|min:8|confirmed',
-            'email' => 'required|email|unique:clients',
-            'phone' => ['required', 'regex:/^(010|011|012|015){1}[0-9]{8}$/', 'unique:clients'],
-            'dob' => 'required|date|before: -16 years',
-            'last_donation_date' => 'required|date|before_or_equal: -1 days',
-            'city_id' => ['required', Rule::in(City::all()->pluck('id')->toArray())],
-            'blood_type_id' => ['required', Rule::in(BloodType::all()->pluck('id')->toArray())],
+            'email' => 'required|email|unique:place_owner',
+            'account_type' => 'required|numeric|in:0,1',
+            'name' => 'required|string|min:3|max:255',
+            'tax_record' => 'required|string|unique:places',
+            'address' => 'required|string|min:3|max:255',
+            'about' => 'required|string',
+            'phone' => 'required|string',
+            'city_id' => 'required|numeric|exists:cities,id',
+            'category_id' => 'required|numeric|exists:categories,id',
+            'opened_time' => 'required|string',
+            'closed_time' => 'required|string',
+            'closed_days' => ['array', Rule::in(array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'))]
+
         ], [
             'name.required' => 'حقل الاسم مطلوب',
             'name.min' => 'يجب ان يحتوي حقل الاسم على الاقل خمس احرف',
@@ -80,23 +93,6 @@ class RegisterController extends Controller
             'email.email' => 'الرجاء كتابة البريد الالكتروني بشكل صحيح',
             'email.unique' => 'هذا البريد الالكنروني موجود بالفعل',
 
-            'phone.required' => 'حقل الجوال مطلوب',
-            'phone.regex' => 'يجب كتابة رقم الجوال بشكل صحيح',
-            'phone.unique' => 'رقم الجوال موجود بالفعل',
-
-            'dob.required' => 'حقل تاريخ الميلاد مطلوب',
-            'dob.date' => 'الرجاء كتابة تاريخ الميلاد بشكل صحيح',
-            'dob.before' => 'يجب ان يكون سن المتبرع على الاقل ١٦ سنة',
-
-            'last_donation_date.required' => 'حقل تاريخ اخر تبرع مطلوب',
-            'last_donation_date.date' => 'الرجاء كتابة تاريخ اخر تبرع بشكل صحيح',
-            'last_donation_date.before_or_equal' => 'الرجاء كتابة تاريخ اخر تبرع بشكل صحيح',
-
-            'city_id.required' => 'حقل المدينة مطلوب',
-            'city_id.in' => 'الرجاء اختيار المدينة بشكل صحيح',
-
-            'blood_type_id.required' => 'حقل فصيلة الدم مطلوب',
-            'blood_type_id.in' => 'الرجاء اختيار فصيلة الدم بشكل صحيح'
 
         ]);
     }
@@ -105,23 +101,44 @@ class RegisterController extends Controller
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
-     * @return \App\User
+     * @return \App\Models\PlaceOwner
      */
     protected function create(array $data)
     {
-        return Client::create([
-            'name' => $data['name'],
+        return PlaceOwner::create([
+            'full_name' => $data['full_name'],
             'email' => $data['email'],
-            'phone' => $data['phone'],
-            'dob' => $data['dob'],
-            'last_donation_date' => $data['last_donation_date'],
-            'city_id' => $data['city_id'],
-            'blood_type_id' => $data['blood_type_id'],
+            'account_type' => $data['account_type'],
             'password' => Hash::make($data['password']),
         ]);
+    }
+    public function createPlace(array $data, PlaceOwner $owner)
+    {
+        $owner->place()->create($data);
     }
     protected function guard()
     {
         return Auth::guard("owners");
+    }
+    /**
+     * Handle a registration request for the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+        $messages = [];
+        if ($request->closed_time <= $request->opened_time)
+            return back()->with('closed_time', 'الرجاء اختيار معاد اغلاق مناسب');
+        $request->merge(['closed_days' => $request->has('closed_days') ? implode(",", $request->closed_days) : '', 'password' => bcrypt($request->password)]);
+
+        $owner = $this->create($request->all());
+        $this->createPlace($request->all(), $owner);
+        flash(__('messages.add'), 'success');
+        // $this->guard()->login($user);
+
+        return  back();
     }
 }

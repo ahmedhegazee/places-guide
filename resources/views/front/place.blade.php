@@ -6,6 +6,7 @@
         <li class="breadcrumb-item active" aria-current="page">{{ $place->name }}</li>
     </ol>
 </nav>
+{!! $place->enableRatingAttribute=true !!}
 <section class="categories py-2 ">
     <div class="container">
         <div class="row mb-5">
@@ -98,6 +99,7 @@
                         @empty
 
                         @endforelse
+                        @auth('clients')
                         @if (auth('clients')->user()->isReviewed($place->id))
                         <div class="mb-4 review">
                             <form action="{{ route('review',['place'=>$place->id]) }}" method="POST">
@@ -120,6 +122,29 @@
                             </form>
                         </div>
                         @endif
+                        @endauth
+                        @guest
+                        <div class="mb-4 review">
+                            <form action="{{ route('review',['place'=>$place->id]) }}" method="POST">
+                                @include('flash::message')
+                                @csrf
+                                <div class="row justify-content-end ml-2">
+                                    @for ($i = 0; $i < 5; $i++) <i class="far fa-star mr-1" onclick="rate({{ $i+1 }})">
+                                        </i>
+                                        @endfor
+                                </div>
+                                <input type="hidden" name="rating" id="rating" value="0">
+                                <div class="form-group">
+                                    <label for="content">تعليق</label>
+                                    <textarea name="content" class="form-control" cols="30" rows="10"
+                                        placeholder="اكتب لنا تجربتك مع هذا المكان" required></textarea>
+                                </div>
+                                <div class="form-group ">
+                                    <button class="btn btn-primary" type="submit">{{ __('pages.Submit') }}</button>
+                                </div>
+                            </form>
+                        </div>
+                        @endguest
                     </div>
 
                 </div>

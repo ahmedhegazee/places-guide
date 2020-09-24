@@ -51,10 +51,18 @@ class LoginController extends Controller
     //     // dd($request);
     //     return $request->only('phone', 'password', 'is_banned');
     // }
+    // public function showLoginForm()
+    // {
+
+    //     return view('owners.auth.login');
+    // }
     public function showLoginForm()
     {
-
-        return view('owners.auth.login');
+        $loginRoute = route('owner.login');
+        $registerRoute = route('owner.register');
+        $title = " لوحة تحكم صاحب الشركة";
+        $resetPasswordRoute = route('owner.password.request');
+        return view('front.auth.login', compact('loginRoute', 'registerRoute', 'resetPasswordRoute', 'title'));
     }
     // public function username()
     // {

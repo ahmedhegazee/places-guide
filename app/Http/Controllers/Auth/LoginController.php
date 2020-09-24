@@ -40,6 +40,14 @@ class LoginController extends Controller
         $this->middleware('guest:owners')->except('logout');
         $this->middleware('guest:workers')->except('logout');
     }
+    public function showLoginForm()
+    {
+        $loginRoute = route('login');
+        $registerRoute = null;
+        $title = " لوحة تحكم مدير الموقع";
+        $resetPasswordRoute = null;
+        return view('front.auth.login', compact('loginRoute', 'registerRoute', 'resetPasswordRoute', 'title'));
+    }
     public function logout(Request $request)
     {
         $this->guard()->logout();

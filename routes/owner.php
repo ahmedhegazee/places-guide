@@ -4,10 +4,10 @@ Route::group(['namespace' => 'Auth'], function () {
     Route::get('/login', 'LoginController@showLoginForm')->name('owner.login');
     Route::post('/login', 'LoginController@login');
 
-    Route::get('/password/reset', 'ForgotPasswordController@showLinkRequestForm')->name('password.request');
-    Route::get('/password/reset/{token}', 'ResetPasswordController@showResetForm')->name('password.reset');
-    Route::post('/password/email', 'ForgotPasswordController@sendResetLinkEmail')->name('password.email');
-    Route::post('/password/reset', 'ResetPasswordController@reset')->name('password.update');
+    Route::get('/password/reset', 'ForgotPasswordController@showLinkRequestForm')->name('owner.password.request');
+    Route::get('/password/reset/{token}', 'ResetPasswordController@showResetForm')->name('owner.password.reset');
+    Route::post('/password/email', 'ForgotPasswordController@sendResetLinkEmail')->name('owner.password.email');
+    Route::post('/password/reset', 'ResetPasswordController@reset')->name('owner.password.update');
 });
 Route::group(['middleware' => ['auth:owners']], function () {
     Route::get('/', 'HomeController@index')->name('owner.home');

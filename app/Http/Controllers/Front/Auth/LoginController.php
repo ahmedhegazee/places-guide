@@ -53,7 +53,11 @@ class LoginController extends Controller
     }
     public function showLoginForm()
     {
-        return view('front.auth.login');
+        $loginRoute = url('/login');
+        $registerRoute = route('front.register');
+        $title = "زوار الموقع";
+        $resetPasswordRoute = route('password.request');
+        return view('front.auth.login', compact('loginRoute', 'registerRoute', 'title', 'resetPasswordRoute'));
     }
     public function username()
     {

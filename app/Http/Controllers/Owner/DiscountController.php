@@ -43,9 +43,9 @@ class DiscountController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'title' => 'required|string|min:3',
+            'title' => 'required|string|min:3|max:255',
             'content' => 'required|string|min:3',
-            'discount' => 'required|string|min:3',
+            'discount' => 'required|string|min:3|max:255',
             'starting_date' => 'required|date|after_or_equal:today',
             'end_date' => 'required|date|after:starting_date',
             'image' => 'required|image|max:4000',

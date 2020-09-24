@@ -115,7 +115,7 @@ class UserController extends Controller
     {
         $this->validate($request, [
             'old_password' => 'required|string',
-            'new_password' => 'required|string|confirmed',
+            'new_password' => 'required|string|min:8|max:255|confirmed',
         ]);
         if (Hash::check($request->old_password, auth()->user()->password)) {
             auth()->user()->update([
@@ -124,7 +124,7 @@ class UserController extends Controller
             flash(__('messages.add'), 'success');
             return back();
         } else {
-            return back()->withErrors(['old_password' => 'The old password is not correct']);
+            return back()->withErrors(['old_password' => 'الرجاء كتابة كلمة السر القديمة بشكل صحيح']);
         }
     }
     public function showPasswordForm()

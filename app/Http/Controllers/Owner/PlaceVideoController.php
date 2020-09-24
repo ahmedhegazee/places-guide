@@ -38,7 +38,7 @@ class PlaceVideoController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'file' => 'required|file|mimes:mp4,webm,mpeg|max:4000'
+            'file' => 'required|file|mimes:mp4,webm,mpeg|max:20000'
         ]);
         // dd($request->all());
         $video = $request->file('file');
@@ -75,7 +75,7 @@ class PlaceVideoController extends Controller
     public function update(Request $request, Place $video)
     {
         $this->validate($request, [
-            'file' => 'required|file|mimes:mp4,webm,mpeg|max:4000'
+            'file' => 'required|file|mimes:mp4,webm,mpeg|max:20000'
         ]);
         // deleteFile(str_replace(env('APP_URL') . '/', '', $video->src));
         $video->update(['video' => storeFileOnGoogleCloud($request->file('file'), 'videos')]);

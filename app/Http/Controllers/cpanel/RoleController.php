@@ -111,7 +111,7 @@ class RoleController extends Controller
         $messages = [
             'name.required' => 'حقل الاسم مطلوب',
             'name.string' => 'حقل الاسم يجب ان يكون نصا',
-            'name.unique' => 'اسم التربة يجب ان يكون مميزا',
+            'name.unique' => 'اسم الرتبة يجب ان يكون مميزا',
             'permissions_list.required' => 'اختيار الصلاحيات مطلوب',
             'permissions_list.array' => 'الصلاحيات يحب ان تكون مجموعة',
         ];

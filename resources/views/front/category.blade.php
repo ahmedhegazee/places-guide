@@ -14,7 +14,7 @@
                 @foreach($records as $record)
                 <div class="col-md-6 col-sm-12">
                     <div class="card mb-4 shadow-sm">
-                        <a href="#" class="category">
+                        <a href="{{ route('place',['place'=>$record->id]) }}" class="category">
                             <div class="position-relative category-content">
                                 @if ($record->main_image=='images/company.png')
                                 <img src="{{asset($record->main_image)}}" width="100%" height="200px" alt="">

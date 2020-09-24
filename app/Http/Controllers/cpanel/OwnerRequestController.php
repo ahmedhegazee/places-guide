@@ -49,7 +49,7 @@ class OwnerRequestController extends Controller
         $rules = [
             'full_name' => 'required|string|min:3|max:255',
             'email' => 'required|email|unique:place_owner',
-            'password' => 'required|string|min:8|confirmed',
+            'password' => 'required|string|min:8|confirmed|max:255',
             'account_type' => 'required|numeric',
             'name' => 'required|string|min:3|max:255',
             'tax_record' => 'required|string|unique:places',

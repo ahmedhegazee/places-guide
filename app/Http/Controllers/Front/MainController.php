@@ -215,7 +215,7 @@ class MainController extends Controller
     {
         $this->validate($request, [
             'content' => 'required|string|min:3|max:255',
-            'rating' => 'required|numeric',
+            'rating' => 'required|numeric|min:0|max:5',
         ]);
         $request->user()->reviews()->create([
             'place_id' => $place->id,

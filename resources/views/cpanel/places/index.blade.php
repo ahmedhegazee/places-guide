@@ -34,6 +34,7 @@
                 <th>{{ __('pages.Name') }}</th>
                 <th>{{ __('pages.Owner') }}</th>
                 <th>{{ __('pages.Category') }}</th>
+                <th>{{ __('pages.SubCategory') }}</th>
                 <th>{{ __('pages.Show') }}</th>
                 {{-- <th>{{ __('pages.Edit') }}</th> --}}
                 {{-- <th>{{ __('pages.Delete') }}</th> --}}
@@ -44,7 +45,8 @@
                     <td>{{$loop->iteration}}</td>
                     <td>{{$record->name}}</td>
                     <td>{{$record->owner->full_name}}</td>
-                    <td>{{$record->subCategory->category->name}}</td>
+                    <td>{{$record->category->name}}</td>
+                    <td>{{$record->subCategory->name??'لا يوجد تصنيف فرعي'}}</td>
                     <td>
                         <a href="{{route('place.show',['place'=>$record->id])}}" class="btn btn-primary"><i
                                 class="fas fa-eye"></i></a>
@@ -62,7 +64,7 @@
                 </tr>
                 @empty
                 <tr style="text-align: center">
-                    <td colspan=5>{{ __('pages.No Data') }}</td>
+                    <td colspan=6>{{ __('pages.No Data') }}</td>
                 </tr>
                 @endforelse
             </tbody>

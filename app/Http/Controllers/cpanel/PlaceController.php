@@ -16,7 +16,9 @@ class placeController extends Controller
     public function index(Request $request)
     {
         // $records = Place::search($request->search)
-        $records = Place::with(['owner', 'city.governorate', 'subCategory.category'])->paginate(10);
+        $records = Place::whereHas('owner', function ($query) {
+            $query->accepted(1);
+        })->with(['city.governorate', 'subCategory','category'])->paginate(10);
         // dd($records);
         return view('cpanel.places.index', compact('records'));
     }

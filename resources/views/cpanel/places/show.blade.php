@@ -52,9 +52,9 @@
             <span class="text-bold">{{ __('pages.Tax Record').' : '}} </span>
             <span>{{  $place->tax_record}}</span><br>
             <span class="text-bold">{{ __('pages.Category').' '.__('pages.Company').' : '}} </span>
-            <span>{{  $place->subCategory->category->name}}</span><br>
+            <span>{{  $place->category->name}}</span><br>
             <span class="text-bold">{{ __('pages.SubCategory').' : '}} </span>
-            <span>{{  $place->subCategory->name}}</span><br>
+            <span>{{  $place->subCategory->name??'لا يوجد تصنيف فرعي'}}</span><br>
             <span class="text-bold">{{ __('pages.Opened Time').' : '}} </span>
             <span>{{  $place->opened_time}}</span><br>
             <span class="text-bold">{{ __('pages.Closed Time').' : '}} </span>

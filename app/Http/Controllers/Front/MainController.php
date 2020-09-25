@@ -32,13 +32,13 @@ class MainController extends Controller
             $bestPlaces = collect([]);
         }
         // dd($bestPlaces);
-        $ratedPlaces = DB::table('reviews')
-            ->join('places', 'reviews.place_id', '=', 'places.id')
-            ->select('places.id', 'places.name', 'places.main_image', DB::raw('AVG(reviews.rating) as avg_rating'))
-            ->groupBy('place_id')
-            ->orderBy('avg_rating', 'desc')
-            ->take(6)
-            ->get();
+        // $ratedPlaces = DB::table('reviews')
+        //     ->join('places', 'reviews.place_id', '=', 'places.id')
+        //     ->select('places.id', 'places.name', 'places.main_image', DB::raw('AVG(reviews.rating) as avg_rating'))
+        //     ->groupBy('place_id')
+        //     ->orderBy('avg_rating', 'desc')
+        //     ->take(6)
+        //     ->get();
         // dd($ratedPlaces);
         // $ratedPlaces = Place::whereHas('owner', function ($query) {
         //     $query->where('is_accepted', 1);
@@ -51,7 +51,7 @@ class MainController extends Controller
         })
             ->latest()->take(6)->get();
         // dd($places);
-        return view('front.home', compact('places', 'ratedPlaces', 'bestPlaces'));
+        return view('front.home', compact('places',  'bestPlaces'));
     }
     public function about()
     {

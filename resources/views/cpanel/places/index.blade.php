@@ -24,55 +24,58 @@
 
         </div>
         <div class="card-body">
-            {{-- <div class="row justify-content-end mb-2 ">
-                <a href="{{route('category.create')}}" class="btn btn-primary"><i class="fas fa-plus"></i>
-            {{ __('pages.Add').' '.__('pages.Category') }}</a>
-        </div> --}}
-        <table id="table" class="table table-bordered table-hover table-striped">
-            <thead>
-                <th>#</th>
-                <th>{{ __('pages.Name') }}</th>
-                <th>{{ __('pages.Owner') }}</th>
-                <th>{{ __('pages.Category') }}</th>
-                <th>{{ __('pages.SubCategory') }}</th>
-                <th>{{ __('pages.Show') }}</th>
-                {{-- <th>{{ __('pages.Edit') }}</th> --}}
-                {{-- <th>{{ __('pages.Delete') }}</th> --}}
-            </thead>
-            <tbody>
-                @forelse ($records as $record)
-                <tr id="record-{{ $record->id }}">
-                    <td>{{$loop->iteration}}</td>
-                    <td>{{$record->name}}</td>
-                    <td>{{$record->owner->full_name}}</td>
-                    <td>{{$record->category->name}}</td>
-                    <td>{{$record->subCategory->name??'لا يوجد تصنيف فرعي'}}</td>
-                    <td>
-                        <a href="{{route('place.show',['place'=>$record->id])}}" class="btn btn-primary"><i
-                                class="fas fa-eye"></i></a>
-                    </td>
-                    {{-- <td>
+            <div class="row justify-content-end mb-2 ">
+                <a href="{{route('place.create')}}" class="btn btn-primary"><i class="fas fa-plus"></i>
+                    {{ __('pages.Add').' '.__('pages.Company') }}</a>
+            </div>
+            <table id="table" class="table table-bordered table-hover table-striped">
+                <thead>
+                    <th>#</th>
+                    <th>{{ __('pages.Name') }}</th>
+                    <th>{{ __('pages.Owner') }}</th>
+                    <th>{{ __('pages.Category') }}</th>
+                    <th>{{ __('pages.SubCategory') }}</th>
+                    <th>{{ __('pages.Show') }}</th>
+                    <th>{{ __('pages.Edit') }}</th>
+                    <th>{{ __('pages.Delete') }}</th>
+                </thead>
+                <tbody>
+                    @forelse ($records as $record)
+                    <tr id="record-{{ $record->id }}">
+                        <td>{{$loop->iteration}}</td>
+                        <td>{{$record->name}}</td>
+                        <td>{{$record->owner->full_name??'لا يوجد مالك'}}</td>
+                        <td>{{$record->category->name}}</td>
+                        <td>{{$record->subCategory->name??'لا يوجد تصنيف فرعي'}}</td>
+
+                        <td>
+                            <a href="{{route('place.show',['place'=>$record->id])}}" class="btn btn-primary"><i
+                                    class="fas fa-eye"></i></a>
+                        </td>
+
+                        <td>
                             <a href="{{route('place.edit',['place'=>$record->id])}}" class="btn btn-success"><i
-                        class="fas fa-edit"></i></a>
-                    </td> --}}
-                    {{-- <td>
+                                    class="fas fa-edit"></i></a>
+                        </td>
+
+                        <td>
                             <a href="{{route('place.destroy',['place'=>$record->id])}}"
-                    id="delete-route-{{ $record->id }}"
-                    onclick="event.preventDefault();deleteRecord({{ $record->id }});"
-                    class="btn btn-danger"><i class="fas fa-trash"></i></a>
-                    </td> --}}
-                </tr>
-                @empty
-                <tr style="text-align: center">
-                    <td colspan=6>{{ __('pages.No Data') }}</td>
-                </tr>
-                @endforelse
-            </tbody>
-        </table>
-        {{$records->links()}}
-    </div>
-    <!-- /.card-body -->
-    @csrf
+                                id="delete-route-{{ $record->id }}"
+                                onclick="event.preventDefault();deleteRecord({{ $record->id }});"
+                                class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                        </td>
+                    </tr>
+                    @empty
+                    <tr style="text-align: center">
+                        <td colspan=7>{{ __('pages.No Data') }}</td>
+                    </tr>
+                    @endforelse
+                </tbody>
+            </table>
+            {{$records->links()}}
+        </div>
+        <!-- /.card-body -->
+        @csrf
     </div>
     <!-- /.card -->
 

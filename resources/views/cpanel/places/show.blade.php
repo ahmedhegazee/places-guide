@@ -1,10 +1,15 @@
 @extends('layouts.app')
 
 @section('page_title')
-{{$place->name}}
+{{ $place->name }}
 @endsection
 @section('additional_styles')
 @include('partials.grid-view-styles')
+<style>
+    #map {
+        height: 70vh;
+    }
+</style>
 @endsection
 @section('additional_scripts')
 @include('partials.grid-view-scripts')
@@ -18,13 +23,27 @@
     let map;
 
     function initMap() {
-        let long= document.getElementById('long');
-        let lat= document.getElementById('lat');
-        if(long!=undefined && lat !=undefined)
-    map = new google.maps.Map(document.getElementById("map"), {
-    center: { lat: lat, lng: long },
-    zoom: 8
-    });
+        let long = document.getElementById('long');
+        let lat = document.getElementById('lat');
+        if (long != undefined && lat != undefined) {
+            long = parseFloat(long.value);
+            lat = parseFloat(lat.value);
+            map = new google.maps.Map(document.getElementById("map"), {
+                center: {
+                    lat:lat,
+                    lng: long
+                },
+                zoom: 12
+            });
+            var marker = new google.maps.Marker({
+                position: {
+                    lat: lat,
+                    lng: long
+                },
+                map: map
+            });
+        }
+
     }
 </script>
 @endsection
@@ -39,35 +58,52 @@
     <div class="card">
 
         <div class="card-body" style="font-size:1.5rem">
-            <span class="text-bold">{{ __('pages.Owner').' : '}} </span>
-            <span>{{  $place->owner->full_name }}</span><br>
-            <span class="text-bold">{{ __('pages.Account Type').' : '}} </span>
-            <span>{{  $place->owner->account_type }}</span><br>
-            <span class="text-bold">{{ __('pages.Govern').' : '}} </span>
-            <span>{{  $place->city->governorate->name}}</span><br>
-            <span class="text-bold">{{ __('pages.City').' : '}} </span>
-            <span>{{  $place->city->name}}</span><br>
-            <span class="text-bold">{{ __('pages.Phone').' : '}} </span>
-            <span>{{  $place->phone}}</span><br>
-            <span class="text-bold">{{ __('pages.Tax Record').' : '}} </span>
-            <span>{{  $place->tax_record}}</span><br>
-            <span class="text-bold">{{ __('pages.Category').' '.__('pages.Company').' : '}} </span>
-            <span>{{  $place->category->name}}</span><br>
-            <span class="text-bold">{{ __('pages.SubCategory').' : '}} </span>
-            <span>{{  $place->subCategory->name??'لا يوجد تصنيف فرعي'}}</span><br>
-            <span class="text-bold">{{ __('pages.Opened Time').' : '}} </span>
-            <span>{{  $place->opened_time}}</span><br>
-            <span class="text-bold">{{ __('pages.Closed Time').' : '}} </span>
-            <span>{{  $place->closed_time}}</span><br>
-            <span class="text-bold">{{ __('pages.Closed Days').' : '}} </span>
-            <span>{{  $place->closed_days}}</span><br>
+            <span class="text-bold">{{ __('pages.Owner').' : ' }} </span>
+            <span>{{ $place->owner->full_name??'لا يوجد مالك' }}</span><br>
+            <span class="text-bold">{{ __('pages.Account Type').' : ' }}
+            </span>
+            <span>{{ $place->owner->account_type??'لا توجد عضوية' }}</span><br>
+            <span class="text-bold">{{ __('pages.Govern').' : ' }} </span>
+            <span>{{ $place->city->governorate->name }}</span><br>
+            <span class="text-bold">{{ __('pages.City').' : ' }} </span>
+            <span>{{ $place->city->name }}</span><br>
+            <span class="text-bold">{{ __('pages.Phone').' : ' }} </span>
+            <span>{{ $place->phone }}</span><br>
+            <span class="text-bold">{{ __('pages.Tax Record').' : ' }}
+            </span>
+            <span>{{ $place->tax_record }}</span><br>
+            <span class="text-bold">{{ __('pages.Category').' '.__('pages.Company').' : ' }}
+            </span>
+            <span>{{ $place->category->name }}</span><br>
+            <span class="text-bold">{{ __('pages.SubCategory').' : ' }}
+            </span>
+            <span>{{ $place->subCategory->name??'لا يوجد تصنيف فرعي' }}</span><br>
+            <span class="text-bold">{{ __('pages.Opened Time').' : ' }}
+            </span>
+            <span>{{ $place->opened_time }}</span><br>
+            <span class="text-bold">{{ __('pages.Closed Time').' : ' }}
+            </span>
+            <span>{{ $place->closed_time }}</span><br>
+            <span class="text-bold">{{ __('pages.Closed Days').' : ' }}
+            </span>
+            <span>{{ $place->closed_days }}</span><br>
+            @if (!is_null($place->owner))
             <input type="hidden" data="{{ $place->owner->preventAccountTypeAttribute = true }}">
-            @if ($place->owner->account_type)
+            @if($place->owner->account_type)
             <input type="hidden" id="lat" value="{{ $place->latitude }}">
             <input type="hidden" id="long" value="{{ $place->longitude }}">
-            <div class="row">
-                <div id="map"></div>
-            </div>
+            <br>
+            <div id="map"></div>
+            @endif
+
+
+            @endif
+
+            @if(!is_null($place->latitude) && !is_null($place->longitude)&&is_null($place->owner))
+            <input type="hidden" id="lat" value="{{ $place->latitude }}">
+            <input type="hidden" id="long" value="{{ $place->longitude }}">
+            <br>
+            <div id="map"></div>
             @endif
 
         </div>

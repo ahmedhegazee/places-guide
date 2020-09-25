@@ -17,7 +17,7 @@ class CreatePlacesTable extends Migration
             $table->text('about');
             $table->decimal('latitude', 10, 6)->index()->nullable();
             $table->decimal('longitude', 10, 6)->index()->nullable();
-            $table->integer('place_owner_id')->unsigned();
+            $table->integer('place_owner_id')->unsigned()->nullable();
             $table->string('phone');
             $table->string('tax_record');
             $table->integer('category_id')->unsigned();

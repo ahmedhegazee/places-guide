@@ -58,6 +58,7 @@
                     <th>{{ __('pages.Email') }}</th>
                     <th>{{ __('pages.Account Type') }}</th>
                     <th>{{ __('pages.Is Banned') }}</th>
+                    <th>{{ __('pages.Change Account Type') }}</th>
                     <th>{{ __('pages.Ban') }}</th>
                     {{-- <th>Date Of Birth</th> --}}
                     <th>{{ __('pages.Delete') }}</th>
@@ -70,9 +71,18 @@
                         <td>{{$record->place->name}}</td>
                         <td>{{$record->email}}</td>
                         {!! $record->preventAccountTypeAttribute=false !!}
-                        <td>{{$record->account_type}}</td>
+                        <td id="account-{{ $record->id }}">{{$record->account_type}}</td>
                         <td id="status-{{ $record->id }}">{{$record->is_banned}}</td>
                         {{-- <td>{{$record->city->name}}</td> --}}
+                        <td class="text-center">
+                            <input type="hidden" class="{{ $record->preventAccountTypeAttribute=true }}"
+                                id="change-{{ $record->id }}" value="{{ $record->account_type?0:1 }}">
+                            <a href="{{route('place-owner.update',['place-owner'=>$record->id])}}"
+                                id="update-route-{{ $record->id }}"
+                                onclick="event.preventDefault();updateAccountType({{ $record->id }});"
+                                class="btn btn-success "><i class="fas fa-arrow-{{$record->account_type?'down':'up'  }}"
+                                    id="arrow-{{ $record->id }}"></i></a>
+                        </td>
                         <td>
                             <input type="hidden" class="{{ $record->preventGetAttr=true }}" id="ban-{{ $record->id }}"
                                 value="{{ $record->is_banned?0:1 }}">
@@ -90,7 +100,7 @@
                     </tr>
                     @empty
                     <tr style="text-align: center">
-                        <td colspan="7">{{ __('pages.No Data') }}</td>
+                        <td colspan="8">{{ __('pages.No Data') }}</td>
                     </tr>
                     @endforelse
                 </tbody>

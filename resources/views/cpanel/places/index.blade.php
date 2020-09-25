@@ -21,7 +21,33 @@
     <div class="card">
         <div class="card-header">
             <h3 class="card-title">{{ __('pages.List Of').' '. __('pages.Companies') }}</h3>
-
+            <div class="row justify-content-end">
+                <form class="form-inline ml-3" id="filter" action="{{route('place.index')}}">
+                    <div class="input-group input-group-sm mr-2">
+                        @if (app()->getLocale()=='ar')
+                        <div class="input-group-append">
+                            <button class="btn btn-navbar"
+                                style="background-color: #fff; border:1px solid #CED4DA; border-left:0; color:rgba(0,0,0,.6)"
+                                type="submit">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                        <input class="form-control form-control-navbar" type="search" name="search" value=""
+                            style="background-color: #fff;" placeholder="{{ __('pages.Search') }}" aria-label="Search">
+                        @else
+                        <input class="form-control form-control-navbar" type="search" name="search" value=""
+                            style="background-color: #fff;" placeholder="{{ __('pages.Search') }}" aria-label="Search">
+                        <div class="input-group-append">
+                            <button class="btn btn-navbar"
+                                style="background-color: #fff; border:1px solid #CED4DA; border-left:0; color:rgba(0,0,0,.6)"
+                                type="submit">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                        @endif
+                    </div>
+                </form>
+            </div>
         </div>
         <div class="card-body">
             <div class="row justify-content-end mb-2 ">
@@ -72,7 +98,7 @@
                     @endforelse
                 </tbody>
             </table>
-            {{$records->links()}}
+            {{$records->appends(request()->only('search'))->render()}}
         </div>
         <!-- /.card-body -->
         @csrf

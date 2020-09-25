@@ -17,8 +17,8 @@ trait Search
         //to make the filtering by governs is optional
         return $query->where(function ($query) use ($search) {
             if (!is_null($search))
-                $query->where('name', 'like', '%' . $search . '%')
-                    ->orWhere('phone', 'like', '%' . $search . '%');
+                $query->where('name', 'like', '%' . $search . '%');
+            // ->orWhere('phone', 'like', '%' . $search . '%');
         });
     }
 }

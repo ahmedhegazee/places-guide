@@ -37,19 +37,36 @@ class OwnerController extends Controller
             return jsonResponse(0, 'error');
         }
     }
-    public function update(PlaceOwner $owner, Request $request)
+    public function update($owner, Request $request)
     {
-
-        $check = $owner->update(['is_banned' => $request->ban]);
+        $owner = PlaceOwner::find($owner);
+        // dd($owner);
+        // dd($request->all());
         $msg = '';
-        if ($request->ban) {
-            $msg = 'تم الحظر';
-        } else
-            $msg = 'تم فك الحظر';
-        if ($check) {
-            return jsonResponse(1, 'success', ['msg' => $msg]);
-        } else {
-            return jsonResponse(0, 'error');
+        if ($request->has('ban')) {
+            $check = $owner->update(['is_banned' => $request->ban]);
+            if ($request->ban) {
+                $msg = 'تم الحظر';
+            } else
+                $msg = 'تم فك الحظر';
+            if ($check) {
+                return jsonResponse(1, 'success', ['msg' => $msg]);
+            } else {
+                return jsonResponse(0, 'error');
+            }
+        } else if ($request->has('account')) {
+            $owner->account_type = intval($request->account);
+            $check = $owner->save();
+            // dd($check);
+            if (intval($request->account)) {
+                $msg = 'تم التحويل الى عضوية الماسية';
+            } else
+                $msg = 'تم التحويل الى عضوية فضية';
+            if ($check) {
+                return jsonResponse(1, 'success', ['msg' => $msg]);
+            } else {
+                return jsonResponse(0, 'error');
+            }
         }
     }
 }

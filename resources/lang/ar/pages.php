@@ -15,6 +15,7 @@ return [
     'Roles' => ' رتب',
     'Role' => ' رتبة',
     'Settings' => 'اعدادات الموقع',
+    'Change Account Type' => 'تغيير نوع عضوية الحساب',
     'Change Password' => 'تغيير كلمة المرور',
     'Logout' => 'الخروج',
     'Client Messages' => 'رسائل العملاء',

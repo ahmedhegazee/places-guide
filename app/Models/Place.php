@@ -135,4 +135,10 @@ class Place extends Model
         //< 10000 means less than 10 km
         return $query->whereRaw("ACOS(SIN(RADIANS(latitude))*SIN(RADIANS($lat))+COS(RADIANS(latitude))*COS(RADIANS($lat))*COS(RADIANS(longitude)-RADIANS($long)))*6380 < 10");
     }
+    public function scopeAvailable($query)
+    {
+        $query->whereHas('owner', function ($query) {
+            $query->accepted(1);
+        })->orWhere('place_owner_id', null);
+    }
 }

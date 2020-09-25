@@ -5,14 +5,14 @@
     <h2 class="text-center mb-4">تصنيفات افضل الاماكن</h2>
     <div class="container">
         <div class="row">
-            @foreach ($category->all() as $record)
+            @foreach ($categories as $record)
             <div class="col-md-4 col-sm-12">
                 <div class="card mb-4 shadow-sm">
                     <a href="{{ route('category',['category'=>$record->id]) }}" class="category">
                         <div class="position-relative category-content">
                             <img src="{{$record->image }}" width="100%" alt="">
                             <span>{{ $record->name }}</span>
-                            <span class="count">{{ $record->acceptedPlaces()->count() }}</span>
+                            <span class="count">{{ $record->accepted_places_count }}</span>
                         </div>
                         <div class="card-body">
                             <h3 class="card-text">{{ $record->name }}</h3>

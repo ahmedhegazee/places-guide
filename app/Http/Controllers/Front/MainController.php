@@ -48,10 +48,13 @@ class MainController extends Controller
         // dd($ratedPlaces);
         $places = Place::whereHas('owner', function ($query) {
             $query->where('is_accepted', 1);
-        })
+        })->orWhere('place_owner_id', null)
             ->latest()->take(6)->get();
         // dd($places);
-        return view('front.home', compact('places',  'bestPlaces'));
+        //acceptedPlaces
+        $categories = Category::withCount('acceptedPlaces')->get();
+        // dd($categories);
+        return view('front.home', compact('places',  'bestPlaces', 'categories'));
     }
     public function about()
     {
@@ -137,8 +140,13 @@ class MainController extends Controller
         $count = $category->acceptedPlaces()->count();
         $categories = $category->subCategories()->withCount('acceptedPlaces')->get();
         // dd($categories);
+        // $records = Place::searchCategory($request->cat)
+        //     ->searchCity($request->city)->whereDoesntHave('owner',function($query){
+        //         $query->where('is_accepted',0);
+        //     })->paginate(10);
+        // dd($records);
         $records = $category->acceptedPlaces()
-            ->searchCategory($request->cat)
+            ->searchSubCategory($request->cat)
             ->searchCity($request->city)->paginate(10);
         $governs = $this->getGovernorates();
         return view('front.category', compact('records', 'category', 'governs', 'categories', 'route', 'title', 'count'));

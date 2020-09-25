@@ -89,10 +89,19 @@ class Place extends Model
     {
         return $query->where(function ($query) use ($category) {
             if (!is_null($category)) {
+                $query->where('category_id', $category);
+            }
+        });
+    }
+    public function scopeSearchSubCategory($query, $category = null)
+    {
+        return $query->where(function ($query) use ($category) {
+            if (!is_null($category)) {
                 $query->where('sub_category_id', $category);
             }
         });
     }
+
     public $enableRatingAttribute = false;
     protected $appends = ['rating'];
     public function getRatingAttribute()

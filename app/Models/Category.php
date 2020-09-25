@@ -19,12 +19,16 @@ class Category extends Model
     public function places()
     {
         // return $this->hasManyThrough('App\Models\Place', 'App\Models\SubCategory');
-        return $this->hasMany('App\Models\Place');
+        return $this->hasMany('App\Models\Place', 'category_id');
     }
     public function acceptedPlaces()
     {
-        return $this->places()->whereHas('owner', function ($query) {
-            $query->where('is_accepted', 1);
-        });
+        return $this->places()->whereDoesntHave('owner',function($query){
+                $query->where('is_accepted',0);
+            });
+    }
+    public function noOwner()
+    {
+        return $this->places()->whereDoesntHave('owner');
     }
 }

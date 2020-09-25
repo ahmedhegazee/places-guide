@@ -56,7 +56,7 @@
                     <th>{{ __('pages.Name') }}</th>
                     <th>{{ __('pages.Company') }}</th>
                     <th>{{ __('pages.Email') }}</th>
-                    {{-- <th>{{ __('pages.Phone') }}</th> --}}
+                    <th>{{ __('pages.Account Type') }}</th>
                     <th>{{ __('pages.Is Banned') }}</th>
                     <th>{{ __('pages.Ban') }}</th>
                     {{-- <th>Date Of Birth</th> --}}
@@ -69,7 +69,8 @@
                         <td>{{$record->full_name}}</td>
                         <td>{{$record->place->name}}</td>
                         <td>{{$record->email}}</td>
-                        {{-- <td>{{$record->phone}}</td> --}}
+                        {!! $record->preventAccountTypeAttribute=false !!}
+                        <td>{{$record->account_type}}</td>
                         <td id="status-{{ $record->id }}">{{$record->is_banned}}</td>
                         {{-- <td>{{$record->city->name}}</td> --}}
                         <td>
@@ -94,7 +95,7 @@
                     @endforelse
                 </tbody>
             </table>
-            {{$records->links()}}
+            {{$records->appends(request()->only('search'))->render()}}
         </div>
         <!-- /.card-body -->
         @csrf

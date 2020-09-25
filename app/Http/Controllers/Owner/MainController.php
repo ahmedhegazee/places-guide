@@ -75,7 +75,7 @@ class MainController extends Controller
     }
     public function changeCompanyInfo(Request $request)
     {
-        // dd($request->all());
+        dd($request->all());
         $place = $request->user()->place;
         $rules = [
             'name' => 'required|string|min:3|max:255',

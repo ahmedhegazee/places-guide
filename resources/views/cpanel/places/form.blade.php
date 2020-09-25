@@ -1,5 +1,4 @@
 {{-- TODO Js Validation --}}
-
 <div id="first-step">
     <div class="form-group">
         <label for="name">{{ __('pages.Company') .' '. __('pages.Name') }}</label>
@@ -112,6 +111,12 @@
         <label for="instagram">{{ __('pages.Instagram') }}</label>
         <input type="url" name="instagram" class="form-control">
     </div>
+    {{--
+
+        --}}
+
+    @if (!is_null($model->owner))
+    @if ($model->owner->account_type)
     <div class="form-group">
         <label for="location">{{ __('pages.Company Location on Map') }}</label>
         <input type="hidden" id="lat" name="latitude" value="{{ $model->latitude??'nope' }}">
@@ -120,6 +125,16 @@
     <div class="row">
         <div id="map" style="width:80%;height:80vh;"></div>
     </div>
+    @endif
+    @else
+    <input type="hidden" id="lat" name="latitude" value="{{ $model->latitude??'nope' }}">
+    <input type="hidden" id="long" name="longitude" value="{{ $model->longitude??'nope' }}">
+    <div class="row">
+        <div id="map" style="width:80%;height:80vh;"></div>
+    </div>
+    @endif
+
+
 
 </div>
 @section('additional_styles')
@@ -264,7 +279,7 @@
                     lat: lat,
                     lng: long
                 }
-                placeMarker(center);
+                // placeMarker(center);
             }
 
             map = new google.maps.Map(document.getElementById("map"), {

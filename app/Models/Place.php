@@ -109,6 +109,7 @@ class Place extends Model
     }
     public function getMainImageAttribute()
     {
+
         if ($this->attributes['main_image'] == 'images/company.png')
             return asset('images/company.png');
         else

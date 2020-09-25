@@ -148,13 +148,14 @@
                     lat: lat,
                     lng: long
                 }
-                placeMarker(center);
+
             }
 
             map = new google.maps.Map(document.getElementById("map"), {
                 center: center,
                 zoom: 8
             });
+            placeMarker(center);
             google.maps.event.addListener(map, 'click', function (event) {
                 placeMarker(event.latLng);
             });

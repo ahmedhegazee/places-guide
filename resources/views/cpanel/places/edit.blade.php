@@ -1,5 +1,4 @@
 @extends('layouts.app')
-@inject('model', 'App\Models\Place')
 @section('page_title')
 {{ __('pages.Edit').' '.__('pages.Company') }}
 @endsection
@@ -22,9 +21,10 @@
 
             @include('partials.validation-errors')
             {!!
-            Form::model($place,[
-            'url'=>route('place.update',['place'=>$place->id]),
-            'method'=>'put'
+            Form::model($model,[
+            'url'=>route('place.update',['place'=>$model->id]),
+            'method'=>'put',
+            'files'=>true,
             ])
             !!}
             @csrf

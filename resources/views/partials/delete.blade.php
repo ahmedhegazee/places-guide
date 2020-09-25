@@ -187,4 +187,72 @@ function banUser(id) {
             }
         });
     }
+    function isBest(id) {
+        let title = '';
+        let status = $(`#best-${id}`).val();
+        // console.log(status==1);
+        if (status != 1) {
+            title = "هل تريد ازالة هذا المكان من قائمة افضل الاماكن";
+        } else {
+            title = "هل تريد وضع هذا المكان في قائمة افضل الاماكن";
+
+        }
+        swal({
+            title: title,
+            text: "هل انت متاكد؟",
+            icon: "warning",
+            buttons: {
+                cancel: {
+                    text: "الغاء",
+                    value: null,
+                    visible: true
+                },
+                confirm: {
+                    text: "موافق",
+                    value: true,
+                    className: 'confirm-button'
+                }
+            },
+
+        }).then(isConfirm => {
+            if (isConfirm) {
+                let url = $(`#update-route-${id}`).prop('href');
+                token = $('input[name="_token"]').val();
+                let data = {
+                    _token: token,
+                    best: status
+                }
+                $.ajax({
+                    url: url,
+                    type: 'put',
+                    data: data,
+                    success: function (response) {
+                        if (response.status) {
+                            swal(response.data.msg, "", "success");
+                            let favourite = document.getElementById(`favourite-${id}`);
+                            if (status != 1) {
+                                $(`#best-${id}`).val(1);
+                                $(`#is-best-${id}`).html('لا');
+                                favourite.classList.remove('fas');
+                                favourite.classList.add('far');
+                            } else {
+                                $(`#best-${id}`).val(0);
+                                $(`#is-best-${id}`).html('نعم');
+                                favourite.classList.remove('far');
+                                favourite.classList.add('fas');
+
+                            }
+                        } else {
+                            if (response.data.msg != undefined)
+                                swal(response.data.msg, "", "error");
+                            else
+                                swal("الرجاء التواصل مع الدعم !", "", "error");
+                        }
+
+                    }
+                })
+
+            }
+        });
+    }
 </script>

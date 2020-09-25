@@ -19,7 +19,13 @@ class placeController extends Controller
     public function index(Request $request)
     {
         // $records = Place::search($request->search)
-        $records = Place::available()->search($request->search)->with(['city.governorate', 'subCategory', 'category'])->paginate(10);
+        $records = Place::available()
+            ->search($request->search)
+            ->searchCity($request->city)
+            ->searchCategory($request->category)
+            ->searchSubCategory($request->subcategory)
+            ->with(['city.governorate', 'subCategory', 'category'])
+            ->paginate(10);
         // dd($records);
         return view('cpanel.places.index', compact('records'));
     }
@@ -123,6 +129,26 @@ class placeController extends Controller
             return jsonResponse(1, 'success');
         } else {
             return jsonResponse(0, 'error');
+        }
+    }
+    public function best(Place $place, Request $request)
+    {
+        // dd($owner);
+        // dd($request->all());
+        $msg = '';
+        if ($request->has('best')) {
+            $place->is_best = intval($request->best);
+            $check = $place->save();
+            // dd($check);
+            if (intval($request->best)) {
+                $msg = 'تم وضع هذا المكان في قائمة افضل الاماكن';
+            } else
+                $msg = 'تم ازالة هذا المكان من قائمة افضل الاماكن';
+            if ($check) {
+                return jsonResponse(1, 'success', ['msg' => $msg]);
+            } else {
+                return jsonResponse(0, 'error');
+            }
         }
     }
 }

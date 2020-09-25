@@ -141,4 +141,16 @@ class Place extends Model
             $query->accepted(1);
         })->orWhere('place_owner_id', null);
     }
+    public $preventIsBest = true;
+    public function getIsBestAttribute()
+    {
+        if ($this->preventIsBest) {
+            return $this->attributes['is_best'];
+        } else {
+            return [
+                0 => 'لا',
+                1 => 'نعم'
+            ][$this->attributes['is_best']];
+        }
+    }
 }

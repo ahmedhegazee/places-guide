@@ -52,9 +52,10 @@ class MainController extends Controller
             ->latest()->take(6)->get();
         // dd($places);
         //acceptedPlaces
+        $discounts = Discount::available()->count();
         $categories = Category::withCount('acceptedPlaces')->get();
         // dd($categories);
-        return view('front.home', compact('places',  'bestPlaces', 'categories'));
+        return view('front.home', compact('places',  'bestPlaces', 'categories', 'discounts'));
     }
     public function about()
     {
@@ -154,23 +155,23 @@ class MainController extends Controller
 
     public function discounts(Request $request)
     {
-        $title = __('pages.All discounts');
+        $title = __('pages.All places');
         $route = route("discount");
-        $count = Discount::available()->count();
+        // $count = Discount::available()->count();
+        $count = Place::available()->count();
         // dd($count);
-        $acceptedOwners = PlaceOwner::accepted(1)->pluck('id')->toArray();
-        $categories = Category::withCount(['places' => function ($query) use ($acceptedOwners) {
-            $query->whereIn('place_owner_id', $acceptedOwners);
-        }])->get();
-
-        $records = Place::has('discounts', '>', 0)
+        // $acceptedOwners = PlaceOwner::accepted(1)->pluck('id')->toArray();
+        //count discounts with categories
+        $categories = Category::withCount('acceptedPlaces')->get();
+        // dd($categories);
+        $records = Place::available()
             ->searchCategory($request->cat)
             ->searchCity($request->city)
-            ->withCount('discounts')
-            ->with('availableDiscounts')
+            // ->withCount('discounts')
+            // ->with('availableDiscounts')
             ->orderBy('name', 'asc')
             ->paginate(10);
-
+        // dd($records);
         $governs = $this->getGovernorates();
         return view('front.discounts', compact('records', 'governs', 'title', 'route', 'count', 'categories'));
     }

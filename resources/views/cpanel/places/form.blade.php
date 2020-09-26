@@ -254,7 +254,7 @@
     defer>
 </script>
 <script>
-    let map;
+    let map,center;
     document.onload = function () {
         initMap();
     }
@@ -266,7 +266,7 @@
         if (long != null && lat != null) {
             lat = lat.value;
             long = long.value;
-            let center = {};
+             center = {};
             if (long == 'nope' || lat == 'nope') {
                 center = {
                     lat: 52.377956,
@@ -284,14 +284,14 @@
 
             map = new google.maps.Map(document.getElementById("map"), {
                 center: center,
-                zoom: 8
+                zoom: 16
             });
             google.maps.event.addListener(map, 'click', function (event) {
                 placeMarker(event.latLng);
             });
         }
         let marker = null;
-
+placeMarker(center);
         function placeMarker(location) {
             if (marker != null)
                 marker.setMap(null);

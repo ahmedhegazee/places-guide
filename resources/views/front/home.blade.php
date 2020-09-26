@@ -2,7 +2,7 @@
 @extends('front.master')
 @section('content')
 <section class="categories py-2">
-    <h2 class="text-center mb-4">تصنيفات افضل الاماكن</h2>
+    <h2 class="text-center mb-4">الأقسام الرئيسية</h2>
     <div class="container">
         <div class="row">
             @foreach ($categories as $record)
@@ -10,7 +10,7 @@
                 <div class="card mb-4 shadow-sm">
                     <a href="{{ route('category',['category'=>$record->id]) }}" class="category">
                         <div class="position-relative category-content">
-                            <img src="{{$record->image }}" width="100%" alt="">
+                            <img src="{{$record->image }}" width="100%" height="180px" alt="">
                             <span>{{ $record->name }}</span>
                             <span class="count">{{ $record->accepted_places_count }}</span>
                         </div>
@@ -21,6 +21,23 @@
                 </div>
             </div>
             @endforeach
+            <div class="col-md-4 col-sm-12">
+                <div class="card mb-4 shadow-sm">
+                    <a href="{{ route('discount') }}" class="category">
+                        <div class="position-relative category-content">
+                            <img src="{{ asset('images/discounts.png') }}" width="100%" height="180px" alt="">
+                            @if ($discounts>0)
+                            <span class="discounts-count badge badge-danger ">{{ $discounts}}عروض</span>
+                            @endif
+                            <span>العروض</span>
+                            {{-- <span class="count">{{ $record->accepted_places_count }}</span> --}}
+                        </div>
+                        <div class="card-body">
+                            <h3 class="card-text">العروض</h3>
+                        </div>
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 </section>
@@ -212,5 +229,19 @@
             });
         });
 </script>
+
+@endpush
+@push('styles')
+<style>
+    .discounts-count {
+        font-size: 1rem !important;
+        position: absolute !important;
+        top: 5%;
+        left: -3%;
+        bottom: unset !important;
+        right: unset !important;
+        padding: 8px 10px;
+    }
+</style>
 
 @endpush

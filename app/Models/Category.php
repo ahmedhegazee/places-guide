@@ -23,9 +23,10 @@ class Category extends Model
     }
     public function acceptedPlaces()
     {
-        return $this->places()->whereDoesntHave('owner',function($query){
-                $query->where('is_accepted',0);
-            });
+        return $this->places()->whereDoesntHave('owner', function ($query) {
+            $query->where('is_accepted', 0);
+        });
+        // ->has('availableDiscounts');
     }
     public function noOwner()
     {

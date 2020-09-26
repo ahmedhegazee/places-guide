@@ -26,10 +26,13 @@
                                 @endif
 
                                 <span>{{ $record->name }}</span>
+                                @if (!is_null($record->countDiscounts()))
                                 <span
                                     {{-- class="discounts-count badge badge-danger">{{ $record->availableDiscounts->count()>1?$record->availableDiscounts->count().'عروض ':'عرض واحد ' }}</span>
                                     --}}
                                     class="discounts-count badge badge-danger ">{{ $record->countDiscounts()}}</span>
+                                @endif
+
                             </div>
                             <div class="card-body">
                                 <h3 class="card-text">{{ $record->name }}</h3>

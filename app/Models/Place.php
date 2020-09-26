@@ -70,6 +70,8 @@ class Place extends Model
     public function countDiscounts()
     {
         $count = $this->availableDiscounts->count();
+        if ($count == 0)
+            return null;
         if ($count == 1)
             return 'عرض واحد';
         if ($count == 2)

@@ -132,6 +132,7 @@ $(`<option value=${subcategory.id}>${subcategory.name}</option>`).appendTo('#sub
                     <th>{{ __('pages.Is Best') }}</th>
                     <th>{{ __('pages.Best') }}</th>
                     <th>{{ __('pages.Photos') }}</th>
+                    <th>{{ __('pages.Videos') }}</th>
                     <th>{{ __('pages.Show') }}</th>
                     <th>{{ __('pages.Edit') }}</th>
                     <th>{{ __('pages.Delete') }}</th>
@@ -158,6 +159,10 @@ $(`<option value=${subcategory.id}>${subcategory.name}</option>`).appendTo('#sub
                         <td>
                             <a href="{{route('dashboard.photo.index',['place'=>$record->id])}}"
                                 class="btn btn-primary"><i class="fas fa-images"></i></a>
+                        </td>
+                        <td>
+                            <a href="{{route('dashboard.video.index',['place'=>$record->id])}}"
+                                class="btn btn-primary"><i class="fas fa-photo-video"></i></a>
                         </td>
                         <td>
                             <a href="{{route('place.show',['place'=>$record->id])}}" class="btn btn-primary"><i

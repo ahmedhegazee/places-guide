@@ -18,6 +18,7 @@ Route::group(['middleware' => ['auth', 'auto-check-permission']], function () {
     Route::resource('role', 'RoleController')->except(['show']);
     Route::name('dashboard.')->group(function () {
         Route::resource('place/{place}/photo', 'PlacePhotoController');
+        Route::resource('place/{place}/video', 'PlaceVideoController');
     });
     // Route::resource('permission', 'PermissionController')->except(['show']);
     Route::get('change-password', 'UserController@showPasswordForm')->name('change-password-form');

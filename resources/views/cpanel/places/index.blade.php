@@ -156,8 +156,8 @@ $(`<option value=${subcategory.id}>${subcategory.name}</option>`).appendTo('#sub
                                     id="favourite-{{ $record->id }}"></i></a>
                         </td>
                         <td>
-                            <a href="{{route('place.photos',['place'=>$record->id])}}" class="btn btn-primary"><i
-                                    class="fas fa-images"></i></a>
+                            <a href="{{route('dashboard.photo.index',['place'=>$record->id])}}"
+                                class="btn btn-primary"><i class="fas fa-images"></i></a>
                         </td>
                         <td>
                             <a href="{{route('place.show',['place'=>$record->id])}}" class="btn btn-primary"><i

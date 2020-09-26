@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('page_title')
-{{ __('pages.Company Photos') }}
+{{ __('pages.Photos') .' '.$place->name}}
 @endsection
 @section('additional_styles')
 @include('partials.grid-view-styles')
@@ -19,12 +19,13 @@
     <!-- Default box -->
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">{{ __('pages.List Of').' '. __('pages.Company Photos') }}</h3>
+            <h3 class="card-title">{{ __('pages.List Of').' '.__('pages.Photos') .' '.$place->name }}</h3>
 
         </div>
         <div class="card-body">
             <div class="row justify-content-end mb-2 ">
-                <a href="{{route('photo.create')}}" class="btn btn-primary"><i class="fas fa-plus"></i>
+                <a href="{{route('dashboard.photo.create',['place'=>$place->id])}}" class="btn btn-primary"><i
+                        class="fas fa-plus"></i>
                     {{ __('pages.Add').' '.__('pages.Photo') }}</a>
             </div>
             <table id="table" class="table table-bordered table-hover table-striped">
@@ -41,15 +42,15 @@
                         <td>{{$loop->iteration}}</td>
                         <td><img src="{{ $record->src }}" width="100px" height="100px" alt=""></td>
                         <td>
-                            <a href="{{route('photo.show',['photo'=>$record->id])}}" class="btn btn-primary"><i
-                                    class="fas fa-eye"></i></a>
+                            <a href="{{route('dashboard.photo.show',['photo'=>$record->id,'place'=>$place->id])}}"
+                                class="btn btn-primary"><i class="fas fa-eye"></i></a>
                         </td>
                         <td>
-                            <a href="{{route('photo.edit',['photo'=>$record->id])}}" class="btn btn-success"><i
-                                    class="fas fa-edit"></i></a>
+                            <a href="{{route('dashboard.photo.edit',['photo'=>$record->id,'place'=>$place->id])}}"
+                                class="btn btn-success"><i class="fas fa-edit"></i></a>
                         </td>
                         <td>
-                            <a href="{{route('photo.destroy',['photo'=>$record->id])}}"
+                            <a href="{{route('dashboard.photo.destroy',['photo'=>$record->id,'place'=>$place->id])}}"
                                 id="delete-route-{{ $record->id }}"
                                 onclick="event.preventDefault();deleteRecord({{ $record->id }});"
                                 class="btn btn-danger"><i class="fas fa-trash"></i></a>

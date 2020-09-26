@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Owner;
+namespace App\Http\Controllers\cpanel;
 
 use App\Http\Controllers\Controller;
+use App\Models\Place;
 use App\Models\PlacePhoto;
 use Illuminate\Http\Request;
 
@@ -13,10 +14,10 @@ class PlacePhotoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Place $place)
     {
-        $records = $request->user()->place->photos;
-        return view('owners.photos.index', compact('records'));
+        $records = $place->photos;
+        return view('cpanel.places.photos.index', compact('records', 'place'));
     }
 
     /**
@@ -24,9 +25,9 @@ class PlacePhotoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Place $place)
     {
-        return view('owners.photos.create');
+        return view('cpanel.places.photos.create', compact('place'));
     }
 
     /**
@@ -35,9 +36,9 @@ class PlacePhotoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Place $place)
     {
-        $place = $request->user()->place;
+
         $this->validate($request, [
             'file.*' => 'required|image|max:4000'
         ]);
@@ -46,12 +47,12 @@ class PlacePhotoController extends Controller
         if ((sizeOf($files) + $place->photos->count()) <= 10) {
             //insert all images in only one time || TODO Search for that
             foreach ($files as $img) {
-                $request->user()->place->photos()->create([
+                $place->photos()->create([
                     'src' => storeFileOnGoogleCloud($img, 'images')
                 ]);
             }
             flash(__('messages.add'), 'success');
-            return redirect(route('photo.index'));
+            return redirect(route('dashboard.photo.index', compact('place')));
         } else {
             flash('اقصى عدد للصور هو ١٠ صور', 'danger');
             return back();
@@ -64,9 +65,9 @@ class PlacePhotoController extends Controller
      * @param  PlacePhoto $photo
      * @return \Illuminate\Http\Response
      */
-    public function show(PlacePhoto $photo)
+    public function show(Place $place, PlacePhoto $photo)
     {
-        return view('owners.photos.show', compact('photo'));
+        return view('cpanel.places.photos.show', compact('photo', 'place'));
     }
 
     /**
@@ -75,10 +76,10 @@ class PlacePhotoController extends Controller
      * @param  PlacePhoto $photo
      * @return \Illuminate\Http\Response
      */
-    public function edit(PlacePhoto $photo)
+    public function edit(Place $place, PlacePhoto $photo)
     {
 
-        return view('owners.photos.edit', compact('photo'));
+        return view('cpanel.places.photos.edit', compact('photo', 'place'));
     }
 
     /**
@@ -88,7 +89,7 @@ class PlacePhotoController extends Controller
      * @param  PlacePhoto $photo
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, PlacePhoto $photo)
+    public function update(Request $request, Place $place, PlacePhoto $photo)
     {
         $this->validate($request, [
             'file' => 'required|image|max:4000'
@@ -96,7 +97,7 @@ class PlacePhotoController extends Controller
         deleteFile(str_replace(env('APP_URL') . '/', '', $photo->src));
         $photo->update(['src' => storeFileOnGoogleCloud($request->file('file'), 'images')]);
         flash(__('messages.update'), 'success');
-        return redirect()->route('photo.index');
+        return redirect()->route('dashboard.photo.index', compact('place'));
     }
 
     /**
@@ -105,7 +106,7 @@ class PlacePhotoController extends Controller
      * @param  PlacePhoto $photo
      * @return \Illuminate\Http\Response
      */
-    public function destroy(PlacePhoto $photo)
+    public function destroy(Place $place, PlacePhoto $photo)
     {
         deleteFile(str_replace(env('APP_URL') . '/', '', $photo->src));
         $check = $photo->delete();

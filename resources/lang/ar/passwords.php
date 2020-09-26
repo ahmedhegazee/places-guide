@@ -13,10 +13,10 @@ return [
     |
     */
 
-    'password' => 'Passwords must be at least eight characters and match the confirmation.',
-    'reset' => 'Your password has been reset!',
-    'sent' => 'We have e-mailed your password reset link!',
-    'token' => 'This password reset token is invalid.',
-    'user' => "We can't find a user with that e-mail address.",
+    'password' => 'يجب ان تكون كلمة السر على الاقل ٨ حروف',
+    'reset' => 'لقد تم تغيير كلمة السر بنجاح',
+    'sent' => 'لقد ارسلنا لك رسالة بها رابط تغيير كلمة السر . الرجاء مراجعة بريدك الالكتروني',
+    'token' => 'كود التفعيل غير صحيح',
+    'user' => "ليس هناك حساب بهذا البريد الالكتروني",
 
 ];

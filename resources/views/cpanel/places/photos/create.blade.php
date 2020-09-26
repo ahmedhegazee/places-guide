@@ -1,4 +1,4 @@
-@extends('owners.app')
+@extends('layouts.app')
 @inject('model', 'App\Models\PlacePhoto')
 @section('page_title')
 {{ __('pages.Company Photos') }}
@@ -20,7 +20,7 @@
             @include('partials.validation-errors')
             {!!
             Form::model($model,[
-            'route'=>'photo.store',
+            'route'=>['dashboard.photo.store',$place->id],
             'files'=>true
             ])
             !!}

@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Notifications\OwnerResetPassword;
+use App\Notifications\ResetPassword;
 use App\Search;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -60,6 +60,6 @@ class PlaceOwner extends Authenticatable implements CanResetPassword
      */
     public function sendPasswordResetNotification($token)
     {
-        $this->notify(new OwnerResetPassword($token));
+        $this->notify(new ResetPassword($token,'owner.password.reset'));
     }
 }

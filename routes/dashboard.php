@@ -11,12 +11,14 @@ Route::group(['middleware' => ['auth', 'auto-check-permission']], function () {
     Route::resource('place-owner', 'OwnerController')->only(['index', 'destroy', 'update']);
     Route::resource('place', 'PlaceController');
     Route::put('place/{place}/best', 'PlaceController@best')->name('place.best');
-    Route::get('place/{place}/photos', 'PlaceController@photos')->name('place.photos');
     Route::resource('setting', 'SettingController')->only(['index', 'edit', 'update']);
     Route::resource('message', 'ClientMessageController')->only(['index', 'destroy']);
     Route::resource('owner-request', 'OwnerRequestController')->except(['edit', 'show']);
     Route::resource('user', 'UserController')->except(['show']);
     Route::resource('role', 'RoleController')->except(['show']);
+    Route::name('dashboard.')->group(function () {
+        Route::resource('place/{place}/photo', 'PlacePhotoController');
+    });
     // Route::resource('permission', 'PermissionController')->except(['show']);
     Route::get('change-password', 'UserController@showPasswordForm')->name('change-password-form');
     Route::post('change-password', 'UserController@changePassword')->name('change-password');

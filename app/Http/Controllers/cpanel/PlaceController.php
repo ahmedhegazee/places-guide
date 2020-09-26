@@ -151,9 +151,4 @@ class placeController extends Controller
             }
         }
     }
-    public function photos(Place $place)
-    {
-        $records = $place->photos;
-        return view('cpanel.places.photos', compact('records'));
-    }
 }

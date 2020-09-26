@@ -2,25 +2,27 @@
 
 namespace App\Notifications;
 
-use Illuminate\Auth\Notifications\ResetPassword;
+use Illuminate\Auth\Notifications\ResetPassword as NotificationResetPassword;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Support\Facades\Lang;
 
-class OwnerResetPassword extends ResetPassword
+class ResetPassword extends NotificationResetPassword
 {
     use Queueable;
     public $token;
+    public $route;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($token)
+    public function __construct($token,$route)
     {
         $this->token = $token;
+        $this->route = $route;
     }
 
     /**
@@ -43,11 +45,11 @@ class OwnerResetPassword extends ResetPassword
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject(Lang::get('Reset Password Notification'))
-            ->line(Lang::get('You are receiving this email because we received a password reset request for your account.'))
-            ->action(Lang::get('Reset Password'), url(config('app.url') . route('owner.password.reset', ['token' => $this->token, 'email' => $notifiable->getEmailForPasswordReset()], false)))
-            ->line(Lang::get('This password reset link will expire in 60 minutes.'))
-            ->line(Lang::get('If you did not request a password reset, no further action is required.'));
+            ->subject(__('messages.Reset Password Notification'))
+            ->line(__('messages.You are receiving this email because we received a password reset request for your account.'))
+            ->action(__('messages.Reset Password'), url(config('app.url') . route($this->route, ['token' => $this->token, 'email' => $notifiable->getEmailForPasswordReset()], false)))
+            ->line(__('messages.This password reset link will expire in 60 minutes.'))
+            ->line(__('messages.If you did not request a password reset, no further action is required.'));
     }
 
     /**

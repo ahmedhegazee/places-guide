@@ -1,5 +1,4 @@
-@extends('owners.app')
-@inject('model', 'App\Models\PlacePhoto')
+@extends('layouts.app')
 @section('page_title')
 {{ __('pages.Company Photos') }}
 @endsection
@@ -12,15 +11,17 @@
     <!-- Default box -->
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">{{ __('pages.Add').' '.__('pages.Photo') }}</h3>
+            <h3 class="card-title">{{ __('pages.Edit').' '.__('pages.Photo') }}</h3>
 
         </div>
         <div class="card-body">
-            @include('flash::message')
+
             @include('partials.validation-errors')
+            @include('owners.photos.photo')
             {!!
-            Form::model($model,[
-            'route'=>'photo.store',
+            Form::model($photo,[
+            'route'=>['dashboard.photo.update',$place->id,$photo->id],
+            'method' => 'put',
             'files'=>true
             ])
             !!}

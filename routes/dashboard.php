@@ -14,9 +14,12 @@ Route::group(['middleware' => ['auth', 'auto-check-permission']], function () {
     Route::resource('setting', 'SettingController')->only(['index', 'edit', 'update']);
     Route::resource('message', 'ClientMessageController')->only(['index', 'destroy']);
     Route::resource('owner-request', 'OwnerRequestController')->except(['edit', 'show']);
+
     Route::resource('user', 'UserController')->except(['show']);
     Route::resource('role', 'RoleController')->except(['show']);
     Route::name('dashboard.')->group(function () {
+        Route::resource('work-ad', 'WorkAdController')->only(['index', 'show', 'destroy']);
+        Route::resource('discount', 'DiscountController')->only(['index', 'show', 'destroy']);
         Route::resource('place/{place}/photo', 'PlacePhotoController');
         Route::resource('place/{place}/video', 'PlaceVideoController');
     });

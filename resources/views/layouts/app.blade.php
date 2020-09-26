@@ -154,6 +154,24 @@ dir="rtl"
                         </a>
                         </li> --}}
                         <li class="nav-item">
+                            <a href="{{ route('dashboard.work-ad.index') }}"
+                                class="nav-link {{ Route::currentRouteName()=='dashboard.work-ad.index'?'active':'' }}">
+                                <i class="nav-icon fas fa-briefcase"></i>
+                                <p>
+                                    {{ __('pages.Work Ads') }}
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('dashboard.discount.index') }}"
+                                class="nav-link {{ Route::currentRouteName()=='dashboard.discount.index'?'active':'' }}">
+                                <i class="nav-icon fas fa-percent"></i>
+                                <p>
+                                    {{ __('pages.Discounts') }}
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="{{ route('user.index') }}"
                                 class="nav-link {{ Route::currentRouteName()=='user.index'?'active':'' }}">
                                 <i class="nav-icon fas fa-users"></i>

@@ -15,9 +15,9 @@ class WorkAdController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $records = WorkAd::with('workerCategory')->paginate(10);
+        $records = $request->user()->place->ads->with('workerCategory')->paginate(10);
         // dd($records);
         return view('owners.workads.index', compact('records'));
     }

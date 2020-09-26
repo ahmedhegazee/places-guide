@@ -16,9 +16,9 @@ class DiscountController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $records = Discount::paginate(10);
+        $records = $request->user()->place->discounts()->paginate(10);
         // dd($records);
         return view('owners.discounts.index', compact('records'));
     }

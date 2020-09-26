@@ -131,6 +131,7 @@ $(`<option value=${subcategory.id}>${subcategory.name}</option>`).appendTo('#sub
                     <th>{{ __('pages.SubCategory') }}</th>
                     <th>{{ __('pages.Is Best') }}</th>
                     <th>{{ __('pages.Best') }}</th>
+                    <th>{{ __('pages.Photos') }}</th>
                     <th>{{ __('pages.Show') }}</th>
                     <th>{{ __('pages.Edit') }}</th>
                     <th>{{ __('pages.Delete') }}</th>
@@ -153,6 +154,10 @@ $(`<option value=${subcategory.id}>${subcategory.name}</option>`).appendTo('#sub
                                 onclick="event.preventDefault();isBest({{ $record->id }});" class="btn btn-success "><i
                                     class="{{$record->is_best?'fas':'far'}} fa-star"
                                     id="favourite-{{ $record->id }}"></i></a>
+                        </td>
+                        <td>
+                            <a href="{{route('place.photos',['place'=>$record->id])}}" class="btn btn-primary"><i
+                                    class="fas fa-images"></i></a>
                         </td>
                         <td>
                             <a href="{{route('place.show',['place'=>$record->id])}}" class="btn btn-primary"><i

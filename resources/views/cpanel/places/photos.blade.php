@@ -1,5 +1,4 @@
-@extends('owners.app')
-
+@extends('layouts.app')
 @section('page_title')
 {{ __('pages.Company Photos') }}
 @endsection

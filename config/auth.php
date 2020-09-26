@@ -143,6 +143,16 @@ return [
             'table' => 'password_resets',
             'expire' => 60,
         ],
+        'clients' => [
+            'provider' => 'clients',
+            'table' => 'password_resets',
+            'expire' => 60,
+        ],
+        'owners' => [
+            'provider' => 'owners',
+            'table' => 'password_resets',
+            'expire' => 60,
+        ],
     ],
 
 ];

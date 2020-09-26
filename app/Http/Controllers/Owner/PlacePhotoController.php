@@ -13,9 +13,9 @@ class PlacePhotoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $records = PlacePhoto::paginate(10);
+        $records = $request->user()->place->photos;
         return view('owners.photos.index', compact('records'));
     }
 
@@ -37,6 +37,7 @@ class PlacePhotoController extends Controller
      */
     public function store(Request $request)
     {
+
         $this->validate($request, [
             'file.*' => 'required|image|max:4000'
         ]);

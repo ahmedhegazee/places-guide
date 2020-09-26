@@ -17,8 +17,8 @@
             <form action="{{ route('password.update') }}" class="w-75 m-auto" method="POST">
                 @csrf
                 <input type="hidden" name="token" value="{{ $token }}">
-                <input type="text" name="phone" value="{{ $phone??old('phone') }}"
-                    class="form-control my-3 @error('phone') is-invalid @enderror" placeholder="رقم الهاتف">
+                <input type="text" name="email" value="{{ $email??old('email') }}"
+                    class="form-control my-3 @error('email') is-invalid @enderror" placeholder="البريد الالكتروني">
                 <input type="password" name="password"
                     class="form-control my-3  @error('password') is-invalid @enderror" autocomplete="new-password"
                     placeholder="كلمة المرور">

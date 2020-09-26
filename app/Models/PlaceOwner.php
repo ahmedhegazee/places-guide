@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Notifications\OwnerResetPassword;
 use App\Search;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -50,5 +51,15 @@ class PlaceOwner extends Authenticatable implements CanResetPassword
             return
                 $type[$this->attributes['account_type']];
         }
+    }
+    /**
+     * Send the password reset notification.
+     *
+     * @param  string  $token
+     * @return void
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new OwnerResetPassword($token));
     }
 }

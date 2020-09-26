@@ -21,8 +21,8 @@
         <div class="py-4 mb-4">
             <form action="{{ route('password.email') }}" class="w-75 m-auto" method="POST">
                 @csrf
-                <input type="text" name="phone" value="{{ old('phone') }}"
-                    class="form-control my-3 @error('phone') is-invalid @enderror" placeholder="رقم الهاتف">
+                <input type="text" name="email" value="{{ old('email') }}"
+                    class="form-control my-3 @error('email') is-invalid @enderror" placeholder="البريد الالكتروني">
                 <button type="submit" class="btn btn-success py-2 w-50">ارسال الرابط</button>
             </form>
         </div>

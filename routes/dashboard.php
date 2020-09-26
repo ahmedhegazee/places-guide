@@ -11,6 +11,7 @@ Route::group(['middleware' => ['auth', 'auto-check-permission']], function () {
     Route::resource('place-owner', 'OwnerController')->only(['index', 'destroy', 'update']);
     Route::resource('place', 'PlaceController');
     Route::put('place/{place}/best', 'PlaceController@best')->name('place.best');
+    Route::get('place/{place}/photos', 'PlaceController@photos')->name('place.photos');
     Route::resource('setting', 'SettingController')->only(['index', 'edit', 'update']);
     Route::resource('message', 'ClientMessageController')->only(['index', 'destroy']);
     Route::resource('owner-request', 'OwnerRequestController')->except(['edit', 'show']);

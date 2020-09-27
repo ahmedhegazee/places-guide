@@ -58,13 +58,19 @@ class Place extends Model
         if ($this->preventClosedDaysAttribute)
             return $this->attributes['closed_days'];
         else {
-            $arr = explode(',', $this->attributes['closed_days']);
-            $days = [];
-            // dd($this->attributes['closed_days']);
-            for ($i = 0; $i < sizeOf($arr); $i++) {
-                array_push($days, $this->getDays()[$arr[$i]]);
+            if(strlen($this->attributes['closed_days'])>0){
+                $arr = explode(',', $this->attributes['closed_days']);
+                $days = [];
+
+                // dd($this->attributes['closed_days']);
+                for ($i = 0; $i < sizeOf($arr); $i++) {
+                    array_push($days, $this->getDays()[$arr[$i]]);
+                }
+                return implode(',', $days);
+            }else {
+                return 'مفتوح طول ايام الاسبوع';
             }
-            return implode(',', $days);
+            
         }
     }
     public function countDiscounts()

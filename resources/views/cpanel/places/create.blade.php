@@ -24,7 +24,8 @@
             {!!
             Form::model(null,[
             'route'=>'place.store',
-            'method'=>'post'
+            'method'=>'post',
+            'files'=>true
             ])
             !!}
             @csrf

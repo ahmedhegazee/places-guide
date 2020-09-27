@@ -58,7 +58,7 @@ class Place extends Model
         if ($this->preventClosedDaysAttribute)
             return $this->attributes['closed_days'];
         else {
-            if(strlen($this->attributes['closed_days'])>0){
+            if (strlen($this->attributes['closed_days']) > 0) {
                 $arr = explode(',', $this->attributes['closed_days']);
                 $days = [];
 
@@ -67,10 +67,9 @@ class Place extends Model
                     array_push($days, $this->getDays()[$arr[$i]]);
                 }
                 return implode(',', $days);
-            }else {
+            } else {
                 return 'مفتوح طول ايام الاسبوع';
             }
-            
         }
     }
     public function countDiscounts()
@@ -145,9 +144,10 @@ class Place extends Model
     }
     public function scopeAvailable($query)
     {
-        $query->whereHas('owner', function ($query) {
-            $query->accepted(1);
-        })->orWhere('place_owner_id', null);
+        $query->whereDoesntHave('owner', function ($query) {
+            $query->accepted(0);
+        });
+        // ->orWhere('place_owner_id', null);
     }
     public $preventIsBest = true;
     public function getIsBestAttribute()

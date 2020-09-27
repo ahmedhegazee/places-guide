@@ -30,3 +30,7 @@ Route::group(['prefix' => 'dashboard'], function () {
 });
 Route::get('/join-us', 'Owner\Auth\RegisterController@showRegistrationForm')->name('owner.register');
 Route::post('/join-us', 'Owner\Auth\RegisterController@register');
+// Route::view('/test','welcome');
+// Route::post('/test',function(Request $request){
+//     dd(storeFileOnGoogleCloud($request->file('image'), 'images'));
+// });

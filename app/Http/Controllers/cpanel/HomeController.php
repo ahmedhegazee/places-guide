@@ -26,9 +26,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $countPlaces = Place::whereHas('owner', function ($query) {
-            $query->accepted(1);
-        })->get()->count();
+        $countPlaces = Place::available()->get()->count();
         $countOwnerRequest = Place::whereHas('owner', function ($query) {
             $query->accepted(0);
         })->get()->count();

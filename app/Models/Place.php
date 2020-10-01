@@ -11,7 +11,7 @@ class Place extends Model
     use Search, FormatDataCollection;
     protected $table = 'places';
     public $timestamps = true;
-    protected $fillable = array('name', 'city_id', 'address', 'about', 'latitude', 'longitude', 'place_owner_id', 'phone', 'sub_category_id', 'category_id', 'is_best', 'is_accepted', 'opened_time', 'closed_time', 'closed_days', 'website', 'twitter', 'facebook', 'instagram', 'youtube', 'main_image', 'tax_record', 'video');
+    protected $fillable = array('name', 'city_id', 'address', 'about', 'latitude', 'longitude', 'place_owner_id', 'phone', 'sub_category_id', 'category_id', 'is_best', 'is_accepted', 'opened_time', 'closed_time', 'closed_days', 'website', 'twitter', 'facebook', 'instagram', 'youtube', 'main_image', 'tax_record', 'video','visited_count');
 
     public function city()
     {

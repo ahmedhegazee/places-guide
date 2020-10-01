@@ -9,32 +9,65 @@
 <section class="categories py-2">
     <div class="container">
         <div class="row">
-            @include('layouts.filter-sidebar')
+{{--            @include('layouts.filter-sidebar')--}}
+            <div class="col-md-3 col-sm-12">
+                <div id="map" style="width:100%;height:300px;" ></div>
+                <div class="row mt-3">
+                    @foreach($records as $record)
+                    <div class="col-md-6 col-sm-12"><img src="{{$record->main_image}}" alt="" width="100%"></div>
+                    @endforeach
+                </div>
+            </div>
             <div class="row col-md-9 col-sm-12">
                 @foreach($records as $record)
-                <div class="col-md-6 col-sm-12">
+                <div class="col-md-12 col-sm-12" onclick="navigateToPlace('{{ route('place',['place'=>$record->id]) }}')">
                     <div class="card mb-4 shadow-sm">
-                        <a href="{{ route('place',['place'=>$record->id]) }}" class="category">
-                            <div class="position-relative category-content">
-                                @if ($record->main_image=='images/company.png')
-                                <img src="{{asset($record->main_image)}}" width="100%" height="200px" alt="">
-                                @else
-                                <img src="{{$record->main_image }}" width="100%" height="200px" alt="">
-                                @endif
+                        {{-- <a href="{{ route('place',['place'=>$record->id]) }}" class="category"> --}}
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <img src="{{$record->main_image }}" width="100%" height="100px" alt="">
+                                  <input type="hidden" vlaue="{{$record->enableRatingAttribute=true}}">
+                                  <div class="mt-3">
+                                      @for ($i = 0; $i < $record->rating; $i++) <i class="fas fa-star mr-1">
+                                      </i>
+                                      @endfor
+                                  </div>
+                                </div>
+                                <div class="col-md-9">
+                                    <h3 class="card-text">{{ $record->name }}</h3>
+                                    @if (!is_null($record->address))
+                                        <div id="address">
+                                            <span><i class="fas fa-map-marker-alt"></i>{{ ' '.$record->address }}</span>
+                                        </div>
+                                    @endif
+                                    <p style="max-height:100px; overflow:hidden;">{{ $record->about }}</p>
+                                    <a href="{{ route('place',['place'=>$record->id]) }}" class="btn btn-link" style="color:#000">اقرأ المزيد
+                                    </a><br /><br>
+                                    <a class="btn btn-success" href="tel:{{ $record->phone }}" target="_blank"><i
+                                            class="fas fa-phone"></i> اتصل</a>
+                                    {{-- <a class="btn btn-success" href="tel:{{ $record->phone }}" target="_blank"><i
+                                        class="fas fa-phone"></i>
+                                    </a> --}}
+                                    @if (!is_null($record->website))
+                                        <a class="btn btn-primary" style="background: transparent; color:#000" href="{{ $record->website }}" target="_blank"><i
+                                                class="fas fa-link"></i>موقع الكتروني</a>
+                                    @endif
 
-                                <span>{{ $record->name }}</span>
-                                {{-- <span class="count">{{ $record->places->count() }}</span>
-                                --}}
+                                </div>
                             </div>
-                            <div class="card-body">
-                                <h3 class="card-text">{{ $record->name }}</h3>
-                            </div>
-                        </a>
+
+                        </div>
+                        {{-- </a> --}}
                     </div>
                 </div>
-                @endforeach
-            </div>
+                @if (!is_null($record->longitude)&&!is_null($record->latitude))
+                        <input type="hidden" value="{{$record->longitude}}" class="lng"><input type="hidden" value="{{$record->latitude}}" class="lat">
+                @endif
 
+                @endforeach
+
+            </div>
         </div>
 
         {{-- pagination --}}
@@ -65,7 +98,9 @@
                 dir: 'rtl'
             });
         });
-
+function navigateToPlace(url){
+    location.assign(url);
+}
         function getCities() {
             let govern = $('#govern').val();
             // console.log(govern);
@@ -123,6 +158,44 @@
                 }
             });
         });
+</script>
+<script
+    src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_TOKEN') }}&callback=initMap&libraries=&v=weekly"
+    defer>
+</script>
+<script>
+    let map;
+    document.onload = function () {
+        initMap();
+    }
+
+    function initMap() {
+
+        let longs = document.getElementsByClassName('lng');
+        let lats = document.getElementsByClassName('lat');
+        // console.log(long);
+        if (longs != null && lats != null) {
+            lat = parseFloat(lats[0].value);
+            long = parseFloat(longs[0].value);
+            map = new google.maps.Map(document.getElementById("map"), {
+                center: {
+                    lat: lat,
+                    lng: long
+                },
+                zoom: 8
+            });
+            for (let i=0;i<lats.length;i++){
+                var marker = new google.maps.Marker({
+                    position: {
+                        lat: parseFloat(lats[i].value),
+                        lng: parseFloat(longs[i].value)
+                    },
+                    map: map
+                });
+            }
+
+        }
+    }
 </script>
 
 @endpush

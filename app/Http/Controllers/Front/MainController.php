@@ -26,11 +26,7 @@ class MainController extends Controller
     use FormatDataCollection;
     public function home()
     {
-        if (!is_null(auth('clients')->user()))
-            $bestPlaces = Place::best()->searchCity(auth('clients')->user()->city->id)->take(6)->get();
-        else {
-            $bestPlaces = collect([]);
-        }
+
         // dd($bestPlaces);
         // $ratedPlaces = DB::table('reviews')
         //     ->join('places', 'reviews.place_id', '=', 'places.id')
@@ -46,16 +42,16 @@ class MainController extends Controller
         //     return $place->rating;
         // });
         // dd($ratedPlaces);
-        $places = Place::whereHas('owner', function ($query) {
-            $query->where('is_accepted', 1);
-        })->orWhere('place_owner_id', null)
+        $bestPlaces = Place::best()->take(6)->get();
+        $mostVisited = Place::available()->orderByDesc('visited_count')->take(6)->get();
+        $places = Place::available()
             ->latest()->take(6)->get();
         // dd($places);
         //acceptedPlaces
         $discounts = Discount::available()->count();
         $categories = Category::withCount('acceptedPlaces')->get();
         // dd($categories);
-        return view('front.home', compact('places',  'bestPlaces', 'categories', 'discounts'));
+        return view('front.home', compact('places',  'bestPlaces', 'categories', 'discounts', 'mostVisited'));
     }
     public function about()
     {

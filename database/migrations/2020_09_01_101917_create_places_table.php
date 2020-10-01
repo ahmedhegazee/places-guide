@@ -23,6 +23,7 @@ class CreatePlacesTable extends Migration
             $table->integer('category_id')->unsigned();
             $table->integer('sub_category_id')->unsigned()->nullable();
             $table->tinyInteger('is_best')->default('0');
+            $table->unisgnedBigInteger('visited_count')->default(0);
             $table->time('opened_time');
             $table->time('closed_time');
             // $table->enum('closed_days', array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'));

@@ -41,7 +41,7 @@
         </div>
     </div>
 </section>
-<section class="new-places bg-white py-2 ">
+{{-- <section class="new-places bg-white py-2 ">
     <h2 class="text-center mb-4 mt-3">احدث الاماكن المضافة</h2>
     <div class="container">
         <div class="row">
@@ -49,22 +49,22 @@
             <div class="col-md-4 col-sm-12">
                 <div class="card mb-4 shadow-sm">
                     <a href="{{ route('place',['place'=>$record->id]) }}" class="category">
-                        <div class="position-relative category-content">
-                            <img src="{{ $record->main_image }}" width="100%" height="200px" alt="">
-                            <span>{{ $record->name }}</span>
+<div class="position-relative category-content">
+    <img src="{{ $record->main_image }}" width="100%" height="200px" alt="">
+    <span>{{ $record->name }}</span>
 
-                        </div>
-                        <div class="card-body">
-                            <h3 class="card-text">{{ $record->name }}</h3>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            @endforeach
-        </div>
-    </div>
-</section>
-@auth('clients')
+</div>
+<div class="card-body">
+    <h3 class="card-text">{{ $record->name }}</h3>
+</div>
+</a>
+</div>
+</div>
+@endforeach
+</div>
+</div>
+</section> --}}
+{{-- @auth('clients')
 <section class="categories py-2">
     <h2 class="text-center mb-4"> افضل الاماكن في مدينتك</h2>
     <div class="container">
@@ -73,54 +73,68 @@
             <div class="col-md-4 col-sm-12">
                 <div class="card mb-4 shadow-sm">
                     <a href="{{ route('place',['place'=>$place->id]) }}" class="category">
-                        <div class="position-relative category-content">
-                            <img src="{{$place->main_image }}" width="100%" alt="">
-                            {{-- <span>{{ $place->name }}</span> --}}
-                        </div>
+<div class="position-relative category-content">
+    <img src="{{$place->main_image }}" width="100%" alt="">
+    {{-- <span>{{ $place->name }}</span> --}}
+    {{--</div>
                         <div class="card-body">
                             <h3 class="card-text">{{ $place->name }}</h3>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            @endforeach
-        </div>
-    </div>
-</section>
-@endauth
-{{-- <section class="best-places py-2">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6 col-sm-12">
-                <h4>أكتر الاماكن شعبية</h4>
-                @foreach ($ratedPlaces as $place)
-                <div class="card mb-4 shadow-sm">
-                    <a href="{{ route('category',['category'=>$record->id]) }}" class="category">
-<div class="position-relative category-content">
-    <img src="{{$record->image }}" width="50px" height="50px" alt="">
-    <span>{{ $record->name }}</span>
 </div>
 </a>
 </div>
+</div>
 @endforeach
+</div>
+</div>
+</section>
+@endauth --}}
+<section class="best-places py-2 mb-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-sm-12">
+                <h4>احدث الاماكن المضافة</h4>
+                @foreach ($places as $record)
+                <div class="card  shadow-sm">
+                    <a href="{{ route('place',['place'=>$record->id]) }}" class="category">
+                        <div class="position-relative category-content">
+                            <img src="{{$record->main_image }}" width="50px" height="50px" alt="">
+                            <span>{{ $record->name }}</span>
+                        </div>
+                    </a>
+                </div>
+                @endforeach
 
-</div>
-<div class="col-md-6 col-sm-12">
-    <h4>اخترنا لكم</h4>
-    @foreach ($bestPlaces as $place)
-    <div class="card mb-4 shadow-sm">
-        <a href="{{ route('category',['category'=>$record->id]) }}" class="category">
-            <div class="position-relative category-content">
-                <img src="{{$record->image }}" width="50px" height="50px" alt="">
-                <span>{{ $record->name }}</span>
             </div>
-        </a>
+            <div class="col-md-4 col-sm-12">
+                <h4>اكثر المواقع زيارة</h4>
+                @foreach ($mostVisited as $record)
+                <div class="card  shadow-sm">
+                    <a href="{{ route('place',['place'=>$record->id]) }}" class="category">
+                        <div class="position-relative category-content">
+                            <img src="{{$record->main_image }}" width="50px" height="50px" alt="">
+                            <span>{{ $record->name }}</span>
+                        </div>
+                    </a>
+                </div>
+                @endforeach
+            </div>
+            <div class="col-md-4 col-sm-12">
+                <h4>اخترنا لكم</h4>
+                @foreach ($bestPlaces as $record)
+                <div class="card  shadow-sm">
+                    <a href="{{ route('place',['place'=>$record->id]) }}" class="category">
+                        <div class="position-relative category-content">
+                            <img src="{{$record->main_image }}" width="50px" height="50px" alt="">
+                            <span>{{ $record->name }}</span>
+                        </div>
+                    </a>
+                </div>
+                @endforeach
+            </div>
+        </div>
     </div>
-    @endforeach
-</div>
-</div>
-</div>
-</section> --}}
+
+</section>
 {{-- Best Places based on City and Admin Choices  --}}
 {{-- Best places based on ratings --}}
 <section class="contact-us py-5 ">

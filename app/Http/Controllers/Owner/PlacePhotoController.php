@@ -47,7 +47,7 @@ class PlacePhotoController extends Controller
             //insert all images in only one time || TODO Search for that
             foreach ($files as $img) {
                 $request->user()->place->photos()->create([
-                    'src' => storeFileOnGoogleCloud($img, 'images')
+                    'src' => storeFileOnAzure($img, 'images')
                 ]);
             }
             flash(__('messages.add'), 'success');
@@ -94,7 +94,7 @@ class PlacePhotoController extends Controller
             'file' => 'required|image|max:4000'
         ]);
         deleteFile(str_replace(env('APP_URL') . '/', '', $photo->src));
-        $photo->update(['src' => storeFileOnGoogleCloud($request->file('file'), 'images')]);
+        $photo->update(['src' => storeFileOnAzure($request->file('file'), 'images')]);
         flash(__('messages.update'), 'success');
         return redirect()->route('photo.index');
     }

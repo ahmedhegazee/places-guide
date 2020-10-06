@@ -103,7 +103,7 @@ class MainController extends Controller
         // dd();
         $request->merge(['closed_days' => implode(",", $request->closed_days), 'longitude' => number_format($request->longitude, 6), 'latitude' => number_format($request->latitude, 6)]);
         if ($request->has('main_image')) {
-            $path = storeFileOnGoogleCloud($request->file('main_image'), 'images');
+            $path = storeFileOnAzure($request->file('main_image'), 'images');
             $data = $request->except('main_image');
             $data['main_image'] = $path;
         } else {

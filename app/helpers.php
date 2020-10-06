@@ -43,8 +43,10 @@ function storeFileOnGoogleCloud($file, $directory)
 }
 function storeFileOnAzure($file, $directory)
 {
+    // return
+    //     env('AZURE_STORAGE_URL') . Storage::disk('azure')->put($directory, $file);;
     return
-        Storage::disk('azure')->put($directory, $$file);;
+        env('AZURE_STORAGE_URL') . $file->store($directory);
 }
 function deleteFile($file)
 {

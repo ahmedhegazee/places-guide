@@ -39,12 +39,12 @@ class placeController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'name' => ['required','array','min:'.sizeof($this->langs),'max:'.sizeof($this->langs)],
+            'name' => ['required', 'array', 'min:' . sizeof($this->langs), 'max:' . sizeof($this->langs)],
             'name.*' => 'required|string|min:3|max:255',
             'tax_record' => 'required|string|unique:places',
-            'address' => ['required','array','min:'.sizeof($this->langs),'max:'.sizeof($this->langs)],
+            'address' => ['required', 'array', 'min:' . sizeof($this->langs), 'max:' . sizeof($this->langs)],
             'address.*' => 'required|string|min:3|max:255',
-            'about' => ['required','array','min:'.sizeof($this->langs),'max:'.sizeof($this->langs)],
+            'about' => ['required', 'array', 'min:' . sizeof($this->langs), 'max:' . sizeof($this->langs)],
             'about.*' => 'required|string|min:3|max:500',
             'phone' => 'required|string',
             // 'city_id' => ['required', 'numeric', Rule::in(City::all('id')->toArray())],
@@ -64,9 +64,9 @@ class placeController extends Controller
 
         $request->merge([
             'closed_days' => $request->has('closed_days') ? implode(",", $request->closed_days) : '',
-            'name'=>json_encode($request->get('name')),
-            'about'=>json_encode($request->get('about')),
-            'address'=>json_encode($request->get('address'))
+            'name' => json_encode($request->get('name')),
+            'about' => json_encode($request->get('about')),
+            'address' => json_encode($request->get('address'))
         ]);
 
         $owner = Place::create($request->all());
@@ -93,12 +93,12 @@ class placeController extends Controller
     public function update(Request $request, Place $place)
     {
         $rules = [
-            'name' => ['required','array','min:'.sizeof($this->langs),'max:'.sizeof($this->langs)],
+            'name' => ['required', 'array', 'min:' . sizeof($this->langs), 'max:' . sizeof($this->langs)],
             'name.*' => 'required|string|min:3|max:255',
             'tax_record' => ['required', 'string', Rule::unique('places')->ignore($place->id)],
-            'address' => ['required','array','min:'.sizeof($this->langs),'max:'.sizeof($this->langs)],
+            'address' => ['required', 'array', 'min:' . sizeof($this->langs), 'max:' . sizeof($this->langs)],
             'address.*' => 'required|string|min:3|max:255',
-            'about' => ['required','array','min:'.sizeof($this->langs),'max:'.sizeof($this->langs)],
+            'about' => ['required', 'array', 'min:' . sizeof($this->langs), 'max:' . sizeof($this->langs)],
             'about.*' => 'required|string|min:3|max:500',
             'phone' => 'required|string',
             // 'city_id' => ['required', 'numeric', Rule::in(City::all('id')->toArray())],
@@ -121,7 +121,7 @@ class placeController extends Controller
         // dd();
         $request->merge(['closed_days' => implode(",", $request->closed_days), 'longitude' => number_format($request->longitude, 6), 'latitude' => number_format($request->latitude, 6)]);
         if ($request->has('main_image')) {
-            $path = storeFileOnGoogleCloud($request->file('main_image'), 'images');
+            $path = storeFileOnAzure($request->file('main_image'), 'images');
             $data = $request->except('main_image');
             $data['main_image'] = $path;
         } else {

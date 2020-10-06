@@ -43,9 +43,9 @@ class DiscountController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'title' => ['required','array','min:'.sizeof($this->langs),'max:'.sizeof($this->langs)],
+            'title' => ['required', 'array', 'min:' . sizeof($this->langs), 'max:' . sizeof($this->langs)],
             'title.*' => 'required|string|min:3|max:255',
-            'content' => ['required','array','min:'.sizeof($this->langs),'max:'.sizeof($this->langs)],
+            'content' => ['required', 'array', 'min:' . sizeof($this->langs), 'max:' . sizeof($this->langs)],
             'content.*' => 'required|string|min:3|max:500',
             'discount' => 'required|string|min:3|max:255',
             'starting_date' => 'required|date|after_or_equal:today',
@@ -54,11 +54,12 @@ class DiscountController extends Controller
         ]);
         $request->merge(
             [
-                'title'=>json_encode($request->get('title')),
-                'content'=>json_encode($request->get('content')),
-            ]);
+                'title' => json_encode($request->get('title')),
+                'content' => json_encode($request->get('content')),
+            ]
+        );
         $data = $request->except('image');
-        $data['image'] = storeFileOnGoogleCloud($request->image, 'images');
+        $data['image'] = storeFileOnAzure($request->image, 'images');
         $request->user()->place->discounts()->create($data);
         flash(__('messages.add'), 'success');
         return redirect(route('discount.index'));
@@ -97,9 +98,9 @@ class DiscountController extends Controller
     public function update(Request $request, Discount $discount)
     {
         $this->validate($request, [
-            'title' => ['required','array','min:'.sizeof($this->langs),'max:'.sizeof($this->langs)],
+            'title' => ['required', 'array', 'min:' . sizeof($this->langs), 'max:' . sizeof($this->langs)],
             'title.*' => 'required|string|min:3|max:255',
-            'content' => ['required','array','min:'.sizeof($this->langs),'max:'.sizeof($this->langs)],
+            'content' => ['required', 'array', 'min:' . sizeof($this->langs), 'max:' . sizeof($this->langs)],
             'content.*' => 'required|string|min:3|max:500',
             'discount' => 'required|string|min:3',
             'starting_date' => 'required|date|after_or_equal:today',
@@ -108,12 +109,13 @@ class DiscountController extends Controller
         ]);
         $request->merge(
             [
-                'title'=>json_encode($request->get('title')),
-                'content'=>json_encode($request->get('content')),
-            ]);
+                'title' => json_encode($request->get('title')),
+                'content' => json_encode($request->get('content')),
+            ]
+        );
         $data = $request->except('image');
         if ($request->has('image'))
-            $data['image'] = storeFileOnGoogleCloud($request->image, 'images');
+            $data['image'] = storeFileOnAzure($request->image, 'images');
         $discount->update($data);
         flash(__('messages.update'), 'success');
         return redirect()->route('discount.index');

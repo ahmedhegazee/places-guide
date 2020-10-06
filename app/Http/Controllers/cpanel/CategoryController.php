@@ -43,14 +43,14 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => ['required','array','min:'.sizeof($this->langs),'max:'.sizeof($this->langs)],
+            'name' => ['required', 'array', 'min:' . sizeof($this->langs), 'max:' . sizeof($this->langs)],
             'name.*' => 'required|string|min:3|max:255',
             'image' => 'required|image|max:4000'
         ]);
-        $request->merge(['name'=>json_encode($request->get('name')),]);
+        $request->merge(['name' => json_encode($request->get('name')),]);
         $data = $request->only('name');
-//        $data['image'] = storeFileOnGoogleCloud($request->file('image'), 'categories');
-        $data['image'] ='';
+        //        $data['image'] = storeFileOnGoogleCloud($request->file('image'), 'categories');
+        $data['image'] = '';
         Category::create($data);
         flash(__('messages.add'), 'success');
         return redirect()->route('category.index');
@@ -64,7 +64,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-//        dd($category->name);
+        //        dd($category->name);
         return view('cpanel.categories.edit', compact('category'));
     }
 
@@ -78,14 +78,14 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category)
     {
         $this->validate($request, [
-            'name' => ['required','array','min:'.sizeof($this->langs),'max:'.sizeof($this->langs)],
+            'name' => ['required', 'array', 'min:' . sizeof($this->langs), 'max:' . sizeof($this->langs)],
             'name.*' => 'required|string|min:3|max:255',
             'image' => 'sometimes|image|max:4000'
         ]);
-        $request->merge(['name'=>json_encode($request->get('name')),]);
+        $request->merge(['name' => json_encode($request->get('name')),]);
         $data = $request->only('name');
         if ($request->has('image'))
-            $data['image'] = storeFileOnGoogleCloud($request->file('image'), 'categories');
+            $data['image'] = storeFileOnAzure($request->file('image'), 'categories');
         $category->update($data);
         flash(__('messages.update'), 'success');
         return redirect()->route('category.index');

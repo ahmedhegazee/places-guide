@@ -45,7 +45,7 @@ class PlaceVideoController extends Controller
         //insert all images in only one time || TODO Search for that
 
         $request->user()->place->update([
-            'video' => storeFileOnGoogleCloud($video, 'videos')
+            'video' => storeFileOnAzure($video, 'videos')
         ]);
 
         flash(__('messages.add'), 'success');
@@ -78,7 +78,7 @@ class PlaceVideoController extends Controller
             'file' => 'required|file|mimes:mp4,webm,mpeg|max:20000'
         ]);
         // deleteFile(str_replace(env('APP_URL') . '/', '', $video->src));
-        $video->update(['video' => storeFileOnGoogleCloud($request->file('file'), 'videos')]);
+        $video->update(['video' => storeFileOnAzure($request->file('file'), 'videos')]);
         flash(__('messages.update'), 'success');
         return redirect()->route('video.index');
     }

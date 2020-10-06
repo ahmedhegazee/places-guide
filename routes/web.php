@@ -25,8 +25,8 @@ use App\Models\Place;
 //     return 'File was saved to Google Drive';
 // });
 
-Route::get('/lang/{lang}',function($lang){
-    Session::put('locale',$lang);
+Route::get('/lang/{lang}', function ($lang) {
+    Session::put('locale', $lang);
     return redirect()->back();
 });
 Route::group(['prefix' => 'dashboard'], function () {
@@ -35,10 +35,10 @@ Route::group(['prefix' => 'dashboard'], function () {
 Route::get('/join-us', 'Owner\Auth\RegisterController@showRegistrationForm')->name('owner.register');
 Route::post('/join-us', 'Owner\Auth\RegisterController@register');
 Route::view('/test', 'welcome');
-// Route::post('/test', function (Request $request) {
+Route::post('/test', function (Request $request) {
 
-//     dd(storeFileOnAzure($request->file('image'), 'images'));
-// });
+    dd(storeFileOnAzure($request->file('image'), 'images'));
+});
 
 
 //Route::get('/la',function(){
@@ -49,4 +49,3 @@ Route::view('/test', 'welcome');
 //
 //
 //});
-

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\ViewErrorBag;
 
 class LoginController extends Controller
 {
@@ -55,9 +56,10 @@ class LoginController extends Controller
     {
         $loginRoute = url('/login');
         $registerRoute = route('front.register');
-        $title = "زوار الموقع";
+        $title = __('main.Website Visitors');
+        $errors= new ViewErrorBag;
         $resetPasswordRoute = route('password.request');
-        return view('front.auth.login', compact('loginRoute', 'registerRoute', 'title', 'resetPasswordRoute'));
+        return view('front.auth.login', compact('loginRoute', 'registerRoute', 'title', 'resetPasswordRoute','errors'));
     }
     public function username()
     {

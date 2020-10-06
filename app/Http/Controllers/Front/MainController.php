@@ -211,6 +211,8 @@ class MainController extends Controller
     }
     public function place(Place $place)
     {
+        $place->visited_count++;
+        $place->save();
         $count = $place->photos->count() + 1;
         if (!is_null($place->vide0))
             $count++;

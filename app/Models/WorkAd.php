@@ -28,6 +28,14 @@ class WorkAd extends Model
             }
         });
     }
+    public function getTitleAttribute()
+{
+    return collect(json_decode($this->attributes['title']))->toArray();
+}
+public function getContentAttribute()
+{
+    return collect(json_decode($this->attributes['content']))->toArray();
+}
     // public function workers()
     // {
     //     return $this->belongsToMany('App\Models\Worker', 'workers_requests')->withTimestamps()->withPivot('is_accepted');

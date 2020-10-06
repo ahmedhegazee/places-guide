@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @inject('model', 'App\Models\SubCategory')
 @section('page_title')
-{{__('pages.Categories').' '.$category->name}}
+{{__('pages.Categories').' '.$category->name[app()->getLocale()]}}
 @endsection
 @section('content')
 <!-- Content Header (Page header) -->
@@ -19,7 +19,7 @@
 
             @include('partials.validation-errors')
             {!!
-            Form::model($model,[
+            Form::model(null,[
             'route'=>['subcategory.store','category'=>$category->id]
             ])
             !!}

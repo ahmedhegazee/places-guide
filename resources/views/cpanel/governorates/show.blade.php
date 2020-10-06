@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('page_title')
-{{__('pages.Cities').' '.$government->name}}
+{{__('pages.Cities').' '.$government->name[app()->getLocale()]}}
 @endsection
 @section('additional_styles')
 @include('partials.grid-view-styles')
@@ -20,7 +20,7 @@
     <!-- Default box -->
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">{{ __('pages.List Of').' '. __('pages.Cities').' '.$government->name}}</h3>
+            <h3 class="card-title">{{ __('pages.List Of').' '. __('pages.Cities').' '.$government->name[app()->getLocale()]}}</h3>
 
         </div>
         <div class="card-body">
@@ -31,7 +31,9 @@
             <table id="table" class="table table-bordered table-hover table-striped">
                 <thead>
                     <th>#</th>
-                    <th>{{ __('pages.Name') }}</th>
+                    @foreach($langs as $lang)
+                        <th>{{ __('pages.Name').' ('.$lang.')' }}</th>
+                    @endforeach
                     <th>{{ __('pages.Edit') }}</th>
                     <th>{{ __('pages.Delete') }}</th>
                 </thead>
@@ -39,7 +41,9 @@
                     @forelse ($records as $record)
                     <tr id="record-{{ $record->id }}">
                         <td>{{$loop->iteration}}</td>
-                        <td>{{$record->name}}</td>
+                        @foreach($langs as $lang)
+                            <td>{{$record->name[$lang]}}</td>
+                        @endforeach
                         <td>
                             <a href="{{route('city.edit',['govern'=>$government->id,'city'=>$record->id])}}"
                                 class="btn btn-success"><i class="fas fa-edit"></i></a>

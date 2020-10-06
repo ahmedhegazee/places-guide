@@ -20,4 +20,8 @@ class Governorate extends Model
     {
         return $this->hasManyThrough('App\Models\Place', 'App\Models\City');
     }
+    public function getNameAttribute()
+    {
+        return collect(json_decode($this->attributes['name']))->toArray();
+    }
 }

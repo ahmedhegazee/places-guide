@@ -35,11 +35,12 @@ $(window).ready(function () {
             600
         );
     });
+    let isRtl = document.getElementById('left-body')==null;
     //fire slick slider
     $(".main-header").slick({
         slidesToShow: 1,
         slidesToScroll: 1,
-        rtl: true,
+        rtl:isRtl ,
         dots: true,
         autoplay: true,
         dotsClass: "slick-dots",

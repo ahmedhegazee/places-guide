@@ -51,10 +51,13 @@ class OwnerRequestController extends Controller
             'email' => 'required|email|unique:place_owner',
             'password' => 'required|string|min:8|confirmed|max:255',
             'account_type' => 'required|numeric',
-            'name' => 'required|string|min:3|max:255',
+            'name' => ['required','array','min:'.sizeof($this->langs),'max:'.sizeof($this->langs)],
+            'name.*' => 'required|string|min:3|max:255',
             'tax_record' => 'required|string|unique:places',
-            'address' => 'required|string|min:3|max:255',
-            'about' => 'required|string',
+            'address' => ['required','array','min:'.sizeof($this->langs),'max:'.sizeof($this->langs)],
+            'address.*' => 'required|string|min:3|max:255',
+            'about' => ['required','array','min:'.sizeof($this->langs),'max:'.sizeof($this->langs)],
+            'about.*' => 'required|string|min:3|max:500',
             'phone' => 'required|string',
             // 'city_id' => ['required', 'numeric', Rule::in(City::all('id')->toArray())],
             'city_id' => 'required|numeric|exists:cities,id',
@@ -68,8 +71,14 @@ class OwnerRequestController extends Controller
         $messages = [];
         $this->validate($request, $rules, $messages);
         if ($request->closed_time <= $request->opened_time)
-            return back()->with('closed_time', 'الرجاء اختيار معاد اغلاق مناسب');
-        $request->merge(['closed_days' => $request->has('closed_days') ? implode(",", $request->closed_days) : '', 'password' => bcrypt($request->password)]);
+            return back()->with('closed_time',  __('messages.Choose correct close time'));
+        $request->merge([
+            'closed_days' => $request->has('closed_days') ? implode(",", $request->closed_days) : '',
+            'password' => bcrypt($request->password),
+            'name'=>json_encode($request->get('name')),
+            'about'=>json_encode($request->get('about')),
+            'address'=>json_encode($request->get('address'))
+        ]);
         $owner = PlaceOwner::create($request->all());
         $owner->place()->create($request->all());
         flash(__('messages.add'), 'success');
@@ -81,7 +90,7 @@ class OwnerRequestController extends Controller
         $owner_request->is_accepted = 1;
         $check = $owner_request->save();
         if ($check) {
-            return jsonResponse(1, 'success', ['msg' => 'تم قبول الطلب بنجاح']);
+            return jsonResponse(1, 'success', ['msg' => __('messages.Accepted Successfully')]);
         } else {
             return jsonResponse(0, 'error');
         }

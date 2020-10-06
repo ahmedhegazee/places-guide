@@ -39,10 +39,13 @@ class placeController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'name' => 'required|string|min:3|max:255',
+            'name' => ['required','array','min:'.sizeof($this->langs),'max:'.sizeof($this->langs)],
+            'name.*' => 'required|string|min:3|max:255',
             'tax_record' => 'required|string|unique:places',
-            'address' => 'required|string|min:3|max:255',
-            'about' => 'required|string',
+            'address' => ['required','array','min:'.sizeof($this->langs),'max:'.sizeof($this->langs)],
+            'address.*' => 'required|string|min:3|max:255',
+            'about' => ['required','array','min:'.sizeof($this->langs),'max:'.sizeof($this->langs)],
+            'about.*' => 'required|string|min:3|max:500',
             'phone' => 'required|string',
             // 'city_id' => ['required', 'numeric', Rule::in(City::all('id')->toArray())],
             'city_id' => 'required|numeric|exists:cities,id',
@@ -57,8 +60,15 @@ class placeController extends Controller
         $messages = [];
         $this->validate($request, $rules, $messages);
         if ($request->closed_time <= $request->opened_time)
-            return back()->with('closed_time', 'الرجاء اختيار معاد اغلاق مناسب');
-        $request->merge(['closed_days' => $request->has('closed_days') ? implode(",", $request->closed_days) : '']);
+            return back()->with('closed_time', __('messages.Choose correct close time'));
+
+        $request->merge([
+            'closed_days' => $request->has('closed_days') ? implode(",", $request->closed_days) : '',
+            'name'=>json_encode($request->get('name')),
+            'about'=>json_encode($request->get('about')),
+            'address'=>json_encode($request->get('address'))
+        ]);
+
         $owner = Place::create($request->all());
         flash(__('messages.add'), 'success');
         return redirect(route('place.index'));
@@ -83,10 +93,13 @@ class placeController extends Controller
     public function update(Request $request, Place $place)
     {
         $rules = [
-            'name' => 'required|string|min:3|max:255',
+            'name' => ['required','array','min:'.sizeof($this->langs),'max:'.sizeof($this->langs)],
+            'name.*' => 'required|string|min:3|max:255',
             'tax_record' => ['required', 'string', Rule::unique('places')->ignore($place->id)],
-            'address' => 'required|string|min:3|max:255',
-            'about' => 'required|string',
+            'address' => ['required','array','min:'.sizeof($this->langs),'max:'.sizeof($this->langs)],
+            'address.*' => 'required|string|min:3|max:255',
+            'about' => ['required','array','min:'.sizeof($this->langs),'max:'.sizeof($this->langs)],
+            'about.*' => 'required|string|min:3|max:500',
             'phone' => 'required|string',
             // 'city_id' => ['required', 'numeric', Rule::in(City::all('id')->toArray())],
             'city_id' => 'required|numeric|exists:cities,id',
@@ -104,7 +117,7 @@ class placeController extends Controller
         ];
         $this->validate($request, $rules);
         if ($request->closed_time <= $request->opened_time)
-            return back()->with('closed_time', 'الرجاء اختيار معاد اغلاق مناسب');
+            return back()->with('closed_time', __('messages.Choose correct close time'));
         // dd();
         $request->merge(['closed_days' => implode(",", $request->closed_days), 'longitude' => number_format($request->longitude, 6), 'latitude' => number_format($request->latitude, 6)]);
         if ($request->has('main_image')) {

@@ -10,7 +10,7 @@ class CreateWorkersCategoriesTable extends Migration {
 		Schema::create('workers_categories', function(Blueprint $table) {
 			$table->increments('id');
 			$table->timestamps();
-			$table->string('name');
+			$table->json('name');
 		});
 	}
 

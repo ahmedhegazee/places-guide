@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Front\Auth;
-
+use Illuminate\Support\ViewErrorBag;
 use App\User;
 use App\Http\Controllers\Controller;
 use App\Models\City;
@@ -48,7 +48,8 @@ class RegisterController extends Controller
     }
     public function showRegistrationForm()
     {
-        return view('front.auth.register');
+        $errors= new ViewErrorBag;
+        return view('front.auth.register',compact('errors'));
     }
     /**
      * Get a validator for an incoming registration request.

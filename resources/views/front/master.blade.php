@@ -18,8 +18,12 @@
     @stack('styles')
     <title>{{ env('APP_NAME') }}</title>
 </head>
+@if (app()->getLocale()!='ar')
+    <body id="left-body">
+    @else
+        <body>
+@endif
 
-<body>
     <!--Loading Page-->
     <div class="loading-page">
         <div class="spinner">
@@ -54,11 +58,14 @@
                     </div>
                     @guest('clients')
                     <div>
-                        <a href="{{ url('/register') }}">انشاء حساب جديد</a>
-                        <a class="px-3 log" href="{{ url('/login') }}">دخول</a>
+                        <a href="{{ url('/register') }}">{{ __('main.register') }}</a>
+                        <a class="px-3 log" href="{{ url('/login') }}">{{ __('main.login') }}</a>
                     </div>
                     @endguest
-
+                   <div>
+                       <a href="{{ url('/lang/en') }}">en</a>
+                       <a href="{{ url('/lang/ar') }}">ar</a>
+                   </div>
                     @auth('clients')
                     <div class="connect">
                         <div class="dropdown">
@@ -68,21 +75,20 @@
                             </a>
                             <div class="dropdown-menu text-right" aria-labelledby="dropdownMenuButton">
                                 <a class="dropdown-item" href="{{ route('index') }}"> <i
-                                        class="fas fa-home ml-2"></i>الرئيسيه</a>
+                                        class="fas fa-home ml-2"></i>{{ __('main.home') }}</a>
                                 <a class="dropdown-item" href="{{ route('front.profile') }}"> <i
-                                        class="fas fa-user-alt ml-2"></i>معلوماتى</a>
+                                        class="fas fa-user-alt ml-2"></i>{{ __('main.profile') }}</a>
                                 <a class="dropdown-item" href="{{ route('front.password') }}"> <i
-                                        class="fas fa-lock ml-2"></i>تغيير كلمة المرور</a>
+                                        class="fas fa-lock ml-2"></i>{{ __('main.change password') }}</a>
                                 {{-- <a class="dropdown-item" href="#"> <i class="fas fa-bell ml-2"></i>اعدادات الاشعارات</a>
                                 <a class="dropdown-item" href="{{ route('front.favourite.posts') }}"> <i
                                     class="far fa-heart ml-2"></i>المفضلة</a> --}}
                                 {{-- <a class="dropdown-item" href="#"> <i class="far fa-comments ml-2"></i>ابلاغ</a> --}}
                                 <a class="dropdown-item" href="{{ route('contact') }}"> <i
-                                        class="fas fa-phone ml-2"></i>تواصل
-                                    معنا</a>
+                                        class="fas fa-phone ml-2"></i>{{ __('main.contactus') }}</a>
                                 <a class="dropdown-item" onclick="event.preventDefault();
                                     document.getElementById('logout-form').submit();" href="{{ url('/logout') }}"> <i
-                                        class="fas fa-sign-out-alt ml-2"></i>خروج</a>
+                                        class="fas fa-sign-out-alt ml-2"></i>{{ __('main.logout') }}</a>
                                 <form id="logout-form" action="{{ url('/logout') }}" method="POST"
                                     style="display: none;">
                                     @csrf
@@ -111,7 +117,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav">
                         <li class="nav-item {{ Route::is('index')||Route::is('category')?'active':'' }}">
-                            <a class="nav-link" href="{{ url('/') }}">الرئيسيه <span
+                            <a class="nav-link" href="{{ url('/') }}">{{ __('main.home') }} <span
                                     class="sr-only">(current)</span></a>
                         </li>
                         {{-- <li class="nav-item">
@@ -119,22 +125,22 @@
                         </li> --}}
 
                         <li class="nav-item {{ Route::is('nearest-places')?'active':'' }}">
-                            <a class="nav-link" href="{{ route('nearest-places') }}">اقرب الاماكن</a>
+                            <a class="nav-link" href="{{ route('nearest-places') }}">{{ __('main.nearest places') }}</a>
                         </li>
                         <li class="nav-item {{ Route::is('discount')?'active':'' }}">
-                            <a class="nav-link" href="{{ route('discount') }}">العروض</a>
+                            <a class="nav-link" href="{{ route('discount') }}">{{ __('main.discounts') }}</a>
                         </li>
                         <li class="nav-item {{ Route::is('workads')?'active':'' }}">
-                            <a class="nav-link" href="{{ route('workads') }}">اعلانات التوظيف</a>
+                            <a class="nav-link" href="{{ route('workads') }}">{{ __('main.job ads') }}</a>
                         </li>
                         <li class="nav-item {{ Route::is('owner.register')?'active':'' }}">
-                            <a class="nav-link" href="{{ route('owner.register') }}">انضم الينا</a>
+                            <a class="nav-link" href="{{ route('owner.register') }}">{{ __('main.join us') }}</a>
                         </li>
                         <li class="nav-item {{ Route::is('about')?'active':'' }}">
-                            <a class="nav-link" href="{{ route('about') }}">من نحن</a>
+                            <a class="nav-link" href="{{ route('about') }}">{{ __('main.about us') }}</a>
                         </li>
                         <li class="nav-item cont {{ Route::is('contact')?'active':'' }}">
-                            <a class="nav-link" href="{{ route('contact') }}">اتصل بنا</a>
+                            <a class="nav-link" href="{{ route('contact') }}">{{ __('main.contact us') }}</a>
                         </li>
                     </ul>
                 </div>
@@ -154,31 +160,26 @@
                     <div class="col-md-4  offset-1">
                         <img src="{{ asset('images/logo.png') }}" style="border-radius: 50%;width: 50px;height: 50px;"
                             alt="">
-                        <h5 class="my-3">{{ env('APP_NAME') }}</h5>
-                        <p class="pl-4"> هذا النص هو مثال لنص ممكن أن يستبدل فى نفس المساحه, لقد تم توليد
-                            هذا النص من مولد النص العرب حيث يمكنك ان تولد هذا النص أو
-                            العديد من النصوص الأخرى وإضافة الى زيادة عدد الحروف التى يولدها التطبيق يطلع على صورة حقيقة
-                            لتطبيق
-                            الموقع
+                        <h5 class="my-3">{{ $pages->get(1)->content[app()->getLocale()] }}</h5>
+                        <p class="pl-4"> {{$pages->get(3)->content[app()->getLocale()]}}
                         </p>
                     </div>
                     <div class="col-md-3">
-                        <h6 class="">الرئيسية</h6>
+
+
+                        <h6 class="">{{ __('main.home') }}</h6>
                         <ul class="list-unstyled">
-                            {{-- <li class="py-2"><a href="#">عن بنك الدم</a></li> --}}
-                            {{-- <li class="py-2"><a href="{{ route('front.posts') }}">المقالات</a></li> --}}
-                            {{-- <li class="py-2"><a href="{{ route('front.requests') }}">عن التبرع</a></li> --}}
-                            {{-- <li class="py-2"><a href="{{ route('about') }}">تصنيفات الدليل</a></li> --}}
-                            <li class="py-2"><a href="{{ route('nearest-places') }}">اقرب الاماكن</a></li>
-                            <li class="py-2"><a href="{{ route('discount') }}">العروض</a></li>
-                            <li class="py-2"><a href="{{ route('workads') }}">اعلانات التوظيف</a></li>
-                            <li class="py-2"><a href="{{ route('owner.register') }}">انضم الينا</a></li>
-                            <li class="py-2"><a href="{{ route('about') }}">من نحن</a></li>
-                            <li class="py-2"><a href="{{ route('contact') }}">اتصل بنا</a></li>
+                            <li class="py-2"><a href="{{ route('nearest-places') }}">{{ __('main.nearest places') }}</a>
+                            </li>
+                            <li class="py-2"><a href="{{ route('discount') }}">{{ __('main.discounts') }}</a></li>
+                            <li class="py-2"><a href="{{ route('workads') }}">{{ __('main.job ads') }}</a></li>
+                            <li class="py-2"><a href="{{ route('owner.register') }}">{{ __('main.join us') }}</a></li>
+                            <li class="py-2"><a href="{{ route('about') }}">{{ __('main.about us') }}</a></li>
+                            <li class="py-2"><a href="{{ route('contact') }}">{{ __('main.contact us') }}</a></li>
                         </ul>
                     </div>
                     <div class="col-md-4 available">
-                        <h6 class="mb-5">متوفر على</h6>
+                        <h6 class="mb-5">{{ __('main.available on') }}</h6>
 
 
                         <div class="my-3"><a href="{{ $settings->get(6)->value }}"><img
@@ -208,7 +209,8 @@
                         </ul>
                     </div>
                     <div class="col-md-4">
-                        <p class="text-center">جميع الحقوق محفوظه لـ <span> {{ env('APP_NAME') }}</span> &copy; 2020</p>
+                        <p class="text-center">{{ __('main.copyrights') }} <span> {{ env('APP_NAME') }}</span> &copy;
+                            2020</p>
                     </div>
                 </div>
             </div>

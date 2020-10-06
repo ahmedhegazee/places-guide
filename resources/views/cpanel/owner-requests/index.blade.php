@@ -138,9 +138,9 @@
             <thead>
                 <th>#</th>
                 <th>{{ __('pages.Name') }}</th>
-                <th>{{ __('pages.Company') .' '.__('pages.Name') }}</th>
+                <th>{{ __('pages.Place Name')  }}</th>
                 <th>{{ __('pages.Tax Record') }}</th>
-                <th>{{ __('pages.Address') .' '.__('pages.Company')}}</th>
+                <th>{{ __('pages.Place Address') }}</th>
                 <th>{{ __('pages.Accept') }}</th>
                 <th>{{ __('pages.Deny') }}</th>
             </thead>
@@ -149,9 +149,9 @@
                 <tr id="record-{{ $record->id }}">
                     <td>{{$loop->iteration}}</td>
                     <td>{{$record->full_name}}</td>
-                    <td>{{$record->place->name}}</td>
+                    <td>{{$record->place->name[app()->getLocale()]}}</td>
                     <td>{{$record->place->tax_record}}</td>
-                    <td>{{$record->place->address}}</td>
+                    <td>{{$record->place->address[app()->getLocale()]}}</td>
                     <td>
                         <a href="{{route('owner-request.update',['owner_request'=>$record->id])}}"
                             id="accept-route-{{ $record->id }}"

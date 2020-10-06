@@ -161,4 +161,16 @@ class Place extends Model
             ][$this->attributes['is_best']];
         }
     }
+    public function getNameAttribute()
+    {
+        return collect(json_decode($this->attributes['name']))->toArray();
+    }
+    public function getAddressAttribute()
+    {
+        return collect(json_decode($this->attributes['address']))->toArray();
+    }
+    public function getAboutAttribute()
+    {
+        return collect(json_decode($this->attributes['about']))->toArray();
+    }
 }

@@ -32,4 +32,9 @@ class Category extends Model
     {
         return $this->places()->whereDoesntHave('owner');
     }
+
+    public function getNameAttribute()
+    {
+     return collect(json_decode($this->attributes['name']))->toArray();
+    }
 }

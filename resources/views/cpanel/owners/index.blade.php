@@ -68,7 +68,7 @@
                     <tr id="record-{{ $record->id }}">
                         <td>{{$loop->iteration}}</td>
                         <td>{{$record->full_name}}</td>
-                        <td>{{$record->place->name}}</td>
+                        <td>{{$record->place->name[app()->getLocale()]}}</td>
                         <td>{{$record->email}}</td>
                         {!! $record->preventAccountTypeAttribute=false !!}
                         <td id="account-{{ $record->id }}">{{$record->account_type}}</td>

@@ -5,8 +5,8 @@
     <!--Breadcrumb-->
     <nav class="my-4" aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ url('/') }}">الرئيسيه</a></li>
-            <li class="breadcrumb-item active" aria-current="page">تعديل بيانات حساب</li>
+            <li class="breadcrumb-item"><a href="{{ url('/') }}">{{__('main.home')}}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{__('main.profile')}}</li>
         </ol>
     </nav>
     <!--End Breadcrumb-->
@@ -23,13 +23,13 @@
                 @method('put')
                 <div><input type="text" name="full_name"
                         class="form-control my-3 @error('full_name') is-invalid @enderror"
-                        value="{{ $client->full_name??old('full_name') }}" placeholder="الاسم"></div>
+                        value="{{ $client->full_name??old('full_name') }}" placeholder="{{__('main.name')}}"></div>
                 <div><input type="email" name="email" class="form-control my-3 @error('email') is-invalid @enderror"
-                        value="{{ $client->email??old('email') }}" placeholder="البريد الاليكترونى"></div>
+                        value="{{ $client->email??old('email') }}" placeholder="{{__('main.email')}}"></div>
                 <div class="input-group mb-3">
                     <select class="form-control  custom-select" onchange="getCities()" value="" name="govern"
                         id="govern">
-                        <option selected="" disabled="">اختيار المحافظة</option>
+                        <option selected="" disabled="">{{__('main.choose govern orate')}}</option>
                         @foreach ($governs->all() as $govern)
                         <option value={{$govern->id}}
                             {{ auth('clients')->user()->city->governorate->id==$govern->id?'selected':'' }}>
@@ -41,7 +41,7 @@
                 <div class="input-group">
                     <select class="form-control @error('city_id') is-invalid @enderror custom-select" name="city_id"
                         id="city">
-                        <option selected="" disabled="">اختيار مدينة</option>
+                        <option selected="" disabled="">{{__('main.choose city')}}</option>
                         @forelse (auth('clients')->user()->city->governorate->cities as $city)
                         <option value={{$city->id}} {{ auth('clients')->user()->city->id==$city->id?'selected':'' }}>
                             {{$city->name}}</option>
@@ -52,13 +52,13 @@
                     <i class="fas fa-chevron-down"></i>
                 </div>
                 <input type="text" name="phone" value="{{ $client->phone??old('phone') }}"
-                    class="form-control my-3 @error('phone') is-invalid @enderror" placeholder="رقم الهاتف">
+                    class="form-control my-3 @error('phone') is-invalid @enderror" placeholder="{{__('main.phone')}}">
                 {{-- <input type="password" name="password" class="form-control my-3 @error('password') is-invalid @enderror"
                     placeholder="كلمة المرور">
                 <input type="password" name="password_confirmation"
                     class="form-control my-3 @error('password_confirmation') is-invalid @enderror"
                     placeholder="تأكيد كلمة المرور"> --}}
-                <button type="submit" class="btn btn-success py-2 w-50">تحديث</button>
+                <button type="submit" class="btn btn-success py-2 w-50">{{__('main.update')}}</button>
             </form>
         </div>
     </div>

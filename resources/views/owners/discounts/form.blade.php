@@ -1,10 +1,13 @@
-<div class="form-group">
-    <label for="title"> {{ __('pages.Title') }}</label>
-    {!!Form::text('title',null,[
-    'class'=>'form-control',
-    'required'
-    ])!!}
-</div>
+@foreach($langs as $lang)
+    <div class="form-group col-md-5 d-inline-block ">
+        <label for="name">{{ __('pages.Title') .' ('.$lang.')' }}</label>
+        {!!Form::text('title['.$lang.']',null,[
+        'class'=>'form-control',
+
+        ])!!}
+    </div>
+@endforeach
+<div class="clearfix"></div>
 <div class="form-group">
     <label for="discount"> {{ __('pages.Discount') }}</label>
     {!!Form::text('discount',null,[
@@ -30,14 +33,17 @@
     'min'=>\Carbon\Carbon::now()->addDay()->toDateString()
     ])!!}
 </div>
+@foreach($langs as $lang)
+    <div class="form-group col-md-5 d-inline-block ">
+        <label for="content">{{ __('pages.Discount About') .' ('.$lang.')' }}</label>
+        {!!Form::textarea('content['.$lang.']',null,[
+        'class'=>'form-control',
+        'required'
+        ])!!}
+    </div>
+@endforeach
+<div class="clearfix"></div>
 
-<div class="form-group">
-    <label for="content"> {{ __('pages.Discount About') }}</label>
-    {!!Form::textarea('content',null,[
-    'class'=>'form-control',
-    'required'
-    ])!!}
-</div>
 @include('layouts.image-upload')
 <div class="form-group ">
     <button class="btn btn-primary" type="submit">{{ __('pages.Submit') }}</button>

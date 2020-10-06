@@ -19,7 +19,7 @@
 
             @include('partials.validation-errors')
             {!!
-            Form::model($model,[
+            Form::model(null,[
             'route'=>'discount.store',
             'files'=>true,
             ])

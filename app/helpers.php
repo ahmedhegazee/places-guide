@@ -41,6 +41,11 @@ function storeFileOnGoogleCloud($file, $directory)
 {
     return env('GOOGLE_CLOUD_PUBLIC_URL') . $file->store($directory);
 }
+function storeFileOnAzure($file, $directory)
+{
+    return
+        Storage::disk('azure')->put($directory, $$file);;
+}
 function deleteFile($file)
 {
     $fileDirectory = public_path($file);

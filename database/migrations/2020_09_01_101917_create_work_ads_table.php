@@ -14,9 +14,9 @@ class CreateWorkAdsTable extends Migration
             $table->integer('work_category_id')->unsigned();
             $table->integer('place_id')->unsigned();
             $table->integer('quantity')->unsigned();
-            $table->string('title');
+            $table->json('title');
             $table->string('phone');
-            $table->text('content');
+            $table->json('content');
         });
     }
 

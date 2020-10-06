@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('page_title')
-{{ $place->name }}
+{{ $place->name[app()->getLocale()] }}
 @endsection
 @section('additional_styles')
 @include('partials.grid-view-styles')
@@ -59,14 +59,14 @@
 
         <div class="card-body" style="font-size:1.5rem">
             <span class="text-bold">{{ __('pages.Owner').' : ' }} </span>
-            <span>{{ $place->owner->full_name??'لا يوجد مالك' }}</span><br>
+            <span>{{ $place->owner->full_name??__('main.No Owner') }}</span><br>
             <span class="text-bold">{{ __('pages.Account Type').' : ' }}
             </span>
-            <span>{{ $place->owner->account_type??'لا توجد عضوية' }}</span><br>
+            <span>{{ $place->owner->account_type??__('main.No Account') }}</span><br>
             <span class="text-bold">{{ __('pages.Govern').' : ' }} </span>
-            <span>{{ $place->city->governorate->name }}</span><br>
+            <span>{{ $place->city->governorate->name[app()->getLocale()] }}</span><br>
             <span class="text-bold">{{ __('pages.City').' : ' }} </span>
-            <span>{{ $place->city->name }}</span><br>
+            <span>{{ $place->city->name[app()->getLocale()] }}</span><br>
             <span class="text-bold">{{ __('pages.Phone').' : ' }} </span>
             <span>{{ $place->phone }}</span><br>
             <span class="text-bold">{{ __('pages.Tax Record').' : ' }}
@@ -74,10 +74,10 @@
             <span>{{ $place->tax_record }}</span><br>
             <span class="text-bold">{{ __('pages.Category').' '.__('pages.Company').' : ' }}
             </span>
-            <span>{{ $place->category->name }}</span><br>
+            <span>{{ $place->category->name[app()->getLocale()] }}</span><br>
             <span class="text-bold">{{ __('pages.SubCategory').' : ' }}
             </span>
-            <span>{{ $place->subCategory->name??'لا يوجد تصنيف فرعي' }}</span><br>
+            <span>{{ $place->subCategory->name[app()->getLocale()]??__('main.No Subcategory') }}</span><br>
             <span class="text-bold">{{ __('pages.Opened Time').' : ' }}
             </span>
             <span>{{ $place->opened_time }}</span><br>

@@ -10,4 +10,9 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+    public $langs;
+    public function  __construct()
+    {
+        $this->langs=explode(',',env('APP_LANGS'));
+    }
 }

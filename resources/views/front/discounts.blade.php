@@ -2,7 +2,7 @@
 @section('content')
 <nav class="mb-4" aria-label="breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ route('index') }}">الرئيسيه</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('index') }}">{{__('main.home')}}</a></li>
         <li class="breadcrumb-item active" aria-current="page">{{ __('pages.Discounts') }}</li>
     </ol>
 </nav>
@@ -25,7 +25,7 @@
                                 <img src="{{$record->main_image }}" width="100%" height="200px" alt="">
                                 @endif
 
-                                <span>{{ $record->name }}</span>
+                                <span>{{ $record->name[app()->getLocale()] }}</span>
                                 @if (!is_null($record->countDiscounts()))
                                 <span
                                     {{-- class="discounts-count badge badge-danger">{{ $record->availableDiscounts->count()>1?$record->availableDiscounts->count().'عروض ':'عرض واحد ' }}</span>
@@ -35,7 +35,7 @@
 
                             </div>
                             <div class="card-body">
-                                <h3 class="card-text">{{ $record->name }}</h3>
+                                <h3 class="card-text">{{ $record->name[app()->getLocale()] }}</h3>
                             </div>
                         </a>
                     </div>

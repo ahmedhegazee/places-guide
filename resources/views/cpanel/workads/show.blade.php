@@ -19,9 +19,13 @@
             <span class="text-bold">{{ __('pages.Quantity').' : '}} </span>
             <span>{{  $work_ad->quantity}}</span><br>
             <span class="text-bold">{{ __('pages.Workers Categories').' : '}} </span>
-            <span>{{  $work_ad->workerCategory->name}}</span><br>
-            <span class="text-bold">{{ __('pages.Ad About').' : '}} </span>
-            <pre>{{ $work_ad->content }}</pre>
+            <span>{{  $work_ad->workerCategory->name}}</span>
+            @foreach($langs as $lang)
+            <br>
+            <span class="text-bold">{{ __('pages.Ad About').' ('.$lang.')'.' : '}} </span>
+                <pre>{{ $work_ad->content[$lang] }}</pre>
+            @endforeach
+
         </div>
         <!-- /.card-body -->
 

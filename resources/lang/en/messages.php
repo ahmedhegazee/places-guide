@@ -1,13 +1,16 @@
 <?php
 return [
-    'add' => 'تم الاضافة بنجاح',
-    'update' => 'تم التحديث بنجاح',
-    'delete' => 'تم الحذف بنجاح',
-    'No Discounts' => 'نعتذر لا يوجد عروض في الوقت الحالي',
-    'No Ads' => 'نعتذر لا يوجد اعلانات في الوقت الحالي',
-    'Reset Password Notification' => 'رسالة تغيير كلمة السر',
-    'You are receiving this email because we received a password reset request for your account.' => 'لقد ارسلت هذه الرسالة بناء على طلبكم لتغيير كلمة المرور',
-    'Reset Password' => 'تغيير كلمة المرور',
-    'This password reset link will expire in 60 minutes.' => 'صلاحية هذا الرابط فقط لمدة ساعة',
-    'If you did not request a password reset, no further action is required.' => 'اذا لم تقم بطلب تغيير كلمة المرور ، فلا تفعل اي شيء'
+    'add' => 'Added Successfully',
+    'update' => 'Updated Successfully',
+    'delete' => 'Deleted Successfully',
+    'No Discounts' => 'Sorry no discounts in the current time',
+    'No Ads' => 'Sorry no job ads in the current time',
+    'Reset Password Notification' => 'Reset Password Notification',
+    'You are receiving this email because we received a password reset request for your account.' => 'You are receiving this email because we received a password reset request for your account.',
+    'Reset Password' => 'Reset Password',
+    'This password reset link will expire in 60 minutes.' => 'This password reset link will expire in 60 minutes.',
+    'If you did not request a password reset, no further action is required.' => 'If you did not request a password reset, no further action is required.',
+    'Choose correct close time'=>'Choose correct close time',
+    'Accepted Successfully'=>'تم قبول الطلب بنجاحAccepted Successfully',
+    'Rejected Successfully'=>'Rejected Successfully'
 ];

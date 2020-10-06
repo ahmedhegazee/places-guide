@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('page_title')
-{{__('pages.Categories').' '.$category->name}}
+{{__('pages.Categories').' '.$category->name[app()->getLocale()]}}
 @endsection
 @section('content')
 <!-- Content Header (Page header) -->

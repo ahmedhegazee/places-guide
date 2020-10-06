@@ -14,7 +14,7 @@
         @forelse ($categories as $category)
         <a href="{{ $route.'?cat='.$category->id }}">
             <li class="d-flex justify-content-between">
-                <div><span>{{ $category->name }}</span>
+                <div><span>{{ $category->name[app()->getLocale()] }}</span>
                     @if (!is_null($category->places_count))
                     <span class="count">({{ $category->places_count }})</span>
                     @endif
@@ -38,10 +38,9 @@
         <div class="filter mb-4">
             <h4 class="text-center filter-header">{{ __('pages.Filter') }}</h4>
             {!!Form::select('govern',$governs,null,array('class'=>'
-            multiple-select','id'=>'govern','onchange'=>'getCities()','placeholder'=>'اختر
-            المحافظة'))!!}
+            multiple-select','id'=>'govern','onchange'=>'getCities()','placeholder'=>__('main.choose govern orate')))!!}
             <select class="multiple-select last-select" id="city" name="city">
-                <option selected>اختر المدينة</option>
+                <option selected>{{__('main.choose city')}}</option>
             </select>
             <input type="hidden" name="cat" value="{{ request()->cat }}">
         </div>

@@ -5,8 +5,8 @@
     <!--Breadcrumb-->
     <nav class="my-4" aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('index') }}">الرئيسيه</a></li>
-            <li class="breadcrumb-item active" aria-current="page">من نحن</li>
+            <li class="breadcrumb-item"><a href="{{ route('index') }}">{{__('main.home')}}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{__('main.about us')}}</li>
         </ol>
     </nav>
     <!--End Breadcrumb-->

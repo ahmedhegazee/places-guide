@@ -32,7 +32,9 @@
             <thead>
                 <th>#</th>
                 <th>{{ __('pages.Company') }}</th>
-                <th>{{ __('pages.Title') }}</th>
+                @foreach($langs as $lang)
+                    <th>{{ __('pages.Title').' ('.$lang.')' }}</th>
+                @endforeach
                 <th>{{ __('pages.Workers Categories') }}</th>
                 <th>{{ __('pages.Quantity') }}</th>
                 <th>{{ __('pages.Show') }}</th>
@@ -44,7 +46,9 @@
                 <tr id="record-{{ $record->id }}">
                     <td>{{$loop->iteration}}</td>
                     <td>{{$record->place->name}}</td>
-                    <td>{{$record->title}}</td>
+                    @foreach($langs as $lang)
+                        <td>{{$record->title[$lang]}}</td>
+                    @endforeach
                     <td>{{$record->workerCategory->name}}</td>
                     <td>{{$record->quantity}}</td>
                     <td>

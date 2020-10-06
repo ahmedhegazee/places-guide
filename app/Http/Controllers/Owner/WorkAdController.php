@@ -42,12 +42,19 @@ class WorkAdController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'title' => 'required|string|min:3',
-            'content' => 'required|string|min:3',
+            'title' => ['required','array','min:'.sizeof($this->langs),'max:'.sizeof($this->langs)],
+            'title.*' => 'required|string|min:3|max:255',
+            'content' => ['required','array','min:'.sizeof($this->langs),'max:'.sizeof($this->langs)],
+            'content.*' => 'required|string|min:3|max:500',
             'quantity' => 'required|numeric|min:1',
             'phone' => 'required|string',
             'work_category_id' => ['required', Rule::in(WorkerCategory::all()->pluck('id')->toArray())]
         ]);
+        $request->merge(
+            [
+            'title'=>json_encode($request->get('title')),
+            'content'=>json_encode($request->get('content')),
+                ]);
         $request->user()->place->ads()->create($request->all());
         flash(__('messages.add'), 'success');
         return redirect(route('work-ad.index'));
@@ -86,12 +93,19 @@ class WorkAdController extends Controller
     public function update(Request $request, WorkAd $work_ad)
     {
         $this->validate($request, [
-            'title' => 'required|string|min:3',
-            'content' => 'required|string|min:3',
+            'title' => ['required','array','min:'.sizeof($this->langs),'max:'.sizeof($this->langs)],
+            'title.*' => 'required|string|min:3|max:255',
+            'content' => ['required','array','min:'.sizeof($this->langs),'max:'.sizeof($this->langs)],
+            'content.*' => 'required|string|min:3|max:500',
             'quantity' => 'required|numeric|min:1',
             'phone' => 'required|string',
             'work_category_id' => ['required', Rule::in(WorkerCategory::all()->pluck('id')->toArray())]
         ]);
+        $request->merge(
+            [
+                'title'=>json_encode($request->get('title')),
+                'content'=>json_encode($request->get('content')),
+            ]);
         $work_ad->update($request->all());
         flash(__('messages.update'), 'success');
         return redirect()->route('work-ad.index');
@@ -117,7 +131,7 @@ class WorkAdController extends Controller
     {
         return WorkerCategory::all()->mapWithKeys(function ($role) {
             return [
-                $role->id =>  $role->name,
+                $role->id =>  $role->name[app()->getLocale()],
             ];
         })->toArray();
     }

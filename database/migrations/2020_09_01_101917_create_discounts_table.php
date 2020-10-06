@@ -12,8 +12,8 @@ class CreateDiscountsTable extends Migration
             $table->increments('id');
             $table->timestamps();
             $table->integer('place_id')->unsigned();
-            $table->string('title');
-            $table->text('content');
+            $table->json('title');
+            $table->json('content');
             $table->string('discount');
             $table->date('starting_date');
             $table->date('end_date');

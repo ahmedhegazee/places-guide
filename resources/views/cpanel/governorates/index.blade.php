@@ -30,7 +30,9 @@
             <table id="table" class="table table-bordered table-hover table-striped">
                 <thead>
                     <th>#</th>
-                    <th>{{ __('pages.Name') }}</th>
+                    @foreach($langs as $lang)
+                        <th>{{ __('pages.Name').' ('.$lang.')' }}</th>
+                    @endforeach
                     <th>{{ __('pages.No').' '. __('pages.Cities') }} </th>
                     <th>{{ __('pages.Show') }}</th>
 
@@ -41,7 +43,9 @@
                     @forelse($records as $record)
                     <tr id="record-{{ $record->id }}">
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $record->name }}</td>
+                        @foreach($langs as $lang)
+                            <td>{{$record->name[$lang]}}</td>
+                        @endforeach
                         <td>{{ $record->cities->count() }}</td>
                         <td>
                             <a href="{{ route('government.show',['government'=>$record->id]) }}"

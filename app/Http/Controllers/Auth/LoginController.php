@@ -44,7 +44,7 @@ class LoginController extends Controller
     {
         $loginRoute = route('login');
         $registerRoute = null;
-        $title = " لوحة تحكم مدير الموقع";
+        $title = __('main.Admin Dashboard');
         $resetPasswordRoute = null;
         return view('front.auth.login', compact('loginRoute', 'registerRoute', 'resetPasswordRoute', 'title'));
     }

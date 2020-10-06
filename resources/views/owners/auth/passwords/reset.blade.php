@@ -4,8 +4,8 @@
     <!--Breadcrumb-->
     <nav class="my-4" aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ url('/') }}">الرئيسيه</a></li>
-            <li class="breadcrumb-item active" aria-current="page">تغيير كلمة المرور</li>
+            <li class="breadcrumb-item"><a href="{{ url('/') }}">{{__('main.home')}}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{__('main.change password')}}</li>
         </ol>
     </nav>
     <!--End Breadcrumb-->
@@ -18,14 +18,14 @@
                 @csrf
                 <input type="hidden" name="token" value="{{ $token }}">
                 <input type="text" name="email" value="{{ $email??old('email') }}"
-                    class="form-control my-3 @error('email') is-invalid @enderror" placeholder="البريد الالكتروني">
+                       class="form-control my-3 @error('email') is-invalid @enderror" placeholder="{{__('main.email')}}">
                 <input type="password" name="password"
-                    class="form-control my-3  @error('password') is-invalid @enderror" autocomplete="new-password"
-                    placeholder="كلمة المرور">
+                       class="form-control my-3  @error('password') is-invalid @enderror" autocomplete="new-password"
+                       placeholder="{{__('main.password')}}">
                 <input type="password" name="password_confirmation"
-                    class="form-control my-3 @error('password_confirmation') is-invalid @enderror"
-                    autocomplete="new-password" placeholder="تأكيد كلمة المرور">
-                <button type="submit" class="btn btn-success py-2 w-50">تغيير كلمة المرور</button>
+                       class="form-control my-3 @error('password_confirmation') is-invalid @enderror"
+                       autocomplete="new-password" placeholder="{{__('main.confirm password')}}">
+                <button type="submit" class="btn btn-success py-2 w-50">{{__('main.change password')}}</button>
             </form>
         </div>
     </div>

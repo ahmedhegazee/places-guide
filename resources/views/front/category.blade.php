@@ -2,7 +2,7 @@
 @section('content')
 <nav class="mb-4" aria-label="breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ route('index') }}">الرئيسيه</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('index') }}">{{__('main.home')}}</a></li>
         <li class="breadcrumb-item active" aria-current="page">{{ $category->name }}</li>
     </ol>
 </nav>
@@ -42,16 +42,16 @@
                                         </div>
                                     @endif
                                     <p style="max-height:100px; overflow:hidden;">{{ $record->about }}</p>
-                                    <a href="{{ route('place',['place'=>$record->id]) }}" class="btn btn-link" style="color:#000">اقرأ المزيد
+                                    <a href="{{ route('place',['place'=>$record->id]) }}" class="btn btn-link" style="color:#000">{{__('main.read more')}}
                                     </a><br /><br>
                                     <a class="btn btn-success" href="tel:{{ $record->phone }}" target="_blank"><i
-                                            class="fas fa-phone"></i> اتصل</a>
+                                            class="fas fa-phone"></i>{{__('main.call')}} </a>
                                     {{-- <a class="btn btn-success" href="tel:{{ $record->phone }}" target="_blank"><i
                                         class="fas fa-phone"></i>
                                     </a> --}}
                                     @if (!is_null($record->website))
                                         <a class="btn btn-primary" style="background: transparent; color:#000" href="{{ $record->website }}" target="_blank"><i
-                                                class="fas fa-link"></i>موقع الكتروني</a>
+                                                class="fas fa-link"></i>{{__('main.website')}}</a>
                                     @endif
 
                                 </div>

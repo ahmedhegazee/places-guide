@@ -955,3 +955,22 @@ a:hover {
     font-size: 2rem;
     bottom: 0;
 }
+#left-body{
+    direction: ltr !important;
+    text-align: left!important;
+}
+
+#left-body .main-footer h6{
+    text-align: left !important;
+}
+#left-body .main-footer p{
+    padding-left:0 !important;
+    padding-right:1.5rem!important;
+}
+#left-body .contact-us{
+    direction: rtl !important;
+}
+#left-body .best-places h4{
+    margin-right: 0 !important;
+    margin-left:5% !important;
+}

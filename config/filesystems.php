@@ -82,6 +82,14 @@ return [
             'path_prefix' => env('GOOGLE_CLOUD_STORAGE_PATH_PREFIX', null), // optional: /default/path/to/apply/in/bucket
             'storage_api_uri' => env('GOOGLE_CLOUD_STORAGE_API_URI', null), // see: Public URLs below
         ],
+        'azure' => [
+            'driver'    => 'azure',
+            'name'      => env('AZURE_STORAGE_NAME'),
+            'key'       => env('AZURE_STORAGE_KEY'),
+            'container' => env('AZURE_STORAGE_CONTAINER'),
+            'url'       => env('AZURE_STORAGE_URL'),
+            'prefix'    => null,
+        ],
     ],
 
 ];

@@ -33,12 +33,14 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
 
+
+        $langs=explode(',',env('APP_LANGS'));
         $settings = Settings::all();
         $pages = Page::all();
         $categories = Category::all();
         $countPlaces = Place::with(['owner' => function ($q) {
             $q->accepted(1);
         }])->count();
-        view()->share(compact('settings', 'pages', 'categories', 'countPlaces'));
+        view()->share(compact('settings', 'pages', 'categories', 'countPlaces','langs'));
     }
 }

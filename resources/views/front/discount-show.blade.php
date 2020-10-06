@@ -2,8 +2,8 @@
 @section('content')
 <nav class="mb-4" aria-label="breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ route('index') }}">الرئيسيه</a></li>
-        <li class="breadcrumb-item active" aria-current="page">{{ __('pages.Discounts1').' '.$place->name }}</li>
+        <li class="breadcrumb-item"><a href="{{ route('index') }}">{{__('main.home')}}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ __('pages.Discounts1').' '.$place->name[app()->getLocale()] }}</li>
     </ol>
 </nav>
 <section class="categories py-2 ">
@@ -20,10 +20,10 @@
                             <img src="{{$record->image }}" width="100%" style="height:60vh" alt="">
                         </div>
                         <div class="card-body">
-                            <h3 class="card-text">{{ $record->title }}</h3>
+                            <h3 class="card-text">{{ $record->title[app()->getLocale()] }}</h3>
                             <span>{{ __('pages.Discount Value').' '.$record->discount }}</span><br>
                             <span>{{ __('pages.From Date').$record->starting_date.' '. __('pages.To Date'). $record->end_date }}</span><br>
-                            <pre>{{ $record->content }}</pre>
+                            <pre>{{ $record->content[app()->getLocale()] }}</pre>
                         </div>
                     </a>
                 </div>

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\cpanel;
 
 use App\Http\Controllers\Controller;
-use App\Page;
+use App\Models\Page;
 use Illuminate\Http\Request;
 
 class PageController extends Controller
@@ -15,72 +15,38 @@ class PageController extends Controller
      */
     public function index()
     {
-        //
-    }
+        $records = Page::all();
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Page  $page
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Page $page)
-    {
-        //
+        return view('cpanel.pages.index', compact('records'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Page  $page
+     * @param  Settings $setting
      * @return \Illuminate\Http\Response
      */
     public function edit(Page $page)
     {
-        //
+        return view('cpanel.pages.edit', compact('page'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Page  $page
+     * @param  Settings $setting
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Page $page)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Page  $page
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Page $page)
-    {
-        //
+        $this->validate($request, [
+            'content' => ['required','array','min:'.sizeof($this->langs),'max:'.sizeof($this->langs)],
+            'content.*' => 'required|string|min:3|max:1500',
+        ]);
+        $request->merge(['content'=>json_encode($request->get('content')),]);
+        $page->update($request->all());
+        flash(__('messages.add'), 'success')->important();
+        return redirect()->route('page.index');
     }
 }

@@ -14,14 +14,20 @@
     <div class="card">
 
         <div class="card-body">
-            <span class="text-bold">{{ __('pages.Title').' : '}} </span>
-            <span>{{  $work_ad->title }}</span><br>
+            @foreach ($langs as $lang)
+                <span class="text-bold">{{ __('pages.Title').' ('.$lang.') : '}} </span>
+                <span>{{  $work_ad->title[$lang] }}</span><br>
+            @endforeach
+
             <span class="text-bold">{{ __('pages.Quantity').' : '}} </span>
             <span>{{  $work_ad->quantity}}</span><br>
             <span class="text-bold">{{ __('pages.Workers Categories').' : '}} </span>
-            <span>{{  $work_ad->workerCategory->name}}</span><br>
-            <span class="text-bold">{{ __('pages.Ad About').' : '}} </span>
-            <pre>{{ $work_ad->content }}</pre>
+            <span>{{  $work_ad->workerCategory->name}}</span>
+                @foreach($langs as $lang)
+                <br>
+            <span class="text-bold">{{ __('pages.Ad About').' ('.$lang.') : '}} </span>
+            <pre>{{ $work_ad->content[$lang] }}</pre>
+                @endforeach
         </div>
         <!-- /.card-body -->
 

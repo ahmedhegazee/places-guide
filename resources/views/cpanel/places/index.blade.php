@@ -94,7 +94,7 @@ $(`<option value=${subcategory.id}>${subcategory.name}</option>`).appendTo('#sub
                     <select class="form-control custom-select mr-2" onchange="getCities()" name="govern" id="govern">
                         <option selected="" disabled="">{{ __('pages.Select').' '.__('pages.Govern') }}</option>
                         @foreach ($governs->all() as $govern)
-                        <option value={{$govern->id}}>{{$govern->name}}</option>
+                        <option value={{$govern->id}}>{{$govern->name[app()->getLocale()]}}</option>
                         @endforeach
                     </select>
                     <select class="form-control custom-select mr-2"
@@ -105,7 +105,7 @@ $(`<option value=${subcategory.id}>${subcategory.name}</option>`).appendTo('#sub
                         id="category">
                         <option selected="" disabled="">{{ __('pages.Select').' '.__('pages.Category') }}</option>
                         @foreach ($categories->all() as $category)
-                        <option value={{$category->id}}>{{$category->name}}</option>
+                        <option value={{$category->id}}>{{$category->name[app()->getLocale()]}}</option>
                         @endforeach
                     </select>
                     <select class="form-control custom-select mr-2"
@@ -141,11 +141,11 @@ $(`<option value=${subcategory.id}>${subcategory.name}</option>`).appendTo('#sub
                     @forelse ($records as $record)
                     <tr id="record-{{ $record->id }}">
                         <td>{{$loop->iteration}}</td>
-                        <td>{{$record->name}}</td>
-                        <td>{{$record->city->name}}</td>
-                        <td>{{$record->owner->full_name??'لا يوجد مالك'}}</td>
-                        <td>{{$record->category->name}}</td>
-                        <td>{{$record->subCategory->name??'لا يوجد تصنيف فرعي'}}</td>
+                        <td>{{$record->name[app()->getLocale()]}}</td>
+                        <td>{{$record->city->name[app()->getLocale()]}}</td>
+                        <td>{{$record->owner->full_name??__('main.No Owner')}}</td>
+                        <td>{{$record->category->name[app()->getLocale()]}}</td>
+                        <td>{{$record->subCategory->name[app()->getLocale()]??__('main.No Subcategory')}}</td>
                         {!! $record->preventIsBest=false !!}
                         <td id="is-best-{{ $record->id }}">{{$record->is_best}}</td>
                         <td class="text-center">

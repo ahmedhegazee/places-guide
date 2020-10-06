@@ -5,8 +5,8 @@
     <!--Breadcrumb-->
     <nav class="my-4" aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ url('/') }}">الرئيسيه</a></li>
-            <li class="breadcrumb-item active" aria-current="page">انشاء حساب جديد</li>
+            <li class="breadcrumb-item"><a href="{{ url('/') }}">{{__('main.home')}}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{__('main.register')}}</li>
         </ol>
     </nav>
     <!--End Breadcrumb-->
@@ -19,9 +19,9 @@
             <form action="{{ url('/register') }}" class="w-75 m-auto" method="POST">
                 @csrf
                 <div><input type="text" name="name" class="form-control my-3 @error('name') is-invalid @enderror"
-                        value="{{ old('name') }}" placeholder="الاسم"></div>
+                        value="{{ old('name') }}" placeholder="{{__('main.name')}}"></div>
                 <div><input type="email" name="email" class="form-control my-3 @error('email') is-invalid @enderror"
-                        value="{{ old('email') }}" placeholder="البريد الاليكترونى"></div>
+                        value="{{ old('email') }}" placeholder="{{__('main.email')}}"></div>
                 {{-- <input type="text" name="booldType" class="form-control my-3" placeholder="فصيلة الدم"> --}}
                 <div class="input-group mb-3">
                     {{-- <select name="capital" id="capital" class="form-control custom-select">
@@ -32,9 +32,9 @@
                     </select> --}}
                     <select class="form-control  custom-select" onchange="getCities()" value="" required name="govern"
                         id="govern">
-                        <option selected="" disabled="">اختيار المحافظة</option>
+                        <option selected="" disabled="">{{__('main.choose govern orate')}}</option>
                         @foreach ($governs->all() as $govern)
-                        <option value={{$govern->id}}>{{$govern->name}}</option>
+                        <option value={{$govern->id}}>{{$govern->name[app()->getLocale()]}}</option>
                         @endforeach
                     </select>
                     <i class="fas fa-chevron-down"></i>
@@ -48,18 +48,18 @@
                     </select> --}}
                     <select class="form-control @error('city_id') is-invalid @enderror custom-select" name="city_id"
                         id="city" required>
-                        <option selected="" disabled="">اختيار مدينة</option>
+                        <option selected="" disabled="">{{__('main.choose city')}}</option>
                     </select>
                     <i class="fas fa-chevron-down"></i>
                 </div>
                 <input type="text" name="phone" value="{{ old('phone') }}"
-                    class="form-control my-3 @error('phone') is-invalid @enderror" placeholder="رقم الهاتف">
+                    class="form-control my-3 @error('phone') is-invalid @enderror" placeholder="{{__('main.phone')}}">
                 <input type="password" name="password" class="form-control my-3 @error('password') is-invalid @enderror"
-                    placeholder="كلمة المرور">
+                    placeholder="{{__('main.password')}}">
                 <input type="password" name="password_confirmation"
                     class="form-control my-3 @error('password_confirmation') is-invalid @enderror"
-                    placeholder="تأكيد كلمة المرور">
-                <button type="submit" class="btn btn-success py-2 w-50">ارسال</button>
+                    placeholder="{{__('main.confirm password')}}">
+                <button type="submit" class="btn btn-success py-2 w-50">{{__('main.send')}}</button>
             </form>
         </div>
     </div>

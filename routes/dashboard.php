@@ -1,6 +1,6 @@
 <?php
-
-Route::group(['middleware' => ['auth', 'auto-check-permission']], function () {
+//'auto-check-permission'
+Route::group(['middleware' => ['auth', ]], function () {
     Route::get('/', 'HomeController@index')->name('home');
     Route::resource('government', 'GovernorateController');
     Route::resource('/{govern}/city', 'CityController')->except(['index', 'show']);
@@ -12,6 +12,7 @@ Route::group(['middleware' => ['auth', 'auto-check-permission']], function () {
     Route::resource('place', 'PlaceController');
     Route::put('place/{place}/best', 'PlaceController@best')->name('place.best');
     Route::resource('setting', 'SettingController')->only(['index', 'edit', 'update']);
+    Route::resource('page', 'PageController')->only(['index', 'edit', 'update']);
     Route::resource('message', 'ClientMessageController')->only(['index', 'destroy']);
     Route::resource('owner-request', 'OwnerRequestController')->except(['edit', 'show']);
 

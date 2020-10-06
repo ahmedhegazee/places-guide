@@ -39,8 +39,10 @@ class GovernorateController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required|min:3',
+            'name' => ['required','array','min:'.sizeof($this->langs),'max:'.sizeof($this->langs)],
+            'name.*' => 'required|string|min:3|max:255',
         ]);
+        $request->merge(['name'=>json_encode($request->get('name')),]);
         Governorate::create($request->all());
         flash(__('messages.add'), 'success');
         return redirect()->route('government.index');
@@ -79,8 +81,10 @@ class GovernorateController extends Controller
     public function update(Request $request, Governorate $government)
     {
         $this->validate($request, [
-            'name' => 'required|min:3',
+            'name' => ['required','array','min:'.sizeof($this->langs),'max:'.sizeof($this->langs)],
+            'name.*' => 'required|string|min:3|max:255',
         ]);
+        $request->merge(['name'=>json_encode($request->get('name')),]);
         $government->update($request->all());
         flash(__('messages.update'), 'success');
         return redirect()->route('government.index');

@@ -203,6 +203,16 @@ dir="rtl"
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a href="{{ route('page.index') }}"
+                                class="nav-link {{ Route::currentRouteName()=='page].index'?'active':'' }}">
+                                <i class="nav-icon fas fa-file-alt"></i>
+                                <p>
+                                    {{ __('pages.Pages Content') }}
+
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="{{ route('change-password-form') }}"
                                 class="nav-link {{ Route::currentRouteName()=='change-password-form'?'active':'' }}">
                                 <i class="nav-icon fas fa-key"></i>

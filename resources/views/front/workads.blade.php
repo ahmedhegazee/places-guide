@@ -3,8 +3,8 @@
 @section('content')
 <nav class="mb-4" aria-label="breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ route('index') }}">الرئيسيه</a></li>
-        <li class="breadcrumb-item active" aria-current="page">اعلانات التوظيف</li>
+        <li class="breadcrumb-item"><a href="{{ route('index') }}">{{__('main.home')}}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{__('main.job ads')}}</li>
     </ol>
 </nav>
 <section class="categories py-2 ">
@@ -26,10 +26,10 @@
                                 @else
                                 <img src="{{$record->place->main_image }}" width="100%" height="200px" alt="">
                                 @endif
-                                <span>{{ $record->place->name }}</span>
+                                <span>{{ $record->place->name[app()->getLocale()] }}</span>
                             </div>
                             <div class="card-body">
-                                <h3 class="card-text">{{ $record->title }}</h3>
+                                <h3 class="card-text">{{ $record->title[app()->getLocale()] }}</h3>
                             </div>
                         </a>
                     </div>

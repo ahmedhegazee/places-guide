@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
 Route::group(['prefix' => 'v1', 'namespace' => 'Api'], function () {
     Route::get('governments', 'MainController@getGovernments');
     Route::get('cities', 'MainController@getCities');
@@ -31,7 +32,16 @@ Route::group(['prefix' => 'v1', 'namespace' => 'Api'], function () {
         $places = Place::nearest($request->lat, $request->long)->whereHas('owner', function ($query) {
             $query->accepted(1);
         })->take(10)
-            ->get(['id', 'name', 'main_image', 'latitude', 'longitude']);
+            ->get(['id', 'name', 'main_image', 'latitude', 'longitude'])
+        ->map(function($place){
+            return [
+                'id'=>$place->id,
+                'name'=>$place->name[app()->getLocale()],
+                'main_image'=>$place->main_image,
+                'latitude'=>$place->latitude,
+                'longitude'=>$place->longitude
+                ];
+        });
         // dd($places);
         return jsonResponse(1, 'nearest places', $places);
     });

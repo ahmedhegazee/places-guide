@@ -11,10 +11,10 @@ class CreatePlacesTable extends Migration
         Schema::create('places', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
-            $table->string('name');
+            $table->json('name');
             $table->integer('city_id')->unsigned();
-            $table->string('address');
-            $table->text('about');
+            $table->json('address');
+            $table->json('about');
             $table->decimal('latitude', 10, 6)->index()->nullable();
             $table->decimal('longitude', 10, 6)->index()->nullable();
             $table->integer('place_owner_id')->unsigned()->nullable();
@@ -23,7 +23,7 @@ class CreatePlacesTable extends Migration
             $table->integer('category_id')->unsigned();
             $table->integer('sub_category_id')->unsigned()->nullable();
             $table->tinyInteger('is_best')->default('0');
-            $table->unisgnedBigInteger('visited_count')->default(0);
+            $table->bigInteger('visited_count')->unsigned()->default(0);
             $table->time('opened_time');
             $table->time('closed_time');
             // $table->enum('closed_days', array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'));

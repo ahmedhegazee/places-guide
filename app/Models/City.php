@@ -24,4 +24,8 @@ class City extends Model
     {
         return $query->where('governorate_id', $govern);
     }
+    public function getNameAttribute()
+    {
+        return collect(json_decode($this->attributes['name']))->toArray();
+    }
 }

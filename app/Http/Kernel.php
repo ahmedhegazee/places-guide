@@ -3,6 +3,7 @@
 namespace App\Http;
 
 use App\Http\Middleware\IsPremimumAccount;
+use App\Http\Middleware\LocalizationMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -67,6 +68,7 @@ class Kernel extends HttpKernel
         'ability' => \Zizaco\Entrust\Middleware\EntrustAbility::class,
         'auto-check-permission' => Middleware\AutoCheckPermission::class,
         'is-premimum' => IsPremimumAccount::class,
+        'localization'=>LocalizationMiddleware::class
     ];
 
     /**

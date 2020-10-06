@@ -19,4 +19,8 @@ class WorkerCategory extends Model
     {
         return $this->hasMany('App\Models\WorkAd', 'work_category_id');
     }
+    public function getNameAttribute()
+    {
+        return collect(json_decode($this->attributes['name']))->toArray();
+    }
 }

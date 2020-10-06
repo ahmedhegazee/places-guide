@@ -53,7 +53,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapWebRoutes()
     {
-        Route::middleware('web')
+        Route::middleware(['web','localization'])
             ->namespace($this->namespace)
             ->group(base_path('routes/web.php'));
     }
@@ -75,20 +75,20 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapDashboardRoutes()
     {
         Route::prefix('dashboard')
-            ->middleware('web')
+            ->middleware(['web','localization'])
             ->namespace($this->namespace . '\cpanel')
             ->group(base_path('routes/dashboard.php'));
     }
     protected function mapOwnerRoutes()
     {
         Route::prefix('company-panel')
-            ->middleware('web')
+            ->middleware(['web','localization'])
             ->namespace($this->namespace . '\Owner')
             ->group(base_path('routes/owner.php'));
     }
     protected function mapFrontRoutes()
     {
-        Route::middleware('web')
+        Route::middleware(['web','localization'])
             ->namespace($this->namespace . '\Front')
             ->group(base_path('routes/front.php'));
     }

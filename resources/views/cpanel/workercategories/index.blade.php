@@ -31,7 +31,9 @@
             <table id="table" class="table table-bordered table-hover table-striped">
                 <thead>
                     <th>#</th>
-                    <th>{{ __('pages.Name') }}</th>
+                    @foreach($langs as $lang)
+                        <th>{{ __('pages.Name').' ('.$lang.')' }}</th>
+                    @endforeach
                     <th>{{ __('pages.Edit') }}</th>
                     <th>{{ __('pages.Delete') }}</th>
                 </thead>
@@ -39,7 +41,9 @@
                     @forelse ($records as $record)
                     <tr id="record-{{ $record->id }}">
                         <td>{{$loop->iteration}}</td>
-                        <td>{{$record->name}}</td>
+                        @foreach($langs as $lang)
+                            <td>{{$record->name[$lang]}}</td>
+                        @endforeach
                         <td>
                             <a href="{{route('worker-category.edit',['workercategory'=>$record->id])}}"
                                 class="btn btn-success"><i class="fas fa-edit"></i></a>

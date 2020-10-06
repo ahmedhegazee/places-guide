@@ -20,4 +20,12 @@ class Discount extends Model
         return $query->where('starting_date', '<=', now()->toDateString())
             ->where('end_date', '>=', now()->toDateString());
     }
+    public function getTitleAttribute()
+    {
+        return collect(json_decode($this->attributes['title']))->toArray();
+    }
+    public function getContentAttribute()
+    {
+        return collect(json_decode($this->attributes['content']))->toArray();
+    }
 }

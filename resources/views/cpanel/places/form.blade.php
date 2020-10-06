@@ -1,40 +1,49 @@
 {{-- TODO Js Validation --}}
 <div id="first-step">
-    <div class="form-group">
-        <label for="name">{{ __('pages.Company') .' '. __('pages.Name') }}</label>
-        {!!Form::text('name',null,[
+    @foreach($langs as $lang)
+    <div class="form-group col-md-5 d-inline-block ">
+        <label for="name">{{ __('pages.Place Name') .' ('.$lang.')' }}</label>
+        {!!Form::text('name['.$lang.']',null,[
         'class'=>'form-control',
 
         ])!!}
     </div>
-    <div class="form-group">
-        <label for="phone">{{ __('pages.Company') .' '. __('pages.Phone') }}</label>
+    @endforeach
+    <div class="clearfix"></div>
+    <div class="form-group col-md-10">
+        <label for="phone">{{ __('pages.Place Phone')  }}</label>
         {!!Form::text('phone',null,[
         'class'=>'form-control',
 
         ])!!}
     </div>
-    <div class="form-group">
+    <div class="form-group col-md-10">
         <label for="phone">{{ __('pages.Tax Record') }}</label>
         {!!Form::text('tax_record',null,[
         'class'=>'form-control',
 
         ])!!}
     </div>
-    <div class="form-group">
-        <label for="address">{{ __('pages.Company') .' '. __('pages.Address') }}</label>
-        {!!Form::text('address',null,[
-        'class'=>'form-control',
+        @foreach($langs as $lang)
+            <div class="form-group col-md-5 d-inline-block ">
+                <label for="address">{{ __('pages.Place Address') .' ('.$lang.')' }}</label>
+                {!!Form::text('address['.$lang.']',null,[
+                'class'=>'form-control',
 
-        ])!!}
-    </div>
-    <div class="form-group">
-        <label for="about">{{ __('pages.Company About') }}</label>
-        {!!Form::textarea('about',null,[
-        'class'=>'form-control',
+                ])!!}
+            </div>
+        @endforeach
+        <div class="clearfix"></div>
+        @foreach($langs as $lang)
+            <div class="form-group col-md-5 d-inline-block ">
+                <label for="address">{{ __('pages.Company About').' ('.$lang.')' }}</label>
+                {!!Form::textarea('about['.$lang.']',null,[
+                'class'=>'form-control',
 
-        ])!!}
-    </div>
+                ])!!}
+            </div>
+        @endforeach
+        <div class="clearfix"></div>
 </div>
 <div id="second-step" style="display:none">
     <div class="form-group">

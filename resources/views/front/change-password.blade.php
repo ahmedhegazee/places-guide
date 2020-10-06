@@ -5,8 +5,8 @@
     <!--Breadcrumb-->
     <nav class="my-4" aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ url('/') }}">الرئيسيه</a></li>
-            <li class="breadcrumb-item active" aria-current="page">تغيير كلمة المرور</li>
+            <li class="breadcrumb-item"><a href="{{ url('/') }}">{{__('main.home')}}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{__('main.change password')}}</li>
         </ol>
     </nav>
     <!--End Breadcrumb-->
@@ -24,13 +24,13 @@
 
                 <input type="password" name="old_password"
                     class="form-control my-3 @error('old_password') is-invalid @enderror"
-                    placeholder=" كلمة المرور القديمة">
+                    placeholder="{{__('main.old password')}}">
                 <input type="password" name="password" class="form-control my-3 @error('password') is-invalid @enderror"
-                    placeholder="كلمة المرور">
+                    placeholder="{{__('main.password')}}">
                 <input type="password" name="password_confirmation"
                     class="form-control my-3 @error('password_confirmation') is-invalid @enderror"
-                    placeholder="تأكيد كلمة المرور">
-                <button type="submit" class="btn btn-success py-2 w-50">تحديث</button>
+                    placeholder="{{__('main.confirm password')}}">
+                <button type="submit" class="btn btn-success py-2 w-50">{{__('main.update')}}</button>
             </form>
         </div>
     </div>

@@ -15,16 +15,21 @@
 
         <div class="card-body">
             <img src="{{ $discount->image }}" alt=""><br>
-            <span class="text-bold">{{ __('pages.Title').' : '}} </span>
-            <span>{{  $discount->title }}</span><br>
+            @foreach ($langs as $lang)
+                <span class="text-bold">{{ __('pages.Title').' ('.$lang.') : '}} </span>
+                <span>{{  $discount->title[$lang] }}</span><br>
+            @endforeach
             <span class="text-bold">{{ __('pages.Discount').' : '}} </span>
             <span>{{  $discount->discount}}</span><br>
             <span class="text-bold">{{ __('pages.Start Date Discount').' : '}} </span>
             <span>{{  $discount->starting_date}}</span><br>
             <span class="text-bold">{{ __('pages.End Date Discount').' : '}} </span>
-            <span>{{  $discount->end_date}}</span><br>
-            <span class="text-bold">{{ __('pages.Discount About').' : '}} </span>
-            <pre>{{ $discount->content }}</pre>
+            <span>{{  $discount->end_date}}</span>
+            @foreach($langs as $lang)
+                <br>
+                <span class="text-bold">{{ __('pages.Discount About').' ('.$lang.') : '}} </span>
+                <pre>{{ $discount->content[$lang] }}</pre>
+            @endforeach
         </div>
         <!-- /.card-body -->
 

@@ -1,33 +1,33 @@
 {{-- TODO Js Validation --}}
 <div id="first-step">
-    <div class="form-group">
-        <label for="full_name">{{ __('pages.Name') }}</label>
+    <div class="form-group col-md-10">
+        <label for="full_name ">{{ __('pages.Name') }}</label>
         {!!Form::text('full_name',null,[
         'class'=>'form-control ',
         ])!!}
     </div>
-    <div class="form-group">
+    <div class="form-group col-md-10">
         <label for="email">{{ __('pages.Email') }}</label>
         {!!Form::email('email',null,[
         'class'=>'form-control ',
 
         ])!!}
     </div>
-    <div class="form-group">
+    <div class="form-group col-md-10">
         <label for="password">{{ __('pages.Password') }}</label>
         {!!Form::password('password',[
         'class'=>'form-control',
 
         ])!!}
     </div>
-    <div class="form-group">
+    <div class="form-group col-md-10">
         <label for="password_confirmation">{{ __('pages.Confirm').' '. __('pages.Password') }}</label>
         {!!Form::password('password_confirmation',[
         'class'=>'form-control',
 
         ])!!}
     </div>
-    <div class="form-group">
+    <div class="form-group col-md-10">
 
         {!!Form::radio('account_type',0,true)!!}
         <label for="account_type">عضوية فضية</label>
@@ -37,77 +37,86 @@
     </div>
 </div>
 <div id="second-step" style="display:none">
-    <div class="form-group">
-        <label for="name">{{ __('pages.Company') .' '. __('pages.Name') }}</label>
-        {!!Form::text('name',null,[
-        'class'=>'form-control',
+    @foreach($langs as $lang)
+        <div class="form-group col-md-5 d-inline-block ">
+            <label for="name">{{ __('pages.Place Name') .' ('.$lang.')' }}</label>
+            {!!Form::text('name['.$lang.']',null,[
+            'class'=>'form-control',
 
-        ])!!}
-    </div>
-    <div class="form-group">
-        <label for="phone">{{ __('pages.Company') .' '. __('pages.Phone') }}</label>
+            ])!!}
+        </div>
+    @endforeach
+    <div class="clearfix"></div>
+    <div class="form-group col-md-10">
+        <label for="phone">{{ __('pages.Place Phone') }}</label>
         {!!Form::text('phone',null,[
         'class'=>'form-control',
 
         ])!!}
     </div>
-    <div class="form-group">
+    <div class="form-group col-md-10">
         <label for="phone">{{ __('pages.Tax Record') }}</label>
         {!!Form::text('tax_record',null,[
         'class'=>'form-control',
 
         ])!!}
     </div>
-    <div class="form-group">
-        <label for="address">{{ __('pages.Company') .' '. __('pages.Address') }}</label>
-        {!!Form::text('address',null,[
-        'class'=>'form-control',
+        @foreach($langs as $lang)
+            <div class="form-group col-md-5 d-inline-block ">
+                <label for="address">{{ __('pages.Place Address') .' ('.$lang.')' }}</label>
+                {!!Form::text('address['.$lang.']',null,[
+                'class'=>'form-control',
 
-        ])!!}
-    </div>
-    <div class="form-group">
-        <label for="about">{{ __('pages.Company About') }}</label>
-        {!!Form::textarea('about',null,[
-        'class'=>'form-control',
+                ])!!}
+            </div>
+        @endforeach
+        <div class="clearfix"></div>
+        @foreach($langs as $lang)
+            <div class="form-group col-md-5 d-inline-block ">
+                <label for="address">{{ __('pages.Company About').' ('.$lang.')' }}</label>
+                {!!Form::textarea('about['.$lang.']',null,[
+                'class'=>'form-control',
 
-        ])!!}
-    </div>
+                ])!!}
+            </div>
+        @endforeach
+        <div class="clearfix"></div>
 </div>
 <div id="third-step" style="display:none">
-    <div class="form-group">
+    <div class="form-group col-md-10">
         <label for="govern">{{ __('pages.Govern') }}</label>
         {!!Form::select('govern',$governs,null,array('class'=>'form-control
         multiple-select','id'=>'govern','onchange'=>'getCities()','placeholder'=>'اختر المحافظة'))!!}
     </div>
-    <div class="form-group">
+    <div class="form-group col-md-10">
         <label for="city">{{ __('pages.City') }}</label>
         <select class="form-control multiple-select" id="city" name="city_id">
-            <option selected>اختر المدينة</option>
+            <option selected>{{__('main.choose city')}}</option>
         </select>
 
     </div>
-    <div class="form-group">
+    <div class="form-group col-md-10">
         <label for="category_id">{{ __('pages.Category') }}</label>
         {!!Form::select('category_id',$categories,null,array('class'=>'form-control
-        multiple-select','id'=>'category','onchange'=>'getSubCategories()','placeholder'=>'اختر التصنيف'))!!}
+        multiple-select','id'=>'category','onchange'=>'getSubCategories()','placeholder'=>__('main.choose category')))!!}
     </div>
-    <div class="form-group">
+    <div class="form-group col-md-10">
         <label for="sub_category_id">{{ __('pages.SubCategory') }}</label>
         <select class="form-control multiple-select" id="sub_category" name="sub_category_id">
-            <option selected value="">اختر التصنيف الفرعي</option>
+            <option selected value="">{{__('main.choose subcategory')}}</option>
 
         </select>
 
     </div>
-    <div class="form-group">
+    <div class="form-group col-md-10">
         <label for="opened_time">{{ __('pages.Opened Time') }}</label>
         <input type="time" name="opened_time" class="form-control" style="text-align:end" id="opened_time">
     </div>
-    <div class="form-group">
+    <div class="form-group col-md-10">
         <label for="closed_time">{{ __('pages.Closed Time') }}</label>
         <input type="time" name="closed_time" class="form-control" style="text-align:end" id="closed_time">
     </div>
-    <div class="form-group">
+    <div class="form-group col-md-10">
         <label for="closed_days">{{ __('pages.Closed Days') }}</label>
         {!!Form::select('closed_days',$days,null,array('multiple'=>'multiple','name'=>'closed_days[]','class'=>'form-control
         multiple-select'))!!}

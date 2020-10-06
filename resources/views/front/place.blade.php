@@ -2,8 +2,8 @@
 @section('content')
 <nav class="mb-4" aria-label="breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ route('index') }}">الرئيسيه</a></li>
-        <li class="breadcrumb-item active" aria-current="page">{{ $place->name }}</li>
+        <li class="breadcrumb-item"><a href="{{ route('index') }}">{{__('main.home')}}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ $place->name[app()->getLocale()] }}</li>
     </ol>
 </nav>
 {!! $place->enableRatingAttribute=true !!}
@@ -14,7 +14,7 @@
                 {{-- use carsoul of main page --}}
                 <div id="myCarousel" class="carousel slide" data-ride="false" data-interval="false">
                     <div id="content" class="row justify-content-between">
-                        <span style="color:#fff;font-size:1.5rem">{{ $place->name }}</span>
+                        <span style="color:#fff;font-size:1.5rem">{{ $place->name[app()->getLocale()] }}</span>
                         <span
                             class="badge badge-danger">{{ __('pages.Rating').' '.$place->rating .' '.__('pages.From 5')}}</span>
                     </div>
@@ -45,18 +45,18 @@
                 {{-- add header and icon and put the about in paragraph --}}
                 <div class="card w-100 mt-4 mb-2" id="about">
                     <div class="card-header">
-                        <h3>معلومات عن المكان</h3>
+                        <h3>{{__('pages.Company About')}}</h3>
                     </div>
                     <div class="card-body">
                         <p>
-                            {{ $place->about }}
+                            {{ $place->about[app()->getLocale()] }}
                         </p>
                     </div>
                 </div>
 
                 <div id="time" class="card w-100  mb-2 ">
                     <div class="card-header">
-                        <h3>مواعيد العمل</h3>
+                        <h3>{{__('pages.Work Time')}}</h3>
                     </div>
                     <div class="card-body">
                         <span
@@ -67,17 +67,17 @@
                 </div>
                 <div id="time" class="card w-100  mb-2 ">
                     <div class="card-header">
-                        <h3> ايام الاغلاق</h3>
+                        <h3>{{__('pages.Closed Days')}}</h3>
                     </div>
                     <div class="card-body">
                         {!! $place->preventClosedDaysAttribute=false !!}
-                        <span>{{ is_null($place->closed_days)?'مفتوح طيلة الاسبوع':$place->closed_days }}</span>
+                        <span>{{ is_null($place->closed_days)?__('main.Open All Week'):$place->closed_days }}</span>
                     </div>
 
                 </div>
                 <div id="comments" class="card w-100  mb-6">
                     <div class="card-header">
-                        <h3>تقييم الزوار</h3>
+                        <h3>{{__('main.visitors rating')}}</h3>
                     </div>
                     <div class="card-body">
                         @forelse ($place->reviews as $review)
@@ -112,9 +112,9 @@
                                 </div>
                                 <input type="hidden" name="rating" id="rating" value="0">
                                 <div class="form-group">
-                                    <label for="content">تعليق</label>
+                                    <label for="content">{{__('main.comment')}}</label>
                                     <textarea name="content" class="form-control" cols="30" rows="10"
-                                        placeholder="اكتب لنا تجربتك مع هذا المكان" required></textarea>
+                                        placeholder="{{__('main.write your experience')}}" required></textarea>
                                 </div>
                                 <div class="form-group ">
                                     <button class="btn btn-primary" type="submit">{{ __('pages.Submit') }}</button>
@@ -135,9 +135,9 @@
                                 </div>
                                 <input type="hidden" name="rating" id="rating" value="0">
                                 <div class="form-group">
-                                    <label for="content">تعليق</label>
+                                    <label for="content">{{__('main.comment')}}</label>
                                     <textarea name="content" class="form-control" cols="30" rows="10"
-                                        placeholder="اكتب لنا تجربتك مع هذا المكان" required></textarea>
+                                        placeholder="{{__('main.write your experience')}}" required></textarea>
                                 </div>
                                 <div class="form-group ">
                                     <button class="btn btn-primary" type="submit">{{ __('pages.Submit') }}</button>
@@ -196,7 +196,7 @@
                 @endif
                 @if (!is_null($place->address))
                 <div id="address" class="card w-100  mb-2 p-3">
-                    <span><i class="fas fa-map-marker-alt"></i>{{ ' '.$place->address }}</span>
+                    <span><i class="fas fa-map-marker-alt"></i>{{ ' '.$place->address[app()->getLocale()] }}</span>
                 </div>
                 @endif
 

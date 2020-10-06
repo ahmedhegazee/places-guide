@@ -21,22 +21,49 @@ class MainController extends Controller
      */
     public function getGovernments()
     {
-        $governments = Governorate::all(['id', 'name']);
+        $governments = Governorate::all(['id', 'name'])
+            ->map(function($record){
+            return [
+                'id'=>$record->id,
+                'name'=>$record->name[app()->getLocale()]
+            ];
+        });;
         return jsonResponse(1, 'success', $governments);
     }
     public function getCities(Request $request)
     {
-        $cities = City::govern($request->govern)->get(['name', 'id']);
+        $cities = City::govern($request->govern)
+            ->get(['name', 'id'])
+            ->map(function($record){
+                return [
+                    'id'=>$record->id,
+                    'name'=>$record->name[app()->getLocale()]
+                ];
+            });
+
         return jsonResponse(1, 'success', $cities);
     }
     public function getSubCategories(Request $request)
     {
-        $subCategories = SubCategory::cat($request->category)->get(['name', 'id']);
+        $subCategories = SubCategory::cat($request->category)
+            ->get(['name', 'id'])
+            ->map(function($record){
+                return [
+                    'id'=>$record->id,
+                    'name'=>$record->name[app()->getLocale()]
+                ];
+            });
         return jsonResponse(1, 'success', $subCategories);
     }
     public function getCategories()
     {
-        $postsCategories = Category::all(['id', 'name']);
+        $postsCategories = Category::all(['id', 'name'])
+            ->map(function($record){
+            return [
+                'id'=>$record->id,
+                'name'=>$record->name[app()->getLocale()]
+            ];
+        });
         return jsonResponse(1, 'success', $postsCategories);
     }
     public function getSettings()

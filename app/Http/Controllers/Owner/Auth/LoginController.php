@@ -60,7 +60,7 @@ class LoginController extends Controller
     {
         $loginRoute = route('owner.login');
         $registerRoute = route('owner.register');
-        $title = " لوحة تحكم صاحب الشركة";
+        $title = __('main.Place Owner Dashboard');
         $resetPasswordRoute = route('owner.password.request');
         return view('front.auth.login', compact('loginRoute', 'registerRoute', 'resetPasswordRoute', 'title'));
     }

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @inject('model', 'App\Models\City')
 @section('page_title')
-{{__('pages.Cities').' '.$govern->name}}
+{{__('pages.Cities').' '.$govern->name[app()->getLocale()]}}
 @endsection
 @section('content')
 <!-- Content Header (Page header) -->
@@ -19,7 +19,7 @@
 
             @include('partials.validation-errors')
             {!!
-            Form::model($model,[
+            Form::model(null,[
             'route'=>['city.store','govern'=>$govern->id]
             ])
             !!}

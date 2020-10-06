@@ -43,13 +43,20 @@ class DiscountController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'title' => 'required|string|min:3|max:255',
-            'content' => 'required|string|min:3',
+            'title' => ['required','array','min:'.sizeof($this->langs),'max:'.sizeof($this->langs)],
+            'title.*' => 'required|string|min:3|max:255',
+            'content' => ['required','array','min:'.sizeof($this->langs),'max:'.sizeof($this->langs)],
+            'content.*' => 'required|string|min:3|max:500',
             'discount' => 'required|string|min:3|max:255',
             'starting_date' => 'required|date|after_or_equal:today',
             'end_date' => 'required|date|after:starting_date',
             'image' => 'required|image|max:4000',
         ]);
+        $request->merge(
+            [
+                'title'=>json_encode($request->get('title')),
+                'content'=>json_encode($request->get('content')),
+            ]);
         $data = $request->except('image');
         $data['image'] = storeFileOnGoogleCloud($request->image, 'images');
         $request->user()->place->discounts()->create($data);
@@ -90,13 +97,20 @@ class DiscountController extends Controller
     public function update(Request $request, Discount $discount)
     {
         $this->validate($request, [
-            'title' => 'required|string|min:3',
-            'content' => 'required|string|min:3',
+            'title' => ['required','array','min:'.sizeof($this->langs),'max:'.sizeof($this->langs)],
+            'title.*' => 'required|string|min:3|max:255',
+            'content' => ['required','array','min:'.sizeof($this->langs),'max:'.sizeof($this->langs)],
+            'content.*' => 'required|string|min:3|max:500',
             'discount' => 'required|string|min:3',
             'starting_date' => 'required|date|after_or_equal:today',
             'end_date' => 'required|date|after:starting_date',
             'image' => 'sometimes|image|max:4000'
         ]);
+        $request->merge(
+            [
+                'title'=>json_encode($request->get('title')),
+                'content'=>json_encode($request->get('content')),
+            ]);
         $data = $request->except('image');
         if ($request->has('image'))
             $data['image'] = storeFileOnGoogleCloud($request->image, 'images');

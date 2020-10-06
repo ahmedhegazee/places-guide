@@ -2,6 +2,8 @@
 return [
     // pages
     'Clients' => 'العملاء',
+    'Pages Content'=>'محتوى الصفحات',
+
     'Donation Request' => 'طلبات التبرع',
     'Governments' => 'محافظات',
     'Cities' => 'مدن',
@@ -32,12 +34,13 @@ return [
     'Address' => 'عنوان',
     'Tax Record' => 'السجل الضريبي',
     'New Request' => 'طلب جديد',
-    'Company About' => 'معلومات عن الشركة',
+    'Company About' => 'معلومات عن المكان',
     'Ad About' => 'معلومات عن الاعلان',
     'Discount About' => 'معلومات عن الخصم',
     'Opened Time' => 'وقت الفتح',
     'Closed Time' => 'وقت الاغلاق',
     'Closed Days' => 'ايام الاغلاق',
+    'Work Time'=>'مواعيد العمل',
     'Owners' => 'اصحاب الشركات',
     'Owner' => 'صاحب الشركة',
     'Account Type' => 'نوع عضوية الحساب',
@@ -99,6 +102,12 @@ return [
     'Discount Value' => 'عرض بقيمة ',
     'Rating' => 'تقييم ',
     'From 5' => 'من 5',
+    'Place Name'=>'اسم المكان',
+    'Place Phone'=>'رقم جوال المكان',
+    'Place Address'=>'عنوان المكان',
+    'Owner Name'=>'اسم صاحب المكان',
+    'Free Account'=>'عضوية فضية',
+    'Premium Account'=>'عضوية الماسية',
 
     //Governorates Pages
     'No' => 'عدد',
@@ -108,5 +117,6 @@ return [
     'Deny' => 'رفض',
     'Submit' => 'ارسال',
     'No Permissions' => 'لا توجد صلاحيات',
-    'No Data' => 'لا توجد بيانات'
+    'No Data' => 'لا توجد بيانات',
+    'Value'=>'قيمة',
 ];

@@ -2,8 +2,8 @@
 @section('content')
 <nav class="mb-4" aria-label="breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ route('index') }}">الرئيسيه</a></li>
-        <li class="breadcrumb-item active" aria-current="page">اقرب الاماكن اليك</li>
+        <li class="breadcrumb-item"><a href="{{ route('index') }}">{{__('main.home')}}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{__('main.nearest places')}}</li>
     </ol>
 </nav>
 <section>
@@ -15,7 +15,7 @@
     </div>
 </section>
 <section class="categories py-2">
-    <h2 class="text-center mb-4"> اقرب الاماكن اليك</h2>
+    <h2 class="text-center mb-4">{{__('main.nearest places')}}</h2>
     <div class="container">
         <div class="row" id="nearest">
             {{-- @foreach ($bestPlaces as $place)

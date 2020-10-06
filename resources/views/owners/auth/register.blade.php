@@ -4,8 +4,8 @@
     <!--Breadcrumb-->
     <nav class="my-4" aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ url('/') }}">الرئيسيه</a></li>
-            <li class="breadcrumb-item active" aria-current="page">انضم الينا</li>
+            <li class="breadcrumb-item"><a href="{{ url('/') }}">{{__('main.home')}}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{__('main.join us')}}</li>
         </ol>
     </nav>
     <!--End Breadcrumb-->
@@ -27,35 +27,35 @@
                 <div id="first-step">
                     <div><input type="text" name="full_name"
                             class="form-control my-3 @error('full_name') is-invalid @enderror"
-                            value="{{ old('full_name') }}" placeholder="اسم صاحب الشركة"></div>
+                            value="{{ old('full_name') }}" placeholder="{{__('pages.Owner Name')}}"></div>
                     <div><input type="email" name="email" class="form-control my-3 @error('email') is-invalid @enderror"
-                            value="{{ old('email') }}" placeholder="البريد الاليكترونى"></div>
+                            value="{{ old('email') }}" placeholder="{{__('main.email')}}"></div>
                     <input type="password" name="password"
-                        class="form-control my-3 @error('password') is-invalid @enderror" placeholder="كلمة المرور">
+                        class="form-control my-3 @error('password') is-invalid @enderror" placeholder="{{__('main.password')}}">
                     <input type="password" name="password_confirmation"
                         class="form-control my-3 @error('password_confirmation') is-invalid @enderror"
-                        placeholder="تأكيد كلمة المرور">
+                        placeholder="{{__('main.confirm password')}}">
                     <div class="form-group" style="text-align: right;">
 
                         {!!Form::radio('account_type',0,true)!!}
-                        <label for="account_type">عضوية فضية</label>
+                        <label for="account_type">{{__('pages.Free Account')}}</label>
                         &nbsp;&nbsp;&nbsp;
                         {!!Form::radio('account_type',1)!!}
-                        <label for="account_type">عضوية الماسية</label>
+                        <label for="account_type">{{__('pages.Premium Account')}}</label>
                     </div>
                 </div>
                 <div id="second-step" style="display:none">
                     <div><input type="text" name="name" class="form-control my-3 @error('name') is-invalid @enderror"
-                            value="{{ old('name') }}" placeholder="اسم الشركة"></div>
+                            value="{{ old('name') }}" placeholder="{{__('pages.Owner Name')}}"></div>
                     <input type="text" name="phone" value="{{ old('phone') }}"
-                        class="form-control my-3 @error('phone') is-invalid @enderror" placeholder=" رقم الهاتف للشركة">
+                        class="form-control my-3 @error('phone') is-invalid @enderror" placeholder="{{__('pages.Place Phone')}}">
 
                     <div><input type="text" name="tax_record"
                             class="form-control my-3 @error('tax_record') is-invalid @enderror"
-                            value="{{ old('tax_record') }}" placeholder="السجل الضريبي"></div>
+                            value="{{ old('tax_record') }}" placeholder="{{__('pages.Tax Record')}}"></div>
                     <div><input type="text" name="address"
                             class="form-control my-3 @error('address') is-invalid @enderror"
-                            value="{{ old('address') }}" placeholder="عنوان الشركة"></div>
+                            value="{{ old('address') }}" placeholder="{{__('pages.Place Address')}}"></div>
                     <div class="form-group">
                         {{-- <label for="about">{{ __('pages.Company About') }}</label> --}}
                         {!!Form::textarea('about',null,[
@@ -68,25 +68,24 @@
                     <div class="form-group">
                         {{-- <label for="govern">{{ __('pages.Govern') }}</label> --}}
                         {!!Form::select('govern',$governs,null,array('class'=>'form-control
-                        multiple-select','id'=>'govern','onchange'=>'getCities()','placeholder'=>'اختر المحافظة'))!!}
+                        multiple-select','id'=>'govern','onchange'=>'getCities()','placeholder'=>__('main.choose govern orate')))!!}
                     </div>
                     <div class="form-group">
                         {{-- <label for="city">{{ __('pages.City') }}</label> --}}
                         <select class="form-control multiple-select" id="city" name="city_id">
-                            <option selected>اختر المدينة</option>
+                            <option selected>{{__('main.choose city')}}</option>
                         </select>
 
                     </div>
                     <div class="form-group">
                         {{-- <label for="category_id">{{ __('pages.Category') }}</label> --}}
                         {!!Form::select('category_id',$categories,null,array('class'=>'form-control
-                        multiple-select','id'=>'category','onchange'=>'getSubCategories()','placeholder'=>'اختر
-                        التصنيف'))!!}
+                        multiple-select','id'=>'category','onchange'=>'getSubCategories()','placeholder'=>__('main.choose category')))!!}
                     </div>
                     <div class="form-group">
                         {{-- <label for="sub_category_id">{{ __('pages.SubCategory') }}</label> --}}
                         <select class="form-control multiple-select" id="sub_category" name="sub_category_id">
-                            <option selected value="">اختر التصنيف الفرعي</option>
+                            <option selected value="">{{__('main.choose subcategory')}}</option>
 
                         </select>
 
@@ -111,8 +110,8 @@
                 <div class="row justify-content-end pl-3">
 
                     <button id="prevBtn" class="btn btn-primary ml-2" type="button" style="display:none"
-                        onclick="showPrev()">السابق</button>
-                    <button id="nextBtn" class="btn btn-primary " type="button" onclick="showNext()">التالي</button>
+                        onclick="showPrev()">{{__('main.Prev')}}</button>
+                    <button id="nextBtn" class="btn btn-primary " type="button" onclick="showNext()">{{__('main.Next')}}</button>
                     <button id="submitBtn" class="btn btn-success" id="submit" style="display:none"
                         type="submit">{{ __('pages.Submit') }}</button>
 

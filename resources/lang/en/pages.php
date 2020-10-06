@@ -2,6 +2,7 @@
 return [
     // pages
     'Clients' => 'Clients',
+    'Pages Content'=>'Pages Content',
 
     'Governments' => 'Governments',
     'Cities' => 'Cities',
@@ -98,6 +99,14 @@ return [
     'Discount Value' => 'Discount Value',
     'Rating' => 'Rating ',
     'From 5' => 'From 5',
+    'Work Time'=>'Work Time',
+    'Place Name'=>'Place Name',
+    'Place Phone'=>'Place Phone',
+    'Place Address'=>'Place Address',
+
+    'Owner Name'=>'Place Owner Name',
+    'Free Account'=>'Free Account',
+    'Premium Account'=>'Premium Account',
 
     //Governorates Pages
     'No' => 'No',
@@ -107,5 +116,6 @@ return [
     'Deny' => 'Deny',
     'Submit' => 'Submit',
     'No Permissions' => 'No Permissions',
-    'No Data' => 'No Data'
+    'No Data' => 'No Data',
+    'Value'=>'Value',
 ];

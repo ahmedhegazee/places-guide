@@ -2,8 +2,8 @@
 @section('content')
 <nav class="mb-4" aria-label="breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ route('index') }}">الرئيسيه</a></li>
-        <li class="breadcrumb-item active" aria-current="page">{{ __('pages.Work Ads').' لـ'.$ad->place->name }}</li>
+        <li class="breadcrumb-item"><a href="{{ route('index') }}">{{__('main.home')}}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ __('pages.Work Ads').$ad->place->name[app()->getLocale()] }}</li>
     </ol>
 </nav>
 <section class="categories py-2 ">
@@ -20,12 +20,12 @@
                             {{-- <img src="{{$ad->place->main_image }}" width="100%" style="height:60vh" alt=""> --}}
                         </div>
                         <div class="card-body">
-                            <h3 class="card-text">{{ $ad->title }}</h3>
-                            <span>{{ $ad->place->name }}</span><br>
-                            <span>{{ __('pages.Address').' : '. $ad->place->address }}</span><br>
+                            <h3 class="card-text">{{ $ad->title[app()->getLocale()] }}</h3>
+                            <span>{{ $ad->place->name[app()->getLocale()] }}</span><br>
+                            <span>{{ __('pages.Address').' : '. $ad->place->address[app()->getLocale()] }}</span><br>
                             <span>{{ __('pages.Phone To Communicate').' : '. $ad->phone }}</span><br>
                             <span>{{ __('pages.Quantity').' : '.$ad->quantity}}</span><br>
-                            <pre>{{ $ad->content }}</pre>
+                            <pre>{{ $ad->content[app()->getLocale()] }}</pre>
                         </div>
                     </a>
                 </div>

@@ -31,4 +31,8 @@ class SubCategory extends Model
             $query->where('is_accepted', 1);
         });
     }
+    public function getNameAttribute()
+    {
+        return collect(json_decode($this->attributes['name']))->toArray();
+    }
 }

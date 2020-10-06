@@ -1,5 +1,8 @@
 <?php
-// Route::group(['namespace' => 'Front'], function () {
+// Route::group(['prefix' => '/{lang}?'], function ($lang) {
+//     if(!is_null($lang))
+//         $lang='ar';
+//     App::setLocale($lang);
 Route::get('/', 'MainController@home')->name('index');
 Route::get('/about', 'MainController@about')->name('about');
 Route::get('/contact', 'MainController@contact')->name('contact');

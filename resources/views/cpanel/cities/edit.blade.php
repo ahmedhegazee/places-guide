@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('page_title')
-Cities of {{$govern->name}}
+Cities of {{$govern->name[app()->getLocale()]}}
 
 @endsection
 @section('content')

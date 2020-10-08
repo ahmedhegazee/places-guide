@@ -28,7 +28,7 @@ use App\Models\Place;
 Route::get('/lang/{lang}', function ($lang) {
     Session::put('locale', $lang);
     return redirect()->back();
-});
+})->name('lang');
 Route::group(['prefix' => 'dashboard'], function () {
     Auth::routes(['register' => false, 'verify' => false, 'reset' => false]);
 });

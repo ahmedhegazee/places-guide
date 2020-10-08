@@ -11,7 +11,7 @@
     <!--End Breadcrumb-->
 </div>
 <!--End container-->
-<section class="signup text-center">
+<section class="signup ">
 
     <div class="container">
         @include('partials.validation-errors')
@@ -25,16 +25,21 @@
 
 
                 <div id="first-step">
-                    <div><input type="text" name="full_name"
+                    <div class="col-md-10"><input type="text" name="full_name"
                             class="form-control my-3 @error('full_name') is-invalid @enderror"
                             value="{{ old('full_name') }}" placeholder="{{__('pages.Owner Name')}}"></div>
-                    <div><input type="email" name="email" class="form-control my-3 @error('email') is-invalid @enderror"
+                    <div class="col-md-10"><input type="email" name="email" class="form-control my-3 @error('email') is-invalid @enderror"
                             value="{{ old('email') }}" placeholder="{{__('main.email')}}"></div>
-                    <input type="password" name="password"
-                        class="form-control my-3 @error('password') is-invalid @enderror" placeholder="{{__('main.password')}}">
-                    <input type="password" name="password_confirmation"
-                        class="form-control my-3 @error('password_confirmation') is-invalid @enderror"
-                        placeholder="{{__('main.confirm password')}}">
+                    <div class="col-md-10">
+                        <input type="password" name="password"
+                               class="form-control my-3 @error('password') is-invalid @enderror " placeholder="{{__('main.password')}}">
+
+                    </div>
+                                        <div class="col-md-10">
+                                            <input type="password" name="password_confirmation"
+                                                   class="form-control my-3 @error('password_confirmation') is-invalid @enderror "
+                                                   placeholder="{{__('main.confirm password')}}">
+                                        </div>
                     <div class="form-group" style="text-align: right;">
 
                         {!!Form::radio('account_type',0,true)!!}
@@ -45,24 +50,37 @@
                     </div>
                 </div>
                 <div id="second-step" style="display:none">
-                    <div><input type="text" name="name" class="form-control my-3 @error('name') is-invalid @enderror"
-                            value="{{ old('name') }}" placeholder="{{__('pages.Owner Name')}}"></div>
+                    @foreach($langs as $lang)
+                    <div class="col-md-5 d-inline-block p-0 mr-2" style="text-align: justify!important;">
+                        <input type="text" name="name{{'['.$lang.']'}}" class="form-control my-3 @error('name['.$lang.']') is-invalid @enderror"
+                            value="{{ old('name['.$lang.']') }}" placeholder="{{__('pages.Place Name').'('.$lang.')'}}"></div>
+                    @endforeach
+                    <div class="clearfix"></div>
+                        <div class="col-md-10">
                     <input type="text" name="phone" value="{{ old('phone') }}"
-                        class="form-control my-3 @error('phone') is-invalid @enderror" placeholder="{{__('pages.Place Phone')}}">
-
-                    <div><input type="text" name="tax_record"
+                        class="form-control my-3 @error('phone') is-invalid @enderror " placeholder="{{__('pages.Place Phone')}}">
+                        </div>
+                    <div class="col-md-10">
+                        <input type="text" name="tax_record"
                             class="form-control my-3 @error('tax_record') is-invalid @enderror"
                             value="{{ old('tax_record') }}" placeholder="{{__('pages.Tax Record')}}"></div>
-                    <div><input type="text" name="address"
-                            class="form-control my-3 @error('address') is-invalid @enderror"
-                            value="{{ old('address') }}" placeholder="{{__('pages.Place Address')}}"></div>
-                    <div class="form-group">
+                        @foreach($langs as $lang)
+                    <div class="col-md-5 p-0 d-inline-block mr-2"><input type="text" name="address{{'['.$lang.']'}}"
+                            class="form-control my-3 @error('address['.$lang.']') is-invalid @enderror"
+                            value="{{ old('address['.$lang.']') }}" placeholder="{{__('pages.Place Address').'('.$lang.')'}}"></div>
+                        @endforeach
+                        <div class="clearfix"></div>
+                        @foreach($langs as $lang)
+                        <div class="form-group col-md-5 d-inline-block">
                         {{-- <label for="about">{{ __('pages.Company About') }}</label> --}}
-                        {!!Form::textarea('about',null,[
+                        {!!Form::textarea('about['.$lang.']',null,[
                         'class'=>'form-control',
-                        'placeholder'=>__('pages.Company About')
+                        'placeholder'=>__('pages.Company About').'('.$lang.')',
+
                         ])!!}
                     </div>
+                        @endforeach
+                        <div class="clearfix"></div>
                 </div>
                 <div id="third-step" style="display:none; text-align:right">
                     <div class="form-group">

@@ -66,14 +66,17 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|string|min:5',
+            'full_name' => 'required|string|min:5',
             'password' => 'required|string|min:8|confirmed',
             'email' => 'required|email|unique:place_owner',
             'account_type' => 'required|numeric|in:0,1',
-            'name' => 'required|string|min:3|max:255',
+            'name' => ['required', 'array', 'min:' . sizeof($this->langs), 'max:' . sizeof($this->langs)],
+            'name.*' => 'required|string|min:3|max:255',
             'tax_record' => 'required|string|unique:places',
-            'address' => 'required|string|min:3|max:255',
-            'about' => 'required|string',
+            'address' => ['required', 'array', 'min:' . sizeof($this->langs), 'max:' . sizeof($this->langs)],
+            'address.*' => 'required|string|min:3|max:255',
+            'about' => ['required', 'array', 'min:' . sizeof($this->langs), 'max:' . sizeof($this->langs)],
+            'about.*' => 'required|string|min:3|max:500',
             'phone' => 'required|string',
             'city_id' => 'required|numeric|exists:cities,id',
             'category_id' => 'required|numeric|exists:categories,id',
@@ -82,17 +85,6 @@ class RegisterController extends Controller
             'closed_days' => ['array', Rule::in(array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'))]
 
         ], [
-            'name.required' => 'حقل الاسم مطلوب',
-            'name.min' => 'يجب ان يحتوي حقل الاسم على الاقل خمس احرف',
-
-            'password.required' => 'حقل كلمة المرور مطلوب',
-            'password.min' => 'حقل كلمة المرور يجب ان يحتوي على الاقل ٨ احرف',
-            'password.confirmed' => 'الرجاء كتابة كلمة المرور مره اخرى بشكل صحيح',
-
-            'email.required' => 'حقل البريد الالكتروني مطلوب',
-            'email.email' => 'الرجاء كتابة البريد الالكتروني بشكل صحيح',
-            'email.unique' => 'هذا البريد الالكنروني موجود بالفعل',
-
 
         ]);
     }
@@ -131,7 +123,7 @@ class RegisterController extends Controller
         $this->validator($request->all())->validate();
         $messages = [];
         if ($request->closed_time <= $request->opened_time)
-            return back()->with('closed_time', 'الرجاء اختيار معاد اغلاق مناسب');
+            return back()->with('closed_time', __('messages.Choose correct close time'));
         $request->merge(['closed_days' => $request->has('closed_days') ? implode(",", $request->closed_days) : '', 'password' => bcrypt($request->password)]);
 
         $owner = $this->create($request->all());

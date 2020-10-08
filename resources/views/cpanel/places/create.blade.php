@@ -33,8 +33,8 @@
             <div class="row justify-content-end">
 
                 <button id="prevBtn" class="btn btn-primary ml-2" type="button" style="display:none"
-                    onclick="showPrev()">السابق</button>
-                <button id="nextBtn" class="btn btn-primary ml-2" type="button" onclick="showNext()">التالي</button>
+                    onclick="showPrev()">{{__('main.Prev')}}</button>
+                <button id="nextBtn" class="btn btn-primary ml-2" type="button" onclick="showNext()">{{__("main.Next")}}</button>
                 <button id="submitBtn" class="btn btn-success" id="submit" style="display:none"
                     type="submit">{{ __('pages.Submit') }}</button>
 

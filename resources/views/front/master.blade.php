@@ -16,6 +16,12 @@
     <link rel="stylesheet" href="{{ asset('front/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('front/css/style.css') }}">
     @stack('styles')
+    <style>
+        .dropdown-menu{
+            min-width:0 !important;
+            padding:0;
+        }
+    </style>
     <title>{{ env('APP_NAME') }}</title>
 </head>
 @if (app()->getLocale()!='ar')
@@ -56,22 +62,40 @@
                                         class="fab fa-whatsapp"></i></a></li>
                         </ul>
                     </div>
-                    @guest('clients')
                     <div>
+
+
+                    @guest('clients')
+
                         <a href="{{ url('/register') }}">{{ __('main.register') }}</a>
                         <a class="px-3 log" href="{{ url('/login') }}">{{ __('main.login') }}</a>
-                    </div>
+
                     @endguest
-                   <div>
-                       <a href="{{ url('/lang/en') }}">en</a>
-                       <a href="{{ url('/lang/ar') }}">ar</a>
-                   </div>
+
+                        <div class="connect d-inline">
+                            <div class="dropdown d-inline">
+                                <a class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                                   aria-haspopup="true" aria-expanded="false">
+                                    {{--                                <span> مرحبا بك </span>--}}
+                                    <img src="{{asset($languages[app()->getLocale()])}}" width="25px" height="25px" alt="">
+                                </a>
+                                <div class="dropdown-menu text-right" aria-labelledby="dropdownMenuButton">
+                                    @foreach($languages as $lang=>$img)
+                                        @if($lang !=app()->getLocale())
+                                    <a class="dropdown-item" href="{{ route('lang',['lang'=>$lang]) }}">
+                                        <img src="{{asset($img)}}" width="25px" height="25px" alt=""> </a>
+                                        @endif
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
                     @auth('clients')
                     <div class="connect">
                         <div class="dropdown">
                             <a class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">
-                                <span> مرحبا بك </span> &nbsp; &nbsp;{{ auth('clients')->user()->full_name }}
+{{--                                <span> مرحبا بك </span>--}}
+                                &nbsp; &nbsp;{{ auth('clients')->user()->full_name }}
                             </a>
                             <div class="dropdown-menu text-right" aria-labelledby="dropdownMenuButton">
                                 <a class="dropdown-item" href="{{ route('index') }}"> <i
@@ -80,10 +104,6 @@
                                         class="fas fa-user-alt ml-2"></i>{{ __('main.profile') }}</a>
                                 <a class="dropdown-item" href="{{ route('front.password') }}"> <i
                                         class="fas fa-lock ml-2"></i>{{ __('main.change password') }}</a>
-                                {{-- <a class="dropdown-item" href="#"> <i class="fas fa-bell ml-2"></i>اعدادات الاشعارات</a>
-                                <a class="dropdown-item" href="{{ route('front.favourite.posts') }}"> <i
-                                    class="far fa-heart ml-2"></i>المفضلة</a> --}}
-                                {{-- <a class="dropdown-item" href="#"> <i class="far fa-comments ml-2"></i>ابلاغ</a> --}}
                                 <a class="dropdown-item" href="{{ route('contact') }}"> <i
                                         class="fas fa-phone ml-2"></i>{{ __('main.contactus') }}</a>
                                 <a class="dropdown-item" onclick="event.preventDefault();
@@ -97,7 +117,7 @@
                         </div>
                     </div>
                     @endauth
-
+                    </div>
                 </div>
                 <!--End row-->
             </div>

@@ -34,6 +34,14 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
 
+        $languages =[
+            'ar'=>'images/flags/ksa.png',
+            'en'=>'images/flags/british.png',
+            'fr'=>'images/flags/french.jpg',
+            'de'=>'images/flags/germany.png',
+            'nl'=>'images/flags/netherlands.jpg',
+
+        ];
         if(DB::table('settings')->exists()){
             $langs=explode(',',env('APP_LANGS'));
             $settings = Settings::all();
@@ -42,7 +50,7 @@ class AppServiceProvider extends ServiceProvider
             $countPlaces = Place::with(['owner' => function ($q) {
                 $q->accepted(1);
             }])->count();
-            view()->share(compact('settings', 'pages', 'categories', 'countPlaces','langs'));
+            view()->share(compact('settings', 'pages', 'categories', 'countPlaces','langs','languages'));
 
         }
            }

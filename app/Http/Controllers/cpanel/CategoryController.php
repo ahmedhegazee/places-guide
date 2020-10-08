@@ -49,7 +49,7 @@ class CategoryController extends Controller
         ]);
         $request->merge(['name' => json_encode($request->get('name')),]);
         $data = $request->only('name');
-        //        $data['image'] = storeFileOnGoogleCloud($request->file('image'), 'categories');
+                $data['image'] = storeFileOnAzure($request->file('image'), 'categories');
         $data['image'] = '';
         Category::create($data);
         flash(__('messages.add'), 'success');

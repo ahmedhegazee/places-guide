@@ -10,7 +10,8 @@ return [
     'Reset Password' => 'Reset Password',
     'This password reset link will expire in 60 minutes.' => 'This password reset link will expire in 60 minutes.',
     'If you did not request a password reset, no further action is required.' => 'If you did not request a password reset, no further action is required.',
-    'Choose correct close time'=>'Choose correct close time',
-    'Accepted Successfully'=>'تم قبول الطلب بنجاحAccepted Successfully',
-    'Rejected Successfully'=>'Rejected Successfully'
+    'Choose correct close time' => 'Choose correct close time',
+    'Accepted Successfully' => 'Accepted Successfully',
+    'Rejected Successfully' => 'Rejected Successfully',
+    'Message sent successfully' => 'Message sent successfully',
 ];

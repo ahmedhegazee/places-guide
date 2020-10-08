@@ -70,17 +70,10 @@ class MainController extends Controller
             'messgAddres' => 'required|string',
             'messageText' => 'required|string',
         ];
-        $messages = [
-            'name.required' => 'حقل الاسم مطلوب',
-            'email.required' => 'حقل البريد الالكتروني مطلوب',
-            'email.email' => 'الرجاء ادخال بريد الكتروني صالح',
-            'phone.required' => 'حقل رقم الهاتف مطلوب',
-            'messgAddres.required' => 'حقل عنوان الرسالة مطلوب',
-            'messageText.required' => 'حقل نص الرسالة مطلوب',
-        ];
-        $this->validate($request, $roles, $messages);
+       
+        $this->validate($request, $roles);
         VisitorMessage::create($request->all());
-        flash('تم ارسال الرسالة بنجاح', 'success')->important();
+        flash(__('messages.Message sent successfully'), 'success')->important();
         return back();
     }
     public function favouritePosts()
@@ -106,7 +99,7 @@ class MainController extends Controller
             $request->merge(['password' => bcrypt($request->password)]);
         // dd($request->user());
         $request->user()->update($request->all());
-        flash('تم التحديث بنجاح', 'success');
+        flash(__('messages.update'), 'success');
         return back();
     }
     public function password()
@@ -123,11 +116,11 @@ class MainController extends Controller
         if (Hash::check($request->old_password, $request->user()->password))
             $request->merge(['password' => bcrypt($request->password)]);
         else {
-            flash('الرجاء ادخال كلمة المرور القديمة ', 'danger');
+            flash(__('main.Enter Old Password'), 'danger');
             return back();
         }
         $request->user()->update($request->only('password'));
-        flash('تم التحديث بنجاح', 'success');
+        flash(__('messages.update'), 'success');
         return back();
     }
     public function category(Request $request, Category $category)

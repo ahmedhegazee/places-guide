@@ -146,6 +146,12 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'messageText'=>'Message Content',
+        'messgAddres'=>'Message Title',
+        'work_category_id'=>'work category',
+        'category_id'=>'category',
+        'city_id'=>'city',
+       ]
 
 ];

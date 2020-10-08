@@ -57,9 +57,9 @@ class LoginController extends Controller
         $loginRoute = url('/login');
         $registerRoute = route('front.register');
         $title = __('main.Website Visitors');
-        $errors= new ViewErrorBag;
+        $errors = new ViewErrorBag;
         $resetPasswordRoute = route('password.request');
-        return view('front.auth.login', compact('loginRoute', 'registerRoute', 'title', 'resetPasswordRoute','errors'));
+        return view('front.auth.login', compact('loginRoute', 'registerRoute', 'title', 'resetPasswordRoute', 'errors'));
     }
     public function username()
     {
@@ -72,10 +72,6 @@ class LoginController extends Controller
             [
                 $this->username() => 'required|string',
                 'password' => 'required|string',
-            ],
-            [
-                'email.required' => 'حقل البريد الالكتروني مطلوب',
-                'password.required' => 'حقل كلمة المرور مطلوب',
             ]
         );
     }

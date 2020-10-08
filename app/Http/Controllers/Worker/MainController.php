@@ -93,58 +93,7 @@ class MainController extends Controller
     {
         return view('front.request-create');
     }
-    public function storeRequest(Request $request)
-    {
-        $rules = [
-            'name' => 'required|string|min:3',
-            'age' => 'required|numeric',
-            'blood_type_id' => ['required', Rule::in(BloodType::all()->pluck('id')->toArray())],
-            'no_blood_bags' => 'required|numeric',
-            'address' => [Rule::requiredIf(function () use ($request) {
-                return !$request->has('longtitude') && !$request->has('latitude');
-            }), 'string'],
-            'longtitude' => ['numeric', Rule::requiredIf(function () use ($request) {
-                return !$request->has('address');
-            })],
-            'latitude' => ['numeric', Rule::requiredIf(function () use ($request) {
-                return !$request->has('address');
-            })],
-            'city_id'
-            => ['required', Rule::in(City::all()->pluck('id')->toArray())],
-            'government_id'
-            => ['required', Rule::in(Government::all()->pluck('id')->toArray())],
-            'phone'
-            => ['required', 'regex:/^(010|011|012|015){1}[0-9]{8}$/'],
-            'notes' => 'sometimes|string'
-        ];
-        $client = $request->user();
-        $validator = $this->validate($request, $rules);
 
-        $donationRequest = $client->donationRequests()->create($request->all());
-        // here we retrieve all the clients who have a favourite blood type of the same request's blood type
-        $donatorsIDs = $donationRequest->city->government->clients()->whereHas('bloodTypes', function ($q) use ($request) {
-            $q->where('blood_types.id', $request->blood_type_id);
-        })->pluck('clients.id')->toArray();
-        if (count($donatorsIDs)) {
-            $notification
-                = $donationRequest->notifications()->create([
-                    'title' => 'نحتاج لتبرعكم بالدم',
-                    'content' => $donationRequest->bloodType->name . ' نحتاج للتبرع لهذه الفصيلة '
-                ]);
-            $notification->clients()->attach($donatorsIDs);
-            $tokens = Token::whereIn('client_id', $donatorsIDs)->where('token', '!=', null)->pluck('token')->toArray();
-            // dd($tokens);
-            if (count($tokens)) {
-                $data = [
-                    'donation_request_id' => $donationRequest->id,
-                ];
-                $send = notifyByFireBase($notification->title, $notification->content, $tokens, $data);
-                info('firebase result:' . $send);
-            }
-        }
-        flash('تم انشاء الطلب', 'success')->important();
-        return back();
-    }
     protected function validator(array $data)
     {
         return Validator::make($data, [

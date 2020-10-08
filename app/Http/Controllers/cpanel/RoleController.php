@@ -108,13 +108,7 @@ class RoleController extends Controller
                 'name' => 'required|string|unique:roles',
                 'permissions_list' => 'required|array'
             ];
-        $messages = [
-            'name.required' => 'حقل الاسم مطلوب',
-            'name.string' => 'حقل الاسم يجب ان يكون نصا',
-            'name.unique' => 'اسم الرتبة يجب ان يكون مميزا',
-            'permissions_list.required' => 'اختيار الصلاحيات مطلوب',
-            'permissions_list.array' => 'الصلاحيات يحب ان تكون مجموعة',
-        ];
-        return Validator::make($data, $rules, $messages);
+
+        return Validator::make($data, $rules);
     }
 }

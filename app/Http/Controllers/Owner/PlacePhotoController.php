@@ -53,7 +53,7 @@ class PlacePhotoController extends Controller
             flash(__('messages.add'), 'success');
             return redirect(route('photo.index'));
         } else {
-            flash('اقصى عدد للصور هو ١٠ صور', 'danger');
+            flash(__('main.Maximum 10 photos'), 'danger');
             return back();
         }
     }

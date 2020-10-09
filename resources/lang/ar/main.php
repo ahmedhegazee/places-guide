@@ -59,5 +59,9 @@ return [
     'No Account' => 'لا توجد عضوية',
     'Maximum 10 photos' => 'اقصى عدد للصور هو ١٠ صور',
     'Enter Old Password' => 'الرجاء ادخال كلمة المرور القديمة',
+    'Banners'=>'باترات',
+    'Banner'=>'بانر',
+    'Banner Content'=>'محتوى البانر'
+
 
 ];

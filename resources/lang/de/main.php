@@ -58,5 +58,8 @@ return [
     'Send Email' => 'E-Mail senden',
     'No Account' => 'kein Konto gefunden',
     'Maximum 10 photos' => 'Maximal 10 Fotos',
-    'Enter Old Password' => 'Geben Sie das alte Passwort ein'
+    'Enter Old Password' => 'Geben Sie das alte Passwort ein',
+    'Banners'=>'Banners',
+    'Banner'=>'Banner',
+    'Banner Content'=>'Bannerinhalt'
 ];

@@ -974,3 +974,10 @@ a:hover {
     margin-right: 0 !important;
     margin-left:5% !important;
 }
+#left-body .slick-caption{
+    right: 50% !important;
+    left: 4% !important;
+}
+#left-body .slick-caption h4 {
+    margin-left: 8%;
+}

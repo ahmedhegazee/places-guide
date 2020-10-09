@@ -172,6 +172,15 @@ dir="rtl"
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a href="{{ route('banner.index') }}"
+                                class="nav-link {{ Route::currentRouteName()=='banner.index'?'active':'' }}">
+                                <i class="nav-icon fas fa-ad"></i>
+                                <p>
+                                    {{ __('main.Banners') }}
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="{{ route('user.index') }}"
                                 class="nav-link {{ Route::currentRouteName()=='user.index'?'active':'' }}">
                                 <i class="nav-icon fas fa-users"></i>

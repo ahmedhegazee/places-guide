@@ -58,5 +58,8 @@ return [
     'Send Email' => 'Send Email',
     'No Account' => 'No Account',
     'Maximum 10 photos' => 'Maximum 10 photos',
-    'Enter Old Password' => 'Enter Old Password'
+    'Enter Old Password' => 'Enter Old Password',
+    'Banners'=>'Banners',
+    'Banner'=>'Banner',
+    'Banner Content'=>'Banner Content'
 ];

@@ -50,7 +50,7 @@ class CategoryController extends Controller
         $request->merge(['name' => json_encode($request->get('name')),]);
         $data = $request->only('name');
                 $data['image'] = storeFileOnAzure($request->file('image'), 'categories');
-        $data['image'] = '';
+//        $data['image'] = '';
         Category::create($data);
         flash(__('messages.add'), 'success');
         return redirect()->route('category.index');

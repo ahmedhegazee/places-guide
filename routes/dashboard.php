@@ -5,6 +5,7 @@ Route::group(['middleware' => ['auth', ]], function () {
     Route::resource('government', 'GovernorateController');
     Route::resource('/{govern}/city', 'CityController')->except(['index', 'show']);
     Route::resource('category', 'CategoryController');
+    Route::resource('banner', 'BannerController');
     Route::resource('worker-category', 'WorkerCategoryController')->except('show');
     Route::resource('/{category}/subcategory', 'SubCategoryController')->except('show');
     Route::resource('client', 'ClientController')->only(['index', 'destroy', 'update']);

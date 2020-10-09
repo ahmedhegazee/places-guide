@@ -1,4 +1,5 @@
 @inject('category', 'App\Models\Category')
+@inject('banner', 'App\Models\Banner')
 @extends('front.master')
 @section('content')
 <section class="categories py-2">
@@ -184,36 +185,18 @@
 @section('slider')
 <!--main-header-->
 <div class="main-header">
-    <div class="slide">
-        <img src="{{ asset('images/background.jpg') }}" class="d-fixed w-100" alt="...">
-        <div class="slick-caption">
-            <h4 class="my-md-3">دليلك لافضل الاماكن</h4>
-            <p class="pl-md-5">هذا النص هو مثال لنص ممكن أن يستبدل فى نفس المساحه, لقد تم توليد هذا النص من مولد
-                النص
-                العرب</p>
-            {{-- <button class="btn bg px-5">المزيد</button> --}}
+    @foreach($banner->all() as $ban)
+        <div class="slide">
+            <img src="{{ $ban->image }}" class="d-fixed w-100" alt="...">
+            <div class="slick-caption">
+                <h4 class="my-md-3">{{$ban->title[app()->getLocale()]}}</h4>
+                <p class="pl-md-5">{{$ban->content[app()->getLocale()]}}</p>
+                {{-- <button class="btn bg px-5">المزيد</button> --}}
+            </div>
         </div>
-    </div>
-    <div class="slide">
-        <img src="{{ asset('images/background.jpg') }}" class="d-fixed w-100" alt="...">
-        <div class="slick-caption">
-            <h4 class="my-md-3">دليلك لافضل الاماكن</h4>
-            <p class="pl-md-5">هذا النص هو مثال لنص ممكن أن يستبدل فى نفس المساحه, لقد تم توليد هذا النص من مولد
-                النص
-                العرب</p>
-            {{-- <button class="btn bg px-5">المزيد</button> --}}
-        </div>
-    </div>
-    <div class="slide">
-        <img src="{{ asset('images/background.jpg') }}" class="d-fixed w-100" alt="...">
-        <div class="slick-caption">
-            <h4 class="my-md-3">دليلك لافضل الاماكن</h4>
-            <p class="pl-md-5">هذا النص هو مثال لنص ممكن أن يستبدل فى نفس المساحه, لقد تم توليد هذا النص من مولد
-                النص
-                العرب</p>
-            {{-- <button class="btn bg px-5">المزيد</button> --}}
-        </div>
-    </div>
+    @endforeach
+
+
 </div>
 <!--End main-header-->
 @endsection

@@ -3,7 +3,7 @@
 <nav class="mb-4" aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ route('index') }}">{{__('main.home')}}</a></li>
-        <li class="breadcrumb-item active" aria-current="page">{{ $category->name }}</li>
+        <li class="breadcrumb-item active" aria-current="page">{{ $category->name[app()->getLocale()] }}</li>
     </ol>
 </nav>
 <section class="categories py-2">
@@ -35,13 +35,13 @@
                                   </div>
                                 </div>
                                 <div class="col-md-9">
-                                    <h3 class="card-text">{{ $record->name }}</h3>
-                                    @if (!is_null($record->address))
+                                    <h3 class="card-text">{{ $record->name[app()->getLocale()] }}</h3>
+                                    @if (!is_null($record->address[app()->getLocale()]))
                                         <div id="address">
-                                            <span><i class="fas fa-map-marker-alt"></i>{{ ' '.$record->address }}</span>
+                                            <span><i class="fas fa-map-marker-alt"></i>{{ ' '.$record->address[app()->getLocale()] }}</span>
                                         </div>
                                     @endif
-                                    <p style="max-height:100px; overflow:hidden;">{{ $record->about }}</p>
+                                    <p style="max-height:100px; overflow:hidden;">{{ $record->about[app()->getLocale()] }}</p>
                                     <a href="{{ route('place',['place'=>$record->id]) }}" class="btn btn-link" style="color:#000">{{__('main.read more')}}
                                     </a><br /><br>
                                     <a class="btn btn-success" href="tel:{{ $record->phone }}" target="_blank"><i
@@ -83,7 +83,7 @@
 <!--main-header-->
 <div class="category-header" style="background:url({{ $category->image }})">
     <div class="row justify-content-center align-content-center">
-        <h2>{{ $category->name }}</h2>
+        <h2>{{ $category->name[app()->getLocale()] }}</h2>
     </div>
 
 </div>

@@ -15,7 +15,7 @@
                 style="border-radius: 50%;width: 50px;height: 50px;" alt="logo"></div>
         <div class="about-US-content px-4 mb-5">
             <p class="my-md-4">
-                {{ $pages->first()->content }}
+                {{ $pages->first()->content[app()->getLocale()] }}
             </p>
         </div>
     </section>

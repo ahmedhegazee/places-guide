@@ -24,7 +24,7 @@
 
         </div>
         <div class="card-body">
-            <img src="{{ $category->image }}" alt="">
+            <img src="{{ $category->image }}" class="mb-4" width="100%" alt="">
             <div class="row justify-content-end mb-2">
                 <a href="{{route('subcategory.create',['category'=>$category->id])}}" class="btn btn-primary"><i
                         class="fas fa-plus"></i> {{ __('pages.Create').' '. __('pages.Category') }}</a>

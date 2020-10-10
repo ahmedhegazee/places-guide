@@ -43,6 +43,7 @@ class MainController extends Controller
         // });
         // dd($ratedPlaces);
         $bestPlaces = Place::best()->take(6)->get();
+//        dd($bestPlaces);
         $mostVisited = Place::available()->orderByDesc('visited_count')->take(6)->get();
         $places = Place::available()
             ->latest()->take(6)->get();
@@ -70,7 +71,7 @@ class MainController extends Controller
             'messgAddres' => 'required|string',
             'messageText' => 'required|string',
         ];
-       
+
         $this->validate($request, $roles);
         VisitorMessage::create($request->all());
         flash(__('messages.Message sent successfully'), 'success')->important();

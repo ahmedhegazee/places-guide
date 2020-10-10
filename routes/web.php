@@ -34,12 +34,15 @@ Route::group(['prefix' => 'dashboard'], function () {
 });
 Route::get('/join-us', 'Owner\Auth\RegisterController@showRegistrationForm')->name('owner.register');
 Route::post('/join-us', 'Owner\Auth\RegisterController@register');
-Route::view('/test', 'welcome');
-Route::post('/test', function (Request $request) {
-
-    dd(storeFileOnAzure($request->file('image'), 'images'));
-});
-
+//Route::view('/test', 'welcome');
+//Route::post('/test', function (Request $request) {
+//
+//    dd(storeFileOnAzure($request->file('image'), 'images'));
+//});
+//Route::view('/con','welcome2');
+//Route::post('/con',function(Request $request){
+//    dd(json_encode($request->get('name')));
+//});
 
 //Route::get('/la',function(){
 //    $place = Place::first();

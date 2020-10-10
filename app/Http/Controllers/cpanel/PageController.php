@@ -42,7 +42,7 @@ class PageController extends Controller
     {
         $this->validate($request, [
             'content' => ['required','array','min:'.sizeof($this->langs),'max:'.sizeof($this->langs)],
-            'content.*' => 'required|string|min:3|max:1500',
+            'content.*' => 'required|string|min:3|max:3000',
         ]);
         $request->merge(['content'=>json_encode($request->get('content')),]);
         $page->update($request->all());

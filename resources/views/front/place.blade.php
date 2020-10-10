@@ -150,7 +150,7 @@
                 </div>
             </div>
             <div class="col-md-3 col-sm-12">
-                @if ($place->owner->is_accepted)
+{{--                @if ($place->owner->is_accepted)--}}
                 <div id="social-media" class="card w-100  mb-2 p-3" style="color:#000">
                     <ul class="list-unstyled">
                         <li class="d-inline-block mx-2">
@@ -186,7 +186,7 @@
                         target="_blank"><i class="fab fa-whatsapp"></i></a></li> --}}
                     </ul>
                 </div>
-                @endif
+{{--                @endif--}}
                 @if (!is_null($place->latitude)&&!is_null($place->longitude))
                 <div class="card w-100  mb-2 p-3">
 

@@ -144,9 +144,9 @@
                             <a class="nav-link" href="{{ route('about') }}">تصنيفات الدليل</a>
                         </li> --}}
 
-                        <li class="nav-item {{ Route::is('nearest-places')?'active':'' }}">
-                            <a class="nav-link" href="{{ route('nearest-places') }}">{{ __('main.nearest places') }}</a>
-                        </li>
+{{--                        <li class="nav-item {{ Route::is('nearest-places')?'active':'' }}">--}}
+{{--                            <a class="nav-link" href="{{ route('nearest-places') }}">{{ __('main.nearest places') }}</a>--}}
+{{--                        </li>--}}
                         <li class="nav-item {{ Route::is('discount')?'active':'' }}">
                             <a class="nav-link" href="{{ route('discount') }}">{{ __('main.discounts') }}</a>
                         </li>
@@ -189,8 +189,8 @@
 
                         <h6 class="">{{ __('main.home') }}</h6>
                         <ul class="list-unstyled">
-                            <li class="py-2"><a href="{{ route('nearest-places') }}">{{ __('main.nearest places') }}</a>
-                            </li>
+{{--                            <li class="py-2"><a href="{{ route('nearest-places') }}">{{ __('main.nearest places') }}</a>--}}
+{{--                            </li>--}}
                             <li class="py-2"><a href="{{ route('discount') }}">{{ __('main.discounts') }}</a></li>
                             <li class="py-2"><a href="{{ route('workads') }}">{{ __('main.job ads') }}</a></li>
                             <li class="py-2"><a href="{{ route('owner.register') }}">{{ __('main.join us') }}</a></li>
